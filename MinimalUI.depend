@@ -1,0 +1,480 @@
+# depslib dependency file v1.0
+1404121596 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\database.cpp
+	"Database.h"
+
+1403859225 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\database.h
+	"sqlite3.h"
+	"Excepcion.h"
+	"roms/estructuras.h"
+	"Dirutil.h"
+	"roms/EmuProperties.h"
+	"tinyxml/tinyxml.h"
+	<string>
+	<vector>
+	<iostream>
+
+1386367516 c:\program files (x86)\codeblocks\externallibs\sqllite\src\sqlite3.h
+	<stdarg.h>
+
+1403251364 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\excepcion.h
+	<iostream>
+	<cmath>
+	"Traza.h"
+	"Constant.h"
+
+1398697644 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\traza.h
+	<stdio.h>
+	<time.h>
+	<string>
+	<limits.h>
+	<iostream>
+	<fstream>
+	"Constant.h"
+
+1403784177 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\constant.h
+	<sstream>
+	<string.h>
+	<vector>
+	<typeinfo>
+	<ctime>
+	<dirent.h>
+	<stdio.h>
+	<limits.h>
+	<algorithm>
+	<windows.h>
+
+1401208921 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\roms\estructuras.h
+	"fileprops.h"
+	"Traza.h"
+	"listaIni.h"
+
+1400292180 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\fileattr.h
+	<string>
+
+1400000697 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\roms\listaini.h
+	"ListaSimple.h"
+
+1403766294 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\listasimple.h
+	<string.h>
+	<stdio.h>
+	"Excepcion.h"
+	"Fileio.h"
+	<typeinfo>
+	"Constant.h"
+	"fileprops.h"
+
+1396252650 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\fileio.h
+	<iostream>
+	<fstream>
+	<string>
+	<algorithm>
+	<vector>
+	<iterator>
+	"Excepcion.h"
+	"Traza.h"
+
+1401208858 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\dirutil.h
+	"fileprops.h"
+	<dirent.h>
+	<sys/stat.h>
+	<sys/types.h>
+	"Traza.h"
+	"ListaSimple.h"
+
+1402649812 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\roms\emuproperties.h
+
+1400000796 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\icogestor.cpp
+	"Icogestor.h"
+
+1393499909 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\icogestor.h
+	"Dirutil.h"
+	"Fileio.h"
+	"Constant.h"
+	"SDL/SDL.h"
+	"SDL/SDL_image.h"
+	"SDL/SDL_rotozoom.h"
+
+1404726876 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\iofrontend.cpp
+	"Iofrontend.h"
+
+1401374830 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\iofrontend.h
+	<string>
+	<vector>
+	"Ioutil.h"
+	"Colorutil.h"
+	"Menuobject.h"
+	"ImagenGestor.h"
+	"Icogestor.h"
+	"Launcher.h"
+	"roms/gestorroms.h"
+	"thread.h"
+	"vlcplayer/vlcplayer.h"
+	"roms/EmuProperties.h"
+	"uipicture.h"
+	"uiinput.h"
+	"uipicture.h"
+	"uiart.h"
+	"uibutton.h"
+	"uiprogressbar.h"
+	"uipopupmenu.h"
+
+1401358609 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\ioutil.h
+	<iostream>
+	<map>
+	<cmath>
+	<sstream>
+	"SDL/SDL.h"
+	"SDL/SDL_ttf.h"
+	"SDL/SDL_image.h"
+	"SDL/SDL_rotozoom.h"
+	"sdl/SDL_draw.h"
+	"Fileio.h"
+	"Constant.h"
+	"ImagenGestor.h"
+	"Traza.h"
+	"Menuobject.h"
+	"Icogestor.h"
+	"joymapper.h"
+	"thread.h"
+	"roms/gestorroms.h"
+	"uiinput.h"
+	"uiprogressbar.h"
+
+1387367429 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\sdl\sdl_draw.h
+	<SDL/SDL.h>
+
+1395059376 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\imagengestor.h
+	"Fileio.h"
+	"SHA1.h"
+	"ListaSimple.h"
+	"Excepcion.h"
+	"Dirutil.h"
+	"SDL/SDL.h"
+
+1386695698 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\sha1.h
+	<memory.h>
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+
+1401270641 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\menuobject.h
+	<sstream>
+	<string.h>
+	"Constant.h"
+	"Excepcion.h"
+	"ListaSimple.h"
+	"ImagenGestor.h"
+	"joymapper.h"
+	"object.h"
+	"uilabel.h"
+	"uibutton.h"
+	"uilist.h"
+	"uiprogressbar.h"
+	"uiart.h"
+	"uicheck.h"
+	"uipanel.h"
+	"uipanelborder.h"
+	"uipicture.h"
+	"uiinput.h"
+	"uipopupmenu.h"
+
+1391555033 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\joymapper.h
+	"Constant.h"
+	"ListaSimple.h"
+
+1401261086 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\object.h
+	"common.h"
+	<stdlib.h>
+	<stdio.h>
+	<iostream>
+	<string>
+	"ImagenGestor.h"
+	"joymapper.h"
+
+1401258662 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\common.h
+
+1398685384 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uilabel.h
+	<object.h>
+
+1398847780 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uibutton.h
+	<object.h>
+
+1401270132 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uilist.h
+	<object.h>
+
+1398758328 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uiprogressbar.h
+	<object.h>
+
+1398883465 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uiart.h
+	<object.h>
+
+1398758562 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uicheck.h
+	<object.h>
+
+1398780284 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uipanel.h
+	<object.h>
+
+1398769372 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uipanelborder.h
+	<uipanel.h>
+
+1398900081 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uipicture.h
+	<object.h>
+
+1398877434 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uiinput.h
+	<object.h>
+
+1391543133 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\thread.h
+	<Windows.h>
+	<pthread.h>
+	"Constant.h"
+	"gmutex.h"
+
+1389802107 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\gmutex.h
+	<windows.h>
+	<pthread.h>
+
+1404726847 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\roms\gestorroms.h
+	"../Database.h"
+	"ListaSimple.h"
+	"Dirutil.h"
+	"Menuobject.h"
+	"estructuras.h"
+	"fileprops.h"
+	"EmuProperties.h"
+	"uilist.h"
+
+1390934229 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\colorutil.h
+	<stdio.h>
+	<iostream>
+	"Constant.h"
+
+1401211535 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\launcher.h
+	<string.h>
+	<unistd.h>
+	<sys/types.h>
+	<errno.h>
+	<stdio.h>
+	<sys/wait.h>
+	<stdlib.h>
+	<vector>
+	"unzip/unziptool.h"
+	"Dirutil.h"
+	"filelaunch.h"
+	<algorithm>
+	<functional>
+	<cctype>
+	<locale>
+	<fcntl.h>
+
+1398697856 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\unzip\unziptool.h
+	<unistd.h>
+	"zlib.h"
+	"unzip.h"
+	"crypt.h"
+	<stdio.h>
+	<iostream>
+	<fstream>
+	"Fileio.h"
+	"Dirutil.h"
+
+1162818518 c:\program files (x86)\codeblocks\externallibs\ziputils\zlib\zlib.h
+	"zconf.h"
+
+1162818518 c:\program files (x86)\codeblocks\externallibs\ziputils\zlib\zconf.h
+	<windows.h>
+	<sys/types.h>
+	<unistd.h>
+	<unixio.h>
+
+1162818518 c:\program files (x86)\codeblocks\externallibs\ziputils\unzip\unzip.h
+	"../zlib/zlib.h"
+	"ioapi.h"
+
+1162818518 c:\program files (x86)\codeblocks\externallibs\ziputils\unzip\ioapi.h
+
+1364921502 c:\program files (x86)\codeblocks\externallibs\ziputils\unzip\crypt.h
+
+1398964627 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\vlcplayer\vlcplayer.h
+	<stdio.h>
+	<stdint.h>
+	<math.h>
+	<stdlib.h>
+	<assert.h>
+	<SDL/SDL.h>
+	<SDL/SDL_mutex.h>
+	<vlc/vlc.h>
+	<string>
+	<iostream>
+	<limits.h>
+	"../Ioutil.h"
+
+1384199304 c:\program files (x86)\codeblocks\externallibs\libvlc\sdk\include\vlc\vlc.h
+	<vlc/libvlc_structures.h>
+	<vlc/libvlc.h>
+	<vlc/libvlc_media.h>
+	<vlc/libvlc_media_player.h>
+	<vlc/libvlc_media_list.h>
+	<vlc/libvlc_media_list_player.h>
+	<vlc/libvlc_media_library.h>
+	<vlc/libvlc_media_discoverer.h>
+	<vlc/libvlc_events.h>
+	<vlc/libvlc_vlm.h>
+	<vlc/deprecated.h>
+
+1384199304 c:\program files (x86)\codeblocks\externallibs\libvlc\sdk\include\vlc\libvlc_structures.h
+	<stdint.h>
+
+1384199304 c:\program files (x86)\codeblocks\externallibs\libvlc\sdk\include\vlc\libvlc.h
+	<stdio.h>
+	<stdarg.h>
+	<vlc/libvlc_structures.h>
+
+1384199304 c:\program files (x86)\codeblocks\externallibs\libvlc\sdk\include\vlc\libvlc_media.h
+
+1384199304 c:\program files (x86)\codeblocks\externallibs\libvlc\sdk\include\vlc\libvlc_media_player.h
+	<stdbool.h>
+
+1384199304 c:\program files (x86)\codeblocks\externallibs\libvlc\sdk\include\vlc\libvlc_media_list.h
+
+1384199304 c:\program files (x86)\codeblocks\externallibs\libvlc\sdk\include\vlc\libvlc_media_list_player.h
+
+1384199304 c:\program files (x86)\codeblocks\externallibs\libvlc\sdk\include\vlc\libvlc_media_library.h
+
+1384199304 c:\program files (x86)\codeblocks\externallibs\libvlc\sdk\include\vlc\libvlc_media_discoverer.h
+
+1384199304 c:\program files (x86)\codeblocks\externallibs\libvlc\sdk\include\vlc\libvlc_events.h
+
+1384199304 c:\program files (x86)\codeblocks\externallibs\libvlc\sdk\include\vlc\libvlc_vlm.h
+
+1384199304 c:\program files (x86)\codeblocks\externallibs\libvlc\sdk\include\vlc\deprecated.h
+
+1401360916 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\ioutil.cpp
+	"Ioutil.h"
+
+1403253726 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\launcher.cpp
+	"Launcher.h"
+
+1403253726 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\main.cpp
+	"main.h"
+	"Dirutil.h"
+
+1386709284 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\main.h
+	<stdio.h>
+	"Ioutil.h"
+	"Iofrontend.h"
+
+1400000797 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\roms\estructuras.cpp
+	"estructuras.h"
+
+1404724996 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\roms\gestorroms.cpp
+	"gestorroms.h"
+
+1079034852 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\sdl\sdl_draw.c
+	"SDL_draw.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<wchar.h>
+	"Draw_Pixel.c"
+	"Draw_Pixel.c"
+	"Draw_Pixel.c"
+	"Draw_Pixel.c"
+	"Draw_Line.c"
+	"Draw_Line.c"
+	"Draw_Line.c"
+	"Draw_Line.c"
+	"Draw_Circle.c"
+	"Draw_Circle.c"
+	"Draw_Circle.c"
+	"Draw_Circle.c"
+	"Draw_FillCircle.c"
+	"Draw_FillCircle.c"
+	"Draw_FillCircle.c"
+	"Draw_FillCircle.c"
+	"Draw_HLine.c"
+	"Draw_HLine.c"
+	"Draw_HLine.c"
+	"Draw_HLine.c"
+	"Draw_VLine.c"
+	"Draw_VLine.c"
+	"Draw_VLine.c"
+	"Draw_VLine.c"
+	"Draw_Rect.c"
+	"Draw_Rect.c"
+	"Draw_Rect.c"
+	"Draw_Rect.c"
+	"Draw_Ellipse.c"
+	"Draw_Ellipse.c"
+	"Draw_Ellipse.c"
+	"Draw_Ellipse.c"
+	"Draw_FillEllipse.c"
+	"Draw_FillEllipse.c"
+	"Draw_FillEllipse.c"
+	"Draw_FillEllipse.c"
+	"Draw_Round.c"
+	"Draw_Round.c"
+	"Draw_Round.c"
+	"Draw_Round.c"
+	"Draw_FillRound.c"
+	"Draw_FillRound.c"
+	"Draw_FillRound.c"
+	"Draw_FillRound.c"
+
+1079034852 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\sdl\draw_pixel.c
+
+1079034852 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\sdl\draw_line.c
+
+1079034852 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\sdl\draw_circle.c
+
+1029325208 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\sdl\draw_fillcircle.c
+
+1029325208 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\sdl\draw_hline.c
+
+1029325208 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\sdl\draw_vline.c
+
+1029325208 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\sdl\draw_rect.c
+
+1079034852 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\sdl\draw_ellipse.c
+
+1029325208 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\sdl\draw_fillellipse.c
+
+1079034852 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\sdl\draw_round.c
+
+1029325208 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\sdl\draw_fillround.c
+
+1400000699 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\unzip\unziptool.cpp
+	"unziptool.h"
+
+1400000795 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\vlcplayer\vlcplayer.cpp
+	"vlcplayer.h"
+
+1401208624 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\fileprops.h
+	<string>
+
+1401211548 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\filelaunch.h
+	<string>
+
+1401376350 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uipopupmenu.h
+	<uilist.h>
+	<SDL/SDL_ttf.h>
+
+1402585246 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\resource.rc
+
+1305393898 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\tinyxml\tinyxml.h
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<string>
+	<iostream>
+	<sstream>
+	"tinystr.h"
+
+1305393898 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\tinyxml\tinystr.h
+	<assert.h>
+	<string.h>
+
+1400000697 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\listaini.h
+	"ListaSimple.h"
+

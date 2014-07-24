@@ -1,0 +1,16 @@
+<MENU name="MENUINICIAL">
+	<OBJECT name="ListaMenuInicial" tipo="GUILISTBOX" x="0" y="0" w="0" h="0" label="ListaMenuInicial" centered="true">
+		<ELEM text="Juegos">1</ELEM>
+		<ELEM text="Opciones">2</ELEM>
+		<ELEM text="Salir">salir</ELEM>
+	</OBJECT>
+</MENU>
+
+<MENU name="MENUJUEGOS">
+	<OBJECT name="ListaMenuJuegos">
+	</OBJECT>
+</MENU>
+<MENU name="MENUOPCIONES">
+	<OBJECT name="ListaMenuOpciones">
+	</OBJECT>
+</MENU>
