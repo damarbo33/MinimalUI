@@ -727,16 +727,16 @@ void Ioutil::drawRectLine(int x0, int y0, int w0, int h0, int lineWidth, t_color
 /**
 *
 */
-void Ioutil::pintarContenedor(int x1, int y1, int w1, int h1, bool selected, Object *obj){
+void Ioutil::pintarContenedor(int x1, int y1, int w1, int h1, bool selected, Object *obj, t_color color){
     if (w1 >= 0 && h1 >= 0 && w1 >= INPUTBORDER && h1 >= INPUTBORDER){
         if (obj->isVerContenedor()){
             if ( (selected && obj == NULL) || (selected && obj != NULL && obj->showShadow()) ){
-                drawRectLine(x1+INPUTBORDER, y1 + INPUTBORDER, w1, h1, BORDERSELECTION, cAzulOscuro);//Dibujo la sombra del elemento seleccionado
+                drawRectLine(x1+INPUTBORDER, y1 + INPUTBORDER, w1, h1, BORDERSELECTION, color);//Dibujo la sombra del elemento seleccionado
             }
             if (obj->getAlpha() >= 0){
-                drawRectAlpha(x1+INPUTBORDER,y1+INPUTBORDER,w1-INPUTBORDER,h1-INPUTBORDER,cInputContent, obj->getAlpha()); // Dibujo el contenedor
+                drawRectAlpha(x1+INPUTBORDER,y1+INPUTBORDER,w1-INPUTBORDER,h1-INPUTBORDER, color, obj->getAlpha()); // Dibujo el contenedor
             } else {
-                drawRect(x1+INPUTBORDER,y1+INPUTBORDER,w1-INPUTBORDER,h1-INPUTBORDER,cInputContent); // Dibujo el contenedor
+                drawRect(x1+INPUTBORDER,y1+INPUTBORDER,w1-INPUTBORDER,h1-INPUTBORDER, color); // Dibujo el contenedor
             }
 
             drawRectLine(x1,y1,w1,h1,INPUTBORDER,cInputBorder);//Dibujo el borde
@@ -746,6 +746,9 @@ void Ioutil::pintarContenedor(int x1, int y1, int w1, int h1, bool selected, Obj
                      + Constant::TipoToStr(w1) + ";"+ Constant::TipoToStr(h1) + ";", W_ERROR);
     }
 }
+
+
+
 
 //void Ioutil::pintarLinea (int x1, int y1, int x2, int y2 , t_color color){
 //    //Draw_Line(screen, x1,y1,x2,y2, SDL_MapRGB(screen->format, color.r, color.g, color.b));
@@ -883,15 +886,20 @@ bool Ioutil::drawImgMem(ImagenGestor *imgGestor, int indice, int destw, int dest
                                      (short unsigned int)destw,
                                      (short unsigned int)desth };
 
-            loadImgFromMem(imgGestor->getFile(),imgGestor->getFileSize(), &mySurface);
+
+            //Cargamos la imagen
+            loadImgFromMem(imgGestor, &mySurface);
+            Traza::print("Imagen cargada de memoria", W_PARANOIC);
             //Creamos la imagen y la pintamos por pantalla
             SDL_Surface *thumbSurface = SDL_CreateRGBSurface(SURFACE_MODE, destw, desth, screen->format->BitsPerPixel, 0, 0, 0, 0);
+            Traza::print("Surface creada", W_PARANOIC);
 
             if (mySurface != NULL) {
                 updateImgScr(mySurface, thumbSurface, imgGestor);
                 SDL_BlitSurface(thumbSurface, NULL, screen, &imgLocation);
             }
             SDL_FreeSurface( thumbSurface );
+            Traza::print("Imagen dibujada", W_PARANOIC);
             return true;
         } catch (Excepcion &e) {
              Traza::print("Excepcion Ioutil::drawImgMem:" + string(e.getMessage()), W_ERROR);
@@ -914,8 +922,8 @@ void Ioutil::drawUIArt(Object *obj){
 
         int tamLabel = fontStrLen(obj->getLabel().c_str());
 
-        drawRect(obj->getX(), obj->getY(), obj->getW(), obj->getH(), cAzul);
-        drawRectLine(obj->getX(), obj->getY(), obj->getX() + obj->getW()-1, obj->getY() + obj->getH()-1,1, cAzulOscuro);
+        drawRect(obj->getX(), obj->getY(), obj->getW(), obj->getH(), cTitleScreen);
+        drawRectLine(obj->getX(), obj->getY(), obj->getX() + obj->getW()-1, obj->getY() + obj->getH()-1,1, cTitleScreen);
         int posx = obj->getW() - tamLabel;
         int posy = (obj->getH() - FONTSIZE)/2;
 
@@ -977,7 +985,7 @@ bool Ioutil::drawImgObj(Object *obj){
 bool Ioutil::drawImgMem(ImagenGestor *imgGestor){
         try{
             SDL_Surface *mySurface = NULL;
-            loadImgFromMem(imgGestor->getFile(),imgGestor->getFileSize(), &mySurface);
+            loadImgFromMem(imgGestor, &mySurface);
 
             if (mySurface != NULL) {
                 return updateImgScr(mySurface, screen, imgGestor);
@@ -1024,7 +1032,7 @@ bool Ioutil::drawZoomImgMem(ImagenGestor *imgGestor){
         bool salida = false;
         SDL_Rect dstRect = { 0,0,0,0 };
 
-        loadImgFromMem(imgGestor->getFile(),imgGestor->getFileSize(), &mySurface);
+        loadImgFromMem(imgGestor, &mySurface);
 
         if (mySurface != NULL) {
             clearScr(cBgImageBin);
@@ -1218,6 +1226,14 @@ bool Ioutil::updateImgScr(SDL_Surface * srcSurface, SDL_Surface * dstSurface, Im
         salida = blitImage(srcSurface, dstSurface,&dstRect, true);
         //objTraza->print("Sin resize",(int)(SDL_GetTicks()-now));
     }
+
+    //Guardamos el tamanyo y la posicion de la imagen respecto a la pantalla
+    imgGestor->getImgLocationRelScreen()->x = dstRect.x;
+    imgGestor->getImgLocationRelScreen()->y = dstRect.y;
+    imgGestor->getImgLocationRelScreen()->w = dstRect.w;
+    imgGestor->getImgLocationRelScreen()->h = dstRect.h;
+
+
     return salida;
 }
 
@@ -1403,8 +1419,24 @@ void Ioutil::loadImgFromFile(const char *uri, SDL_Surface **destino){
     loadImgFromMem(this->getFile(), this->getFileSize(), destino);
 }
 
+
 /**
-*
+* Carga la imagen desde el array binario creado en memoria y establece el tamanyo
+* original de la imagen para poder utilizarlo posteriormente
+*/
+void Ioutil::loadImgFromMem(ImagenGestor *imgGestor, SDL_Surface **destino){
+    loadImgFromMem(imgGestor->getFile(), imgGestor->getFileSize(), destino);
+    if (*destino != NULL){
+        //Guardamos la posicion de la imagen relativa a la superficie de destino,
+        //que suele ser la propia pantalla. Es util para dibujar sobre una imagen
+        //en unas posiciones determinadas por su tamanyo
+        imgGestor->setImgOrigWidth(((SDL_Surface *)*destino)->w);
+        imgGestor->setImgOrigHeight(((SDL_Surface *)*destino)->h);
+    }
+}
+
+/**
+* Carga la imagen desde el array binario creado en memoria
 */
 void Ioutil::loadImgFromMem(char *fileArray, int size, SDL_Surface **destino){
     /*
@@ -1437,7 +1469,7 @@ void Ioutil::loadImgFromMem(char *fileArray, int size, SDL_Surface **destino){
 void Ioutil::drawUITitleBorder(const char *title, int sizeBorder, t_color colorBorder){
     //Dibujando el titulo
     loadFont(TITLEFONTSIZE);
-    drawText(title,sizeBorder + TITLESPACE, sizeBorder - TITLEFONTSIZE/2,colorBorder);
+    drawText(title,sizeBorder + TITLESPACE, sizeBorder - TITLEFONTSIZE/2, cBlanco);
 
     int pixelTitle = 0;
     TTF_SizeText(this->font,title,&pixelTitle,NULL );
@@ -1489,7 +1521,7 @@ void Ioutil::drawUIPicture(Object *obj){
         int h_ = obj->getH();
 
         if (!obj->getImgDrawed()){
-            pintarContenedor(x_,y_,w_,h_,obj->isFocus() && obj->isEnabled(), obj);
+            pintarContenedor(x_,y_,w_,h_,obj->isFocus() && obj->isEnabled(), obj, cInputContent);
             if (obj->getImgGestor() != NULL){
                 drawImgObj(obj);
                 if (obj->getAlpha() >= 0)
@@ -1514,7 +1546,15 @@ void Ioutil::cachearObjeto(Object *obj){
             borde += BORDERSELECTION;
         }
 
-        SDL_Rect imgLocation = { (short int)obj->getX() , (short int)obj->getY(), (short unsigned int)(obj->getW() + borde), (short unsigned int)(obj->getH() + borde) };
+        SDL_Rect imgLocation = { (short int)obj->getX() , (short int)obj->getY(),
+            (short unsigned int)(obj->getW() + borde), (short unsigned int)(obj->getH() + borde) };
+
+        if (obj->getObjectType() == GUICOMBOBOX && obj->isChecked()){
+                //Si se ha pulsado el combo, tenemos que cachear el alto de la lista desplegada tambien
+                imgLocation.h = imgLocation.h + COMBOLISTHEIGHT;
+        }
+
+
         if (!obj->getImgDrawed()){
             //Reseteamos el surface
             obj->getImgGestor()->setSurface(NULL);
@@ -1627,7 +1667,7 @@ void Ioutil::drawUIPopupMenu(Object *obj){
             int centeredY = (Constant::getMENUSPACE() - fontHeight) / 2;
             Traza::print("Repintando popup: " + listObj->getLabel(), W_PARANOIC);
             Traza::print("Alto del popup: ", h, W_PARANOIC);
-            pintarContenedor(x,y,w,h, listObj->isFocus() && listObj->isEnabled(), obj);
+            pintarContenedor(x,y,w,h, listObj->isFocus() && listObj->isEnabled(), obj, cInputContent);
             x += INPUTCONTENT;
             y += INPUTCONTENT;
 
@@ -1674,7 +1714,302 @@ void Ioutil::drawUIPopupMenu(Object *obj){
 }
 
 /**
-*
+* Dibuja una lista en forma de combo
+*/
+void Ioutil::drawUIComboBox(Object *obj){
+    if (obj->isVisible()){
+        int x = obj->getX();
+        int y = obj->getY();
+        int w = obj->getW();
+        int h = obj->getH();
+
+            //Dibujando el label del input
+            drawText(obj->getLabel().c_str(),x,y-FONTSIZE-4,cAzulOscuro);
+
+        if (!obj->getImgDrawed()){
+            UIComboBox *listObj = (UIComboBox *)obj;
+            t_color colorText = listObj->isEnabled() ? cNegro : cGris;
+
+
+            //Pintamos el contenedor del elemento seleccionado en el combo
+            pintarContenedor(x,y,w,h,listObj->isFocus() && listObj->isEnabled(), obj, cInputContent);
+            //Pintamos la flechita caracteristica del combo con su correspondiente contenedor
+            pintarLinea(x + w - 30, y, x + w - 30, y + h, cInputBorder);
+            pintarTriangulo (x + w - 15, y + 20, 10, 10, false, colorText);
+
+            if (listObj->getObjectType() == GUICOMBOBOX && listObj->getSize() > 0){
+                int icono = -1;
+                //Ponemos el color por defecto para las listas
+                TTF_SetFontStyle(font, TTF_STYLE_NORMAL);
+                Traza::print("listObj->getPosIniLista(): ", listObj->getPosIniLista(), W_PARANOIC);
+                Traza::print("listObj->getPosFinLista(): ", listObj->getPosFinLista(), W_PARANOIC);
+
+                //Si se ha pulsado el combo, mostramos la lista del combo
+                if (obj->isChecked()){
+                    pintarContenedor(x, y + h, w, COMBOLISTHEIGHT, listObj->isFocus() && listObj->isEnabled(), obj, cInputContent);
+                }
+
+                //Incorporamos algo de espacio para pintar los contenidos del combo y de la lista
+                x += INPUTCONTENT;
+                y += INPUTCONTENT;
+
+                //Pintamos el texto del elemento seleccionado que aparecera en el combo
+                int selectedPos = listObj->getPosActualLista();
+                drawText(listObj->getListNames()->get(selectedPos).c_str() , x + ((icono >= 0) ? ICOSPACE : 0), y, colorText);
+
+                if (obj->isChecked()){
+                    drawListContent(obj, x, y + h, w, COMBOLISTHEIGHT);
+                }
+            }
+            cachearObjeto(obj);
+        } else {
+            cachearObjeto(obj);
+        }
+    }
+}
+
+/**
+* Pone una marca en la posicion que se le indique
+*/
+void Ioutil::marcarPos(int x, int y){
+    putpixelSafe(screen,x-1,y-1,SDL_MapRGB(screen->format, 255, 0, 0));
+    putpixelSafe(screen,x-1,y+1,SDL_MapRGB(screen->format, 255, 0, 0));
+    putpixelSafe(screen,x+1,y-1,SDL_MapRGB(screen->format, 255, 0, 0));
+    putpixelSafe(screen,x+1,y+1,SDL_MapRGB(screen->format, 255, 0, 0));
+    putpixelSafe(screen,x,y,SDL_MapRGB(screen->format, 255, 0, 0));
+}
+/**
+* Pinta una lista
+*/
+void Ioutil::drawUIListGroupBox(Object *obj){
+    if (obj->isVisible()){
+        int x = obj->getX();
+        int y = obj->getY();
+        int w = obj->getW();
+        int h = obj->getH();
+        UIListGroup *listObj = (UIListGroup *)obj;
+
+        if (listObj->isShowLetraPopup()){
+                //Forzamos para que se repinte lo ultimo que habia por pantalla
+                if (!listObj->getImgDrawed()){
+                    listObj->setImgDrawed(true);
+                }
+                cachearObjeto(obj);
+                //Pintamos el fondo traslucido para darle un efecto de ventana emergente
+                //y lo volvemos a cachear una sola vez
+                if (listObj->getBgLetraPopup() == false){
+                    listObj->setBgLetraPopup(true);
+                    listObj->setImgDrawed(false);
+                    drawUIPopupFondo(obj, 20);
+                    cachearObjeto(obj);
+                }
+                //Llamamos a la funcion que dibuja la seleccion de letras
+                drawUILetraPopup(obj);
+        } else if (!listObj->getImgDrawed()){
+            int centeredY = (Constant::getMENUSPACE() - fontHeight) / 2;
+            listObj->setBgLetraPopup(false);
+            Traza::print("Repintando lista: " + listObj->getLabel(), W_PARANOIC);
+            Traza::print("Alto de la lista: ", h, W_PARANOIC);
+            pintarContenedor(x,y,w,h,listObj->isFocus() && listObj->isEnabled(), obj, cInputContent);
+            x += INPUTCONTENT;
+            y += INPUTCONTENT;
+
+            t_color colorText = listObj->isEnabled() && listObj->isFocus() ? cNegro : cGris;
+            if (listObj->getObjectType() == GUILISTGROUPBOX && listObj->getSize() > 0){
+                //Ponemos el color por defecto para las listas
+                colorText = listObj->isEnabled() && listObj->isFocus() ? cNegro : cGris;
+                TTF_SetFontStyle(font, TTF_STYLE_NORMAL);
+                Traza::print("listObj->getPosIniLista(): ", listObj->getPosIniLista(), W_PARANOIC);
+                Traza::print("listObj->getPosFinLista(): ", listObj->getPosFinLista(), W_PARANOIC);
+                //Dibujamos el resto de la lista
+                drawListGroupContent(obj, x, y, w, h);
+            }
+            cachearObjeto(obj);
+        } else {
+            Traza::print("Alto de la lista: ", h, W_PARANOIC);
+            cachearObjeto(obj);
+        }
+    }
+}
+
+/**
+* Metodo comun para pintar el listado y la lista del combo
+*/
+void Ioutil::drawListGroupContent(Object *obj, int x, int y, int w, int h){
+
+    if (obj->isVisible()){
+        try{
+
+            UIListGroup *listObj = (UIListGroup *)obj;
+            //t_color colorText = listObj->isEnabled() && listObj->isFocus() ? cNegro : cGris;
+            t_color colorText = listObj->isEnabled() ? cNegro : cGris;
+            int cont = 0;
+            int centeredY = 0;
+            centeredY = (Constant::getMENUSPACE() - fontHeight) / 2;
+            int posObjY = 0;
+
+            //Pintamos el fondo de la cabecera
+    //        drawRectAlpha(x - INPUTCONTENT + 1, y, listObj->getW() - 1,
+    //                              Constant::getMENUSPACE(), cGrisClaro, listObj->isFocus() ? 255 : 128);
+            pintarDegradado(x - INPUTCONTENT + 1,
+                            y - INPUTCONTENT,
+                            x - INPUTCONTENT - 1 + w,
+                            y - INPUTCONTENT,
+                            Constant::getMENUSPACE() + INPUTCONTENT , 180, 255);
+            pintarDegradado(x - INPUTCONTENT + 1,
+                            y - INPUTCONTENT,
+                            x - INPUTCONTENT - 1 + w,
+                            y - INPUTCONTENT,
+                            5, 128, 180);
+
+
+
+            if (listObj->isColsAdjustedToHeader() || listObj->sizeHeader() <= 0)
+                listObj->clearHeaderWith();
+
+            int sepCabecera = 0;
+            SDL_Rect textArea = { 0, 0, 0, Constant::getMENUSPACE() };
+
+            //Dibujamos las cabeceras
+            for (unsigned int contCol=0; contCol < listObj->getSizeCol(); contCol++ ){
+                int headerPixelSize = 0;
+                TTF_SizeText(this->font,listObj->getHeaderCol(contCol)->getTexto().c_str(),&headerPixelSize,NULL );
+                if (listObj->isColsAdjustedToHeader() || listObj->sizeHeader() <= contCol) {
+                    listObj->addHeaderWith(headerPixelSize);
+                }
+
+                int temp = 0;
+                //Solo pintamos texto que quepa en la columna
+                textArea.w = listObj->getHeaderWith(contCol);
+                //comprobamos que el texto no salga de los limites de la tabla
+                if (x + sepCabecera + headerPixelSize > obj->getX() + obj->getW()){
+                    if (x + sepCabecera > obj->getX() + obj->getW())
+                        textArea.w = 0; //Cuando el texto ya se ha salido totalmente
+                    else
+                        textArea.w = obj->getX() + obj->getW() - (x + sepCabecera); //Cuando el texto esta fuera parcialmente
+                } else if (sepCabecera <= 0 && contCol > 0){
+                      Traza::print("Salimos del limite izquierdo", W_PARANOIC);
+                      temp = sepCabecera;
+                }
+
+                //Pintamos el texto
+                drawTextInArea(listObj->getHeaderCol(contCol)->getTexto().c_str(),
+                         x + sepCabecera,
+                         centeredY + y,
+                         listObj->isEnabled() ? cNegro : cGris,
+                         &textArea);
+
+                sepCabecera += listObj->getHeaderWith(contCol) + INPUTCONTENT;
+            }
+
+             textArea.x = 0;
+            //Primero recorremos todas las filas
+            for (unsigned int i=listObj->getPosIniLista(); i <= listObj->getPosFinLista(); i++ ){
+                Traza::print("pintando la fila",i, W_PARANOIC);
+                posObjY = y + Constant::getMENUSPACE() + cont*Constant::getMENUSPACE();
+
+                //Dibujamos el rectangulo del elemento seleccionado
+                if (i == listObj->getPosActualLista()){
+                    drawRectAlpha(x - INPUTCONTENT, posObjY, listObj->getW(),
+                                  Constant::getMENUSPACE(), cAzul, listObj->isFocus() ? 255 : 128);
+                }
+
+                //Se pinta el separador de elementos horizontales
+                if (i > 0){
+                    pintarLinea(x, y + (cont+1)*Constant::getMENUSPACE(), x + w - 2*INPUTCONTENT,  y + (cont+1)*Constant::getMENUSPACE(), cSeparator);
+                }
+
+                int sepGrupos = 0;
+                Traza::print("pintando columnas de la fila",i, W_PARANOIC);
+                //Ahora recorremos todas las columnas
+                for (unsigned int contCol=0; contCol < listObj->getSizeCol(); contCol++ ){
+
+                    //Solo pintamos texto que quepa en la columna
+                    textArea.w = listObj->getHeaderWith(contCol);
+                    Traza::print("Ancho de columna",textArea.w, W_PARANOIC);
+                    //comprobamos que el texto no salga de los limites de la tabla
+                    int headerPixelSize = 0;
+                    TTF_SizeText(this->font, listObj->getCol(i,contCol)->getTexto().c_str(), &headerPixelSize, NULL );
+                    Traza::print("Tam. Texto Col", headerPixelSize, W_PARANOIC);
+
+                    if (x + sepGrupos + headerPixelSize > obj->getX() + obj->getW()){
+                        if (x + sepGrupos > obj->getX() + obj->getW())
+                            textArea.w = 0;
+                        else
+                            textArea.w = obj->getX() + obj->getW() - (x + sepGrupos);
+                    }
+
+                    Traza::print("Dibujando texto y triangulos", W_PARANOIC);
+                    if (listObj->getCol(i,contCol) != NULL){
+                        Traza::print("pintando la columna: " + listObj->getCol(i,contCol)->getTexto() , W_PARANOIC);
+                        if (i == listObj->getPosActualLista()){
+                            colorText = cBlanco;
+                            TTF_SetFontStyle(font, TTF_STYLE_BOLD);
+                            drawTextInArea(listObj->getCol(i,contCol)->getTexto().c_str() , x + sepGrupos, centeredY + posObjY, colorText, &textArea);
+                            colorText = listObj->isEnabled() ? cNegro : cGris;
+                            TTF_SetFontStyle(font, TTF_STYLE_NORMAL);
+                        } else {
+                            drawTextInArea(listObj->getCol(i,contCol)->getTexto().c_str() , x + sepGrupos, centeredY + posObjY, colorText, &textArea);
+                        }
+
+                        //Se pinta el triangulo superior
+                        if (listObj->getPosIniLista() > 0){
+                            pintarTriangulo (listObj->getX() + listObj->getW() - 6, listObj->getY() + INPUTCONTENT + Constant::getMENUSPACE(), TRISCROLLBARTAM, TRISCROLLBARTAM, true, colorText);
+                        }
+                        //Se pinta el triangulo inferior
+                        if (listObj->getPosFinLista() + 1 < (unsigned int)listObj->getSize()){
+                            pintarTriangulo (listObj->getX() + listObj->getW() - 6, listObj->getY() + listObj->getH() - INPUTCONTENT, TRISCROLLBARTAM, TRISCROLLBARTAM, false, colorText);
+                        }
+                    }
+                    sepGrupos += listObj->getHeaderWith(contCol) + INPUTCONTENT;
+                }
+                cont++;
+            }
+
+            //Pintamos la barrita de desplazamiento
+            drawScrollBar(listObj);
+
+
+            Traza::print("pintando limites de columnas", W_PARANOIC);
+            //Finalmente dibujamos los limites de las columnas
+            int acumWidth = 0;
+            int selectedPosX = 0;
+            int selectedPosY = 0;
+            bool colAnchorPressed = false;
+
+            for (int i=0; i < listObj->getSizeCol() ; i++){
+                acumWidth += listObj->getHeaderWith(i) + (i > 0 ? INPUTCONTENT : 0);
+                selectedPosX = x + acumWidth;
+                selectedPosY = y - INPUTCONTENT;
+                colAnchorPressed = listObj->isColAnchorPressed() && listObj->getPosColAnchorPressed() == i;
+
+                if (selectedPosX < listObj->getX() + listObj->getW() && selectedPosX > listObj->getX()){
+                    pintarLinea(selectedPosX , selectedPosY, selectedPosX, selectedPosY + h - 2, colAnchorPressed ? cNegro : cGris);
+                    if (colAnchorPressed){
+                        pintarLinea(selectedPosX - 1, selectedPosY, selectedPosX - 1, selectedPosY + h - 2, cNegro);
+                    }
+                    int order = listObj->getHeaderCol(i)->getSortOrder();
+                    if (order == 0){
+                        pintarTriangulo(selectedPosX - TRIGLTAM,
+                                        selectedPosY + Constant::getMENUSPACE()/2 + TRIGLTAM / 2,
+                                        TRIGLTAM, TRIGLTAM, false, cNegro);
+                    } else if (order == 1){
+                        pintarTriangulo(selectedPosX - TRIGLTAM,
+                                        selectedPosY + Constant::getMENUSPACE()/2 - TRIGLTAM / 2,
+                                        TRIGLTAM, TRIGLTAM, true, cNegro);
+                    }
+                }
+            }
+        } catch (Excepcion &e){
+            Traza::print("Error al pintar la lista agrupada: " + string(e.getMessage()), W_ERROR);
+        }
+    }
+}
+
+
+
+/**
+* Pinta una lista
 */
 void Ioutil::drawUIListBox(Object *obj){
     if (obj->isVisible()){
@@ -1682,7 +2017,6 @@ void Ioutil::drawUIListBox(Object *obj){
         int y = obj->getY();
         int w = obj->getW();
         int h = obj->getH();
-
         UIList *listObj = (UIList *)obj;
 
         if (listObj->isShowLetraPopup()){
@@ -1706,50 +2040,19 @@ void Ioutil::drawUIListBox(Object *obj){
             listObj->setBgLetraPopup(false);
             Traza::print("Repintando lista: " + listObj->getLabel(), W_PARANOIC);
             Traza::print("Alto de la lista: ", h, W_PARANOIC);
-            pintarContenedor(x,y,w,h,listObj->isFocus() && listObj->isEnabled(), obj);
+            pintarContenedor(x,y,w,h,listObj->isFocus() && listObj->isEnabled(), obj, cInputContent);
             x += INPUTCONTENT;
             y += INPUTCONTENT;
 
             t_color colorText = listObj->isEnabled() && listObj->isFocus() ? cNegro : cGris;
-            int cont = 0;
             if (listObj->getObjectType() == GUILISTBOX && listObj->getSize() > 0){
-                int icono = -1;
-
                 //Ponemos el color por defecto para las listas
                 colorText = listObj->isEnabled() && listObj->isFocus() ? cNegro : cGris;
                 TTF_SetFontStyle(font, TTF_STYLE_NORMAL);
                 Traza::print("listObj->getPosIniLista(): ", listObj->getPosIniLista(), W_PARANOIC);
                 Traza::print("listObj->getPosFinLista(): ", listObj->getPosFinLista(), W_PARANOIC);
-
-                for (unsigned int i=listObj->getPosIniLista(); i <= listObj->getPosFinLista(); i++ ){
-                    Traza::print("pintando: " + listObj->getListNames()->get(i), W_PARANOIC);
-                    icono = listObj->getListIcons()->get(i);
-                    if (i == listObj->getPosActualLista()){
-                        drawRectAlpha(x - INPUTCONTENT, y + cont*Constant::getMENUSPACE(), listObj->getW(), Constant::getMENUSPACE(), cAzulOscuro, listObj->isFocus() ? 255 : 128);
-                        colorText = cBlanco;
-                        TTF_SetFontStyle(font, TTF_STYLE_BOLD);
-                        drawText(listObj->getListNames()->get(i).c_str() , x + ((icono >= 0) ? ICOSPACE : 0), y + centeredY + cont*Constant::getMENUSPACE(), colorText);
-                        colorText = listObj->isEnabled() && listObj->isFocus() ? cNegro : cGris;
-                        TTF_SetFontStyle(font, TTF_STYLE_NORMAL);
-                    } else {
-                        drawText(listObj->getListNames()->get(i).c_str() , x + ((icono >= 0) ? ICOSPACE : 0), y + centeredY + cont*Constant::getMENUSPACE(), colorText);
-                    }
-
-                    pintarLinea(x + ((icono >= 0) ? ICOSPACE : 0), y + (cont+1)*Constant::getMENUSPACE(), w - ((icono >= 0) ? ICOSPACE : 0),  y + (cont+1)*Constant::getMENUSPACE(), cSeparator);
-
-                    if (icono >= 0){
-                        drawIco(icono, x, y + centeredY + cont*Constant::getMENUSPACE());
-                    }
-
-                    if (listObj->getPosIniLista() > 0){
-                        pintarTriangulo (listObj->getX() + listObj->getW() - 6,listObj->getY() + INPUTCONTENT, 8, 8, true, colorText);
-                    }
-
-                    if (listObj->getPosFinLista() + 1 < (unsigned int)listObj->getSize()){
-                        pintarTriangulo (listObj->getX() + listObj->getW() - 6,listObj->getY() + listObj->getH() - INPUTCONTENT, 8, 8, false, colorText);
-                    }
-                    cont++;
-                }
+                //Dibujamos el resto de la lista
+                drawListContent(obj, x, y, w, h);
             }
             cachearObjeto(obj);
         } else {
@@ -1758,6 +2061,61 @@ void Ioutil::drawUIListBox(Object *obj){
         }
     }
 }
+
+/**
+* Metodo comun para pintar el listado y la lista del combo
+*/
+void Ioutil::drawListContent(Object *obj, int x, int y, int w, int h){
+
+    if (obj->isVisible()){
+
+        UIList *listObj = (UIList *)obj;
+        int icono = -1;
+        //t_color colorText = listObj->isEnabled() && listObj->isFocus() ? cNegro : cGris;
+        t_color colorText = listObj->isEnabled() ? cNegro : cGris;
+        int cont = 0;
+        int centeredY = 0;
+
+        if (listObj->getObjectType() == GUILISTBOX){
+            centeredY = (Constant::getMENUSPACE() - fontHeight) / 2;
+        }
+
+        for (unsigned int i=listObj->getPosIniLista(); i <= listObj->getPosFinLista(); i++ ){
+            Traza::print("pintando: " + listObj->getListNames()->get(i), W_PARANOIC);
+            icono = listObj->getListIcons()->get(i);
+            if (i == listObj->getPosActualLista()){
+                drawRectAlpha(x - INPUTCONTENT, y + cont*Constant::getMENUSPACE(), listObj->getW(), Constant::getMENUSPACE(), cAzul, listObj->isFocus() ? 255 : 128);
+                colorText = cBlanco;
+                TTF_SetFontStyle(font, TTF_STYLE_BOLD);
+                drawText(listObj->getListNames()->get(i).c_str() , x + ((icono >= 0) ? ICOSPACE : 0), y + centeredY + cont*Constant::getMENUSPACE(), colorText);
+                colorText = listObj->isEnabled() ? cNegro : cGris;
+                TTF_SetFontStyle(font, TTF_STYLE_NORMAL);
+            } else {
+                drawText(listObj->getListNames()->get(i).c_str() , x + ((icono >= 0) ? ICOSPACE : 0), y + centeredY + cont*Constant::getMENUSPACE(), colorText);
+            }
+
+            pintarLinea(x, y + (cont+1)*Constant::getMENUSPACE(), x + w - 2*INPUTCONTENT,  y + (cont+1)*Constant::getMENUSPACE(), cSeparator);
+
+            if (icono >= 0){
+                drawIco(icono, x, y + centeredY + cont*Constant::getMENUSPACE());
+            }
+
+            if (listObj->getObjectType() == GUILISTBOX){
+                if (listObj->getPosIniLista() > 0){
+                    pintarTriangulo (listObj->getX() + listObj->getW() - 6,listObj->getY() + INPUTCONTENT, 8, 8, true, colorText);
+                }
+
+                if (listObj->getPosFinLista() + 1 < (unsigned int)listObj->getSize()){
+                    pintarTriangulo (listObj->getX() + listObj->getW() - 6,listObj->getY() + listObj->getH() - INPUTCONTENT, 8, 8, false, colorText);
+                }
+            }
+            cont++;
+        }
+
+        drawScrollBar(listObj);
+    }
+}
+
 
 /**
 *
@@ -1770,7 +2128,7 @@ void Ioutil::drawUIInputWide(Object *obj){
         int h = obj->getH();
 
         //Dibujando el inputText
-        pintarContenedor(x,y,w,h,obj->isFocus() && obj->isEnabled(), obj);
+        pintarContenedor(x,y,w,h,obj->isFocus() && obj->isEnabled(), obj, cInputContent);
         //Dibujando el label del input
         drawText(obj->getLabel().c_str(),x,y-FONTSIZE-4,cAzulOscuro);
 
@@ -1874,7 +2232,7 @@ void Ioutil::drawUIProgressBar(Object *obj){
         int w = obj->getW();
         int h = obj->getH();
 
-        pintarContenedor(x,y,w,h,objProg->isFocus() && objProg->isEnabled(), obj);
+        pintarContenedor(x,y,w,h,objProg->isFocus() && objProg->isEnabled(), obj, cInputContent);
 
         if (w > 0 && h > 0){
             int wsel = (objProg->getProgressPos() / (float)objProg->getProgressMax()) * w;
@@ -2026,7 +2384,7 @@ void Ioutil::showCheck(Object *obj){
     int x = obj->getX();
     int y = obj->getY();
 
-    pintarContenedor(x,y,CHECKW, CHECKH, obj->isFocus(), obj);
+    pintarContenedor(x,y,CHECKW, CHECKH, obj->isFocus(), obj, cInputContent);
     //Escribir el label del input text
     drawText(obj->getLabel().c_str(),x+5+CHECKW,y,cNegro);
 
@@ -2252,7 +2610,7 @@ void Ioutil::pintarCirculo (int n_cx, int n_cy, int r, t_color color)
  * WARNING:  This function does not lock surfaces before altering, so
  * use SDL_LockSurface in any release situation.
  */
-void pintarFillCircle(SDL_Surface *surface, int cx, int cy, int radius, Uint32 pixel)
+void Ioutil::pintarFillCircle(SDL_Surface *surface, int cx, int cy, int radius, Uint32 pixel)
 {
     // Note that there is more to altering the bitrate of this
     // method than just changing this value.  See how pixels are
@@ -2291,7 +2649,6 @@ void pintarFillCircle(SDL_Surface *surface, int cx, int cy, int radius, Uint32 p
 
 void Ioutil::pintarSemiCirculo (int x, int y, int r, t_color color, int angle)
 {
-
     int centro_x=0;
     int centro_y=0;
 
@@ -2491,7 +2848,7 @@ void Ioutil::msg_processing(unsigned int posString, unsigned int tam)
 /**
 *
 */
-string Ioutil::configButtonsJOY(){
+string Ioutil::configButtonsJOY(tEvento *evento){
     Traza::print("casoJOYBUTTONS: Inicio", W_PARANOIC);
     bool salir = false;
     string salida = "";
@@ -2500,34 +2857,93 @@ string Ioutil::configButtonsJOY(){
     unsigned long before = 0;
     const char* JoystickButtonsMSG[] = {"Arriba","Abajo","Izquierda","Derecha","Aceptar","Cancelar", "Página anterior", "Página siguiente", "Select", "Buscar elemento"};
     int JoyButtonsVal[] = {JOY_BUTTON_UP, JOY_BUTTON_DOWN, JOY_BUTTON_LEFT, JOY_BUTTON_RIGHT, JOY_BUTTON_A, JOY_BUTTON_B, JOY_BUTTON_L, JOY_BUTTON_R, JOY_BUTTON_SELECT, JOY_BUTTON_R3};
+    //Posiciones de los botones calculadas en porcentaje respecto al alto y ancho de la imagen
+    t_posicion_precise imgButtonsRelScreen[] = {{0.3512,0.682,0,0},{0.3512,0.84,0,0},{0.295,0.76,0,0},{0.4075,0.76,0,0},
+            {0.79375,0.616,0,0},{0.87625,0.496,0,0},{0.2225,0.194,0,0},{0.7775,0.194,0,0},{0.39375,0.512,0,0},{0.60875,0.512,0,0}};
+
     int tam = 10;
     int i=0;
+    UIPicture obj;
+
+    obj.setX(0);
+    obj.setY(0);
+    obj.setW(this->getWidth());
+    obj.setH(this->getHeight());
+    obj.loadImgFromFile(Constant::getAppDir() +  Constant::getFileSep() + "imgs" + Constant::getFileSep() + "xbox_360_controller-small.png");
+    //Para que se guarde la relacion de aspecto
+    obj.getImgGestor()->setBestfit(false);
+    //Para redimensionar la imagen al contenido
+    obj.getImgGestor()->setResize(true);
 
     do{
         SDL_Event event;
         before = SDL_GetTicks();
-        clearScr(cBgScreen);
-        drawTextCent(JoystickButtonsMSG[i], 0, 0, true, true, cNegro);
+
+        if (!obj.getImgDrawed()){
+            //Limpiamos la pantalla
+            clearScr(cBgScreen);
+            //Dibujamos la imagen
+            drawImgObj(&obj);
+            //Obtenemos las variables que indican la posicion de la imagen una vez que
+            //ha sido pintada por pantalla
+            int imgX = obj.getImgGestor()->getImgLocationRelScreen()->x;
+            int imgY = obj.getImgGestor()->getImgLocationRelScreen()->y;
+            int imgW = obj.getImgGestor()->getImgLocationRelScreen()->w;
+            int imgh = obj.getImgGestor()->getImgLocationRelScreen()->h;
+            double relacionAncho =  obj.getImgGestor()->getImgOrigWidth() > 1 ? this->getWidth() / (double) obj.getImgGestor()->getImgOrigWidth()  : 0.2;
+            double relacionAlto =  obj.getImgGestor()->getImgOrigHeight() > 1 ? this->getHeight() / (double) obj.getImgGestor()->getImgOrigHeight()  : 0.2;
+            //Marcamos la posicion del boton que hay que pulsar
+            pintarCirculo(imgW * imgButtonsRelScreen[i].x + imgX, imgh * imgButtonsRelScreen[i].y + imgY, 40 * (relacionAncho < relacionAlto ? relacionAncho : relacionAlto), cRojo);
+//            pintarFillCircle(screen,
+//                             imgW * imgButtonsRelScreen[i].x + imgX,
+//                             imgh * imgButtonsRelScreen[i].y + imgY,
+//                             40 * relacionAncho,
+//                             SDL_MapRGB(screen->format, 255,0,0));
+
+            //Dibujamos el texto de la accion
+            drawTextCent(JoystickButtonsMSG[i], 0, 20, true, false, cBlanco);
+            cachearObjeto(&obj);
+        } else {
+            cachearObjeto(&obj);
+        }
+
+        //Mostramos todo por pantalla
         flipScr();
         if( SDL_PollEvent( &event ) ){
              switch( event.type ){
                 case SDL_QUIT:
                     salir = true;
                     break;
+                case SDL_VIDEORESIZE:
+                    screen = SDL_SetVideoMode (event.resize.w, event.resize.h, SCREEN_BITS, SCREEN_MODE);
+                    this->w = event.resize.w;
+                    this->h = event.resize.h;
+                    evento->resize = true;
+                    obj.setW(this->getWidth());
+                    obj.setH(this->getHeight());
+                    obj.setImgDrawed(false);
+                    break;
+                case SDL_KEYDOWN: // PC buttons
+                    if (event.key.keysym.sym == SDLK_ESCAPE){
+                        salir = true;
+                    }
+                    break;
+
                 case SDL_JOYBUTTONDOWN :
                     JoyMapper::setJoyMapper(JoyButtonsVal[i], event.jbutton.button);
                     i++;
+                    obj.setImgDrawed(false);
                     break;
                 case SDL_JOYHATMOTION:
                     if (event.jhat.value != 0){ //Solo en el momento del joydown
                         JoyMapper::setJoyMapper(JoyButtonsVal[i], JOYHATOFFSET + event.jhat.value);
                         i++;
+                        obj.setImgDrawed(false);
                     }
                     break;
                 case SDL_JOYAXISMOTION:
                     int normValue;
-                    if((abs(event.jaxis.value) > DEADZONE) != (abs(mPrevAxisValues[event.jaxis.which][event.jaxis.axis]) > DEADZONE))
-                    {
+                    if((abs(event.jaxis.value) > DEADZONE) != (abs(mPrevAxisValues[event.jaxis.which][event.jaxis.axis]) > DEADZONE)){
                         if(abs(event.jaxis.value) <= DEADZONE){
                             normValue = 0;
                         } else {
@@ -2536,11 +2952,11 @@ string Ioutil::configButtonsJOY(){
                             else
                                 normValue = -1;
                         }
-
                         if (normValue != 0){
                             int valor = (abs(normValue) << 4 | event.jaxis.axis) * normValue;
                             JoyMapper::setJoyMapper(JoyButtonsVal[i], JOYAXISOFFSET + valor);
                             i++;
+                            obj.setImgDrawed(false);
                         }
                     }
                     mPrevAxisValues[event.jaxis.which][event.jaxis.axis] = event.jaxis.value;
@@ -2555,6 +2971,7 @@ string Ioutil::configButtonsJOY(){
         delay = before - SDL_GetTicks() + TIMETOLIMITFRAME;
         if(delay > 0) SDL_Delay(delay);
     } while (!salir);
+
     JoyMapper::saveJoyConfig();
     return salida;
 }
@@ -2575,6 +2992,12 @@ void Ioutil::drawObject(Object *obj){
             break;
         case GUILISTBOX:
             drawUIListBox(obj);
+            break;
+        case GUILISTGROUPBOX:
+            drawUIListGroupBox(obj);
+            break;
+        case GUICOMBOBOX:
+            drawUIComboBox(obj);
             break;
         case GUIPICTURE:
             drawUIPicture(obj);
@@ -2600,4 +3023,66 @@ void Ioutil::drawObject(Object *obj){
         default:
             break;
     }
+}
+
+/**
+* Dibuja varias lineas horizontales a partir de una posicion degrandando el gris progresivamente desde
+* el valor grayIni al valor grayFin
+*/
+void Ioutil::pintarDegradado(int x1, int y1, int x2, int y2, int lineas, int grayIni, int grayFin){
+    int inc = (grayFin - grayIni) / (lineas - 1);
+    t_color tempColor;
+
+    for (int i=0; i < lineas; i++){
+        tempColor.r = grayIni + i*inc;
+        tempColor.g = tempColor.r;
+        tempColor.b = tempColor.r;
+        pintarLinea(x1, y1 + i, x2, y2 + i, tempColor);
+    }
+}
+
+/**
+*
+*/
+void Ioutil::drawScrollBar(UIListCommon *obj){
+    //Tamanyo por defecto minimo de la barra de desplazamiento
+    int scrollbarHeight = MINSCROLLBARHEIGHT;
+    //Variable para almacenar el incremento de la posicion de la barra de desplazamiento
+    //segun el tamanyo de la lista
+    int posRelativa = 0;
+    bool allElementsVisible = false;
+
+
+    int minY = obj->getY() + INPUTCONTENT + Constant::getMENUSPACE() + TRISCROLLBARTAM;
+    int maxY = obj->getY() + obj->getH() - INPUTCONTENT - TRISCROLLBARTAM;
+    int maxScrollBarY = maxY;
+
+    if (obj->getSize() > 0){
+        if (obj->getSize() > obj->getElemVisibles()){
+            //Cuantos mas elementos haya en la lista, mas pequenya sera la barra de desplazamiento
+            scrollbarHeight = (maxY - minY) * obj->getElemVisibles() / (float) obj->getSize();
+        } else {
+            //Si no hay suficientes elementos en la lista para que se supere el maximo que se
+            //puede mostrar por pantalla, se pinta la barra entera
+            scrollbarHeight = (maxY - minY);
+            allElementsVisible = true;
+        }
+        //Comprobamos que la barra tenga un tamanyo minimo
+        scrollbarHeight = scrollbarHeight < MINSCROLLBARHEIGHT ? MINSCROLLBARHEIGHT : scrollbarHeight;
+
+        if (obj->getSize() > obj->getElemVisibles()){
+            //Calculamos la posicion Y que se tendra que agregar a la minima posicion Y desde la que
+            //partira la barra
+            posRelativa = (maxY - minY - scrollbarHeight) * obj->getPosActualLista() / (float) obj->getSize();
+        }
+    }
+
+    if (obj->isShowScrollbar() && ((allElementsVisible && obj->isShowScrollbarAlways()) || !allElementsVisible) ){
+        //Dibujamos la barra de scroll
+        drawRectLine(obj->getX() + obj->getW() - SCROLLBARWIDTH - INPUTCONTENT + 1,
+             minY + posRelativa,
+             SCROLLBARWIDTH, scrollbarHeight,
+             1, cNegro);
+    }
+
 }

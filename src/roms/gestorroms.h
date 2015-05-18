@@ -18,12 +18,11 @@ class Gestorroms
         virtual ~Gestorroms();
         void loadDBFromFile(string);
         void closeDB();
-        int fillMenuByQuery(UIList *, string, vector<string> *statementValues, int);
+        int fillMenuByQuery(Object *, string, vector<string> *statementValues, int);
         string getColQuery(const char*);
         vector<vector<string> > getRowQuery(string);
         bool executeQuery(string);
         DWORD actualizarRoms();
-
         bool insertEmulador(Emuinfo::struct_emu *);
         bool updateEmulador(Emuinfo::struct_emu *);
         bool deleteEmulador(int);
@@ -32,12 +31,12 @@ class Gestorroms
         unsigned int listarDirSinOrden(const char *strdir, vector <FileProps> * tempFilelist, Rominfo *);
         string parserSQLWhere(string);
         DWORD importRetroarchConfig();
-
         void setRutaInicial(string var){rutaInicial = var;}
         string getRutaInicial(){return rutaInicial;}
         bool comprobarUnidad(string diractual, string *unidadRoms);
         void updateRutas(string unidadRoms, string unidadActual);
         string getImgEmulador(int idEmu);
+        Database * getDb(){return db;}
 
     protected:
     private:

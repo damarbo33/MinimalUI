@@ -86,7 +86,7 @@ void Gestorroms::loadDBFromFile(string ruta){
 
     if (!existe){
         try{
-            db->query("CREATE TABLE \"EMULADOR\" (\"IDPROG\" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , \"NOMBREEMU\" TEXT, \"RUTAEMU\" TEXT, \"PARMSEMU\" TEXT, \"RUTAROMS\" TEXT, \"EXTENSIONES\" TEXT, \"DESCOMPRIMIR\" TEXT DEFAULT N,  \"IMGRUTAFONDO\" TEXT, \"SEPARARUTAPARM\" TEXT DEFAULT S, \"SHOWTITLE\" TEXT DEFAULT N)");
+            db->query("CREATE TABLE \"EMULADOR\" (\"IDPROG\" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL  UNIQUE , \"NOMBREEMU\" TEXT, \"RUTAEMU\" TEXT, \"PARMSEMU\" TEXT, \"RUTAROMS\" TEXT, \"EXTENSIONES\" TEXT, \"DESCOMPRIMIR\" TEXT DEFAULT N,  \"IMGRUTAFONDO\" TEXT, \"SEPARARUTAPARM\" TEXT DEFAULT S, \"SHOWTITLE\" TEXT DEFAULT N, \"FIXOPTION\" INTEGER DEFAULT 0 )");
             db->query("CREATE TABLE \"ROMINFO\" (\"IDROM\" INTEGER NOT NULL , \"IDPROG\" INTEGER NOT NULL , \"NPLAYERS\" TEXT, \"TITLE\" TEXT, \"CATEG\" TEXT, PRIMARY KEY (\"IDROM\", \"IDPROG\"));");
             db->query("CREATE TABLE \"ROMS\" (\"IDPROG\" INTEGER NOT NULL , \"IDRUTA\" INTEGER NOT NULL , \"IDROM\" INTEGER NOT NULL , \"NOMBRE\" TEXT, PRIMARY KEY (\"IDPROG\", \"IDRUTA\", \"IDROM\"));");
             db->query("CREATE TABLE \"RUTAS\" (\"IDPROG\" INTEGER NOT NULL ,\"IDRUTA\" INTEGER NOT NULL ,\"RUTA\" TEXT DEFAULT (null), PRIMARY KEY (\"IDPROG\", \"IDRUTA\") );");
@@ -172,7 +172,8 @@ bool Gestorroms::updateEmulador(Emuinfo::struct_emu *emuData){
     db->setString(5,emuData->emuRomExt);
     db->setString(6,emuData->rutaImg);
     db->setString(7,string((emuData->titleRom)?"S":"N"));
-    db->setInt   (8,Constant::strToTipo<int>(emuData->idEmu));
+    db->setInt   (8,Constant::strToTipo<int>(emuData->fixOption));
+    db->setInt   (9,Constant::strToTipo<int>(emuData->idEmu));
 
     bool res = db->execute();
 
@@ -196,6 +197,7 @@ bool Gestorroms::insertEmulador(Emuinfo::struct_emu *emuData){
     db->setString(5,emuData->rutaImg);
     db->setString(6,string((emuData->descomp)?"S":"N"));
     db->setString(7,string((emuData->titleRom)?"S":"N"));
+    db->setInt(8,Constant::strToTipo<int>(emuData->fixOption));
     return db->execute();
 }
 
@@ -382,6 +384,7 @@ unsigned int Gestorroms::listarDirSinOrden(const char *strdir, vector <FileProps
     string romname = "";
     string romnamenoext = "";
     string title = "";
+    string nplayers = "";
 
     try{
         //Miramos a ver si el directorio a explorar tiene una / al final
@@ -404,6 +407,9 @@ unsigned int Gestorroms::listarDirSinOrden(const char *strdir, vector <FileProps
                 vector<vector<string> > result = getDatosEmulador(rominfo->emuladorID);
                 string rutaRomsEmu = db->getColQuery(&result,4);
                 bool isShowTitle = (db->getColQuery(&result,8) == "S") ? true : false;
+
+                Traza::print("rominfo->filtroExtension: " + rominfo->filtroExtension, W_PARANOIC);
+
 
                 //Recorremos el directorio
                 while ((dirp = readdir(dp)) != NULL) {
@@ -441,8 +447,14 @@ unsigned int Gestorroms::listarDirSinOrden(const char *strdir, vector <FileProps
                                  db->executeNoCommit();
                             }
 
+                            Traza::print("Para: " + propFile.filename + " tenemos ext: " + dirUtil.getExtension(propFile.filename), W_PARANOIC);
+                            bool cumpleFiltro = false;
+                            if (rominfo->filtroExtension.find(dirUtil.getExtension(propFile.filename)) != std::string::npos){
+                                cumpleFiltro = true;
+                            }
+
                             if (rominfo->filtroExtension.empty() ||
-                                (!rominfo->filtroExtension.empty() && rominfo->filtroExtension.find(dirUtil.getExtension(propFile.filename)) != string::npos)){
+                                (!rominfo->filtroExtension.empty() && cumpleFiltro)){
                                 //Insertamos los datos importantes para poder ejecutar la rom
                                 romname = Constant::replaceAll(propFile.filename,"'","''");
                                 db->prepareStatement("insertRoms");
@@ -455,16 +467,30 @@ unsigned int Gestorroms::listarDirSinOrden(const char *strdir, vector <FileProps
                                 if (isShowTitle){
                                     romnamenoext = dirUtil.getFileNameNoExt(propFile.filename);
                                     Traza::print("romname: " + romnamenoext, W_PARANOIC);
-                                    int pos = rominfo->infoRom->find(romnamenoext);
 
+
+                                    int posPlayers = rominfo->nplayers->find(romnamenoext);
+                                    if (posPlayers != -1){
+                                        nplayers = rominfo->nplayers->get(posPlayers).getValue();
+                                    }
+
+                                    title = "";
+                                    int pos = rominfo->infoRom->find(romnamenoext);
                                     if (pos != -1){
                                         title = Constant::replaceAll(rominfo->infoRom->get(pos).getValue(),"'","''");
+                                    }
+
+                                    if (pos != -1 || posPlayers != -1){
                                         db->prepareStatement("insertRominfo");
                                         db->setInt(0,rominfo->romCounter);
                                         db->setInt(1,rominfo->emuladorID);
                                         db->setString(2,title);
+                                        db->setString(3,nplayers);
                                         db->executeNoCommit();
                                     }
+
+
+
                                 }
 
                                 rominfo->romCounter++;
@@ -516,21 +542,19 @@ string Gestorroms::parserSQLWhere(string claves){
             }
         }
     }
-
     return sqlwhere;
-
 }
 
 
 /**
 *
 */
-int Gestorroms::fillMenuByQuery(UIList *refMenu, string query, vector<string> *statementValues, int destino){
+int Gestorroms::fillMenuByQuery(Object *refMenu, string query, vector<string> *statementValues, int destino){
     int errorCode = 0;
 
     try{
         if (db != NULL) {
-            db->prepareStatement("query");
+            db->prepareStatement(query);
             //Si hay parametros, generamos la query con parametros
             if (statementValues == NULL) db->setClauseWhere(false);
             else {
@@ -540,18 +564,37 @@ int Gestorroms::fillMenuByQuery(UIList *refMenu, string query, vector<string> *s
             }
             //Lanzamos la query
             vector<vector<string> > result = db->executeQuery();
+
+            UIListCommon *refListaComun = (UIListCommon *)refMenu;
             //Redimensionamos la lista del menu antes de asignar elementos
-            refMenu->resizeLista(result.size());
+            refListaComun->resizeLista(result.size());
             //Forzamos al repintado del menu
-            refMenu->setImgDrawed(false);
-            //Anyadimos los elementos que iran dentro de la lista
-            for(vector<vector<string> >::iterator it = result.begin(); it < result.end(); ++it){
-                vector<string> row = *it;
-                    refMenu->addElemLista(row.at(1), row.at(0), controller, destino);
+            refListaComun->setImgDrawed(false);
+
+            if (refMenu->getObjectType() == GUILISTBOX){
+                UIList *refMenuList = (UIList *)refMenu;
+                //Anyadimos los elementos que iran dentro de la lista
+                for(vector<vector<string> >::iterator it = result.begin(); it < result.end(); ++it){
+                    vector<string> row = *it;
+                        refMenuList->addElemLista(row.at(1), row.at(0), controller, destino);
+                }
+            } else if (refMenu->getObjectType() == GUILISTGROUPBOX){
+                UIListGroup *refMenuList = (UIListGroup *)refMenu;
+                //Anyadimos los elementos que iran dentro de la lista
+                for(vector<vector<string> >::iterator it = result.begin(); it < result.end(); ++it){
+                    vector<string> row = *it;
+                        vector <ListGroupCol *> miFila;
+
+                        if (row.size() > 1)
+                            miFila.push_back(new ListGroupCol(row.at(1), row.at(0), controller, destino));
+
+                        if (row.size() > 2)
+                            miFila.push_back(new ListGroupCol(row.at(2), "", controller, destino));
+                        refMenuList->addElemLista(miFila);
+                }
             }
             //Recalculamos la posicion de la lista
-            refMenu->calcularScrPos();
-            refMenu->setImgDrawed(false);
+            refListaComun->calcularScrPos();
         }
     } catch(Excepcion &e){
         Traza::print("gestorroms::fillMenuByQuery: " + string(e.getMessage()), W_ERROR);
@@ -602,6 +645,12 @@ void Gestorroms::updateRutas(string unidadRoms, string unidadActual){
     db->execute();
 
     db->prepareStatement("updateRutaRoms");
+    db->setString(0,unidadRoms);
+    db->setString(1,unidadActual);
+    db->setString(2,unidadRoms + "%");
+    db->execute();
+
+    db->prepareStatement("updateRutaImgs");
     db->setString(0,unidadRoms);
     db->setString(1,unidadActual);
     db->setString(2,unidadRoms + "%");

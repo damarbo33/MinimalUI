@@ -24,6 +24,7 @@
 
     #include "uiinput.h"
     #include "uiprogressbar.h"
+    #include "uicombobox.h"
 
     struct tInput{
         int cursorX;
@@ -65,6 +66,12 @@
             void drawUIPanel(Object *obj);
             void drawUILetraPopup(Object *obj);
             void drawUIPopupFondo(Object *obj, int);
+            void drawUIComboBox(Object *obj);
+            void drawListContent(Object *obj, int x, int y, int w, int h);
+            void marcarPos(int x, int y);
+            void drawUIListGroupBox(Object *obj);
+            void drawListGroupContent(Object *obj, int x, int y, int w, int h);
+            void drawScrollBar(UIListCommon *obj);
 
             void drawIco(int , int , int , int , int );
             void drawIco(int numIco, int angle, int x, int y, int w, int h);
@@ -73,7 +80,9 @@
             void pintarFillCircle(SDL_Surface *surface, int cx, int cy, int radius, Uint32 pixel);
             void pintarLinea (int , int , int , int  , t_color );
             void pintarTriangulo (int , int , int , int , bool , t_color);
-            void pintarContenedor(int , int , int , int , bool, Object *);
+            void pintarContenedor(int x1, int y1, int w1, int h1, bool selected, Object *obj, t_color color);
+            void pintarDegradado(int x1, int y1, int x2, int y2, int lineas, int grayIni, int grayFin);
+
             void printContImg(const char *);
             void printGrafica(double, int);
             void showCheck(Object *);
@@ -113,7 +122,7 @@
             bool isCanFlip(){return canFlip;}
             void setCanFlip(bool var){canFlip = var;}
             void clearLastEvento(){clearEvento(&lastEvento);}
-            string configButtonsJOY();
+            string configButtonsJOY(tEvento *evento);
             TTF_Font* getFont(){ return font; }
 
 
@@ -155,6 +164,7 @@
 
             void cachearObjeto(Object *obj);
             void loadImgFromMem(char *, int, SDL_Surface **); //Carga una imagen desde un array
+            void loadImgFromMem(ImagenGestor *imgGestor, SDL_Surface **destino); //Carga una imagen desde el objeto imgGestor
             void loadImgFromFile(const char *, SDL_Surface **); //Carga una imagen desde un fichero del disco
             bool redimension(SDL_Surface *,SDL_Surface *, ImagenGestor *, SDL_Surface **);
             void ResizeSurface(float , SDL_Surface *, SDL_Surface **);

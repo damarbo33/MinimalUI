@@ -1,5 +1,7 @@
 # depslib dependency file v1.0
-1404121596 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\database.cpp
+1402585246 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\resource.rc
+
+1429009112 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\database.cpp
 	"Database.h"
 
 1403859225 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\database.h
@@ -13,10 +15,10 @@
 	<vector>
 	<iostream>
 
-1386367516 c:\program files (x86)\codeblocks\externallibs\sqllite\src\sqlite3.h
+1428521928 c:\program files (x86)\codeblocks\externallibs\sqllite\src\sqlite3.h
 	<stdarg.h>
 
-1403251364 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\excepcion.h
+1431504557 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\excepcion.h
 	<iostream>
 	<cmath>
 	"Traza.h"
@@ -31,7 +33,7 @@
 	<fstream>
 	"Constant.h"
 
-1403784177 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\constant.h
+1431942161 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\constant.h
 	<sstream>
 	<string.h>
 	<vector>
@@ -48,10 +50,10 @@
 	"Traza.h"
 	"listaIni.h"
 
-1400292180 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\fileattr.h
+1401208624 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\fileprops.h
 	<string>
 
-1400000697 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\roms\listaini.h
+1400000697 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\listaini.h
 	"ListaSimple.h"
 
 1403766294 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\listasimple.h
@@ -73,15 +75,32 @@
 	"Excepcion.h"
 	"Traza.h"
 
-1401208858 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\dirutil.h
+1430408415 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\dirutil.h
 	"fileprops.h"
 	<dirent.h>
 	<sys/stat.h>
 	<sys/types.h>
 	"Traza.h"
 	"ListaSimple.h"
+	<stdio.h>
+	<windows.h>
 
-1402649812 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\roms\emuproperties.h
+1430400865 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\roms\emuproperties.h
+
+1305393898 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\tinyxml\tinyxml.h
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<string>
+	<iostream>
+	<sstream>
+	"tinystr.h"
+
+1305393898 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\tinyxml\tinystr.h
+	<assert.h>
+	<string.h>
 
 1400000796 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\icogestor.cpp
 	"Icogestor.h"
@@ -94,10 +113,13 @@
 	"SDL/SDL_image.h"
 	"SDL/SDL_rotozoom.h"
 
-1404726876 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\iofrontend.cpp
+1431960107 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\iofrontend.cpp
 	"Iofrontend.h"
+	"uilistgroup.h"
+	"beans/listgroupcol.h"
+	"uilistcommon.h"
 
-1401374830 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\iofrontend.h
+1431678268 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\iofrontend.h
 	<string>
 	<vector>
 	"Ioutil.h"
@@ -118,7 +140,7 @@
 	"uiprogressbar.h"
 	"uipopupmenu.h"
 
-1401358609 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\ioutil.h
+1431939784 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\ioutil.h
 	<iostream>
 	<map>
 	<cmath>
@@ -139,11 +161,12 @@
 	"roms/gestorroms.h"
 	"uiinput.h"
 	"uiprogressbar.h"
+	"uicombobox.h"
 
 1387367429 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\sdl\sdl_draw.h
 	<SDL/SDL.h>
 
-1395059376 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\imagengestor.h
+1430905621 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\imagengestor.h
 	"Fileio.h"
 	"SHA1.h"
 	"ListaSimple.h"
@@ -157,7 +180,7 @@
 	<string.h>
 	<stdlib.h>
 
-1401270641 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\menuobject.h
+1431501183 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\menuobject.h
 	<sstream>
 	<string.h>
 	"Constant.h"
@@ -177,12 +200,14 @@
 	"uipicture.h"
 	"uiinput.h"
 	"uipopupmenu.h"
+	"uicombobox.h"
+	"uilistgroup.h"
 
 1391555033 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\joymapper.h
 	"Constant.h"
 	"ListaSimple.h"
 
-1401261086 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\object.h
+1431592682 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\object.h
 	"common.h"
 	<stdlib.h>
 	<stdio.h>
@@ -191,7 +216,7 @@
 	"ImagenGestor.h"
 	"joymapper.h"
 
-1401258662 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\common.h
+1431437708 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\common.h
 
 1398685384 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uilabel.h
 	<object.h>
@@ -199,8 +224,8 @@
 1398847780 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uibutton.h
 	<object.h>
 
-1401270132 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uilist.h
-	<object.h>
+1431678014 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uilist.h
+	<uilistcommon.h>
 
 1398758328 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uiprogressbar.h
 	<object.h>
@@ -217,11 +242,18 @@
 1398769372 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uipanelborder.h
 	<uipanel.h>
 
-1398900081 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uipicture.h
+1430834521 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uipicture.h
 	<object.h>
 
 1398877434 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uiinput.h
 	<object.h>
+
+1401376350 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uipopupmenu.h
+	<uilist.h>
+	<SDL/SDL_ttf.h>
+
+1429284371 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uicombobox.h
+	<uilist.h>
 
 1391543133 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\thread.h
 	<Windows.h>
@@ -233,7 +265,7 @@
 	<windows.h>
 	<pthread.h>
 
-1404726847 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\roms\gestorroms.h
+1431618172 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\roms\gestorroms.h
 	"../Database.h"
 	"ListaSimple.h"
 	"Dirutil.h"
@@ -294,6 +326,9 @@
 
 1364921502 c:\program files (x86)\codeblocks\externallibs\ziputils\unzip\crypt.h
 
+1429698633 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\filelaunch.h
+	<string>
+
 1398964627 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\vlcplayer\vlcplayer.h
 	<stdio.h>
 	<stdint.h>
@@ -348,13 +383,13 @@
 
 1384199304 c:\program files (x86)\codeblocks\externallibs\libvlc\sdk\include\vlc\deprecated.h
 
-1401360916 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\ioutil.cpp
+1431958629 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\ioutil.cpp
 	"Ioutil.h"
 
 1403253726 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\launcher.cpp
 	"Launcher.h"
 
-1403253726 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\main.cpp
+1431618764 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\main.cpp
 	"main.h"
 	"Dirutil.h"
 
@@ -366,7 +401,7 @@
 1400000797 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\roms\estructuras.cpp
 	"estructuras.h"
 
-1404724996 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\roms\gestorroms.cpp
+1431693158 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\roms\gestorroms.cpp
 	"gestorroms.h"
 
 1079034852 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\sdl\sdl_draw.c
@@ -445,36 +480,83 @@
 1400000699 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\unzip\unziptool.cpp
 	"unziptool.h"
 
-1400000795 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\vlcplayer\vlcplayer.cpp
+1430819604 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\vlcplayer\vlcplayer.cpp
 	"vlcplayer.h"
 
-1401208624 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\fileprops.h
-	<string>
-
-1401211548 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\filelaunch.h
-	<string>
-
-1401376350 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uipopupmenu.h
-	<uilist.h>
-	<SDL/SDL_ttf.h>
-
-1402585246 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\resource.rc
-
-1305393898 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\tinyxml\tinyxml.h
-	<ctype.h>
-	<stdio.h>
+1431341565 c:\program files (x86)\codeblocks\projects\httpcurl\httpcurl\src\httputil.h
 	<stdlib.h>
 	<string.h>
-	<assert.h>
+	<stdio.h>
+	<unistd.h>
+	<fcntl.h>
+	<iostream>
+	<string>
+	<fstream>
+	<map>
+
+1430740271 c:\program files (x86)\codeblocks\projects\httpcurl\httpcurl\src\constant.h
+	<sstream>
+	<string.h>
+	<vector>
+	<typeinfo>
+	<ctime>
+	<dirent.h>
+	<stdio.h>
+	<limits.h>
+	<algorithm>
+	<windows.h>
+
+1387234956 c:\program files (x86)\codeblocks\externallibs\curl-7.34.0-devel-mingw32\include\curl\curl.h
+	"curlver.h"
+	"curlbuild.h"
+	"curlrules.h"
+	<stdio.h>
+	<limits.h>
+	<osreldate.h>
+	<sys/types.h>
+	<time.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+	<sys/select.h>
+	<sys/socket.h>
+	<sys/time.h>
+	<support/SupportDefs.h>
+	"easy.h"
+	"multi.h"
+	"typecheck-gcc.h"
+
+1387270292 c:\program files (x86)\codeblocks\externallibs\curl-7.34.0-devel-mingw32\include\curl\curlver.h
+
+1387270292 c:\program files (x86)\codeblocks\externallibs\curl-7.34.0-devel-mingw32\include\curl\curlbuild.h
+	<sys/types.h>
+	<sys/socket.h>
+
+1378681876 c:\program files (x86)\codeblocks\externallibs\curl-7.34.0-devel-mingw32\include\curl\curlrules.h
+
+1378681876 c:\program files (x86)\codeblocks\externallibs\curl-7.34.0-devel-mingw32\include\curl\easy.h
+
+1382565334 c:\program files (x86)\codeblocks\externallibs\curl-7.34.0-devel-mingw32\include\curl\multi.h
+	"curl.h"
+
+1387234956 c:\program files (x86)\codeblocks\externallibs\curl-7.34.0-devel-mingw32\include\curl\typecheck-gcc.h
+
+1431438506 source:c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\uilistgroup.cpp
+	"uilistgroup.h"
+
+1431438802 c:\program files (x86)\codeblocks\projects\minimalui\minimalui\src\uilistgroup.h
+	<object.h>
+
+1431961096 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uilistgroup.h
+	"uilistcommon.h"
+	"beans/listgroupcol.h"
+	<algorithm>
+
+1431943178 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\uilistcommon.h
+	<object.h>
+
+1431930073 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\beans\listgroupcol.h
+	<iostream>
 	<string>
 	<iostream>
-	<sstream>
-	"tinystr.h"
-
-1305393898 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\tinyxml\tinystr.h
-	<assert.h>
-	<string.h>
-
-1400000697 c:\program files (x86)\codeblocks\externallibs\uiobjects\src\listaini.h
-	"ListaSimple.h"
+	<vector>
 

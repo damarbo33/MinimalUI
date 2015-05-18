@@ -383,6 +383,7 @@ bool Database::generarQuery(string *query){
     int pos = 0;
 
 
+    Traza::print("Database::generarQuery::Buscando sentencia de: " + *query, W_DEBUG);
     //Obtenemos la query
     if ((pos = this->statementDataList.find("SENTENCE")) >= 0 ){
         *query = this->statementDataList.getSubElem(pos).getValue();

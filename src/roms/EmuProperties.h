@@ -11,12 +11,12 @@ class Emuinfo{
         ~Emuinfo(){};
 
         struct struct_emu {
-            string idEmu, nombreEmu, rutaEmu, parmsEmu, rutaRoms, emuRomExt, rutaImg;
+            string idEmu, nombreEmu, rutaEmu, parmsEmu, rutaRoms, emuRomExt, rutaImg, fixOption;
             bool descomp, titleRom;
         } emuProperties;
 
         void clear(){
-            emuProperties.descomp = true;
+            emuProperties.descomp = false;
             emuProperties.titleRom = false;
             emuProperties.idEmu = "";
             emuProperties.nombreEmu = "";
@@ -24,6 +24,7 @@ class Emuinfo{
             emuProperties.parmsEmu = "";
             emuProperties.rutaRoms = "";
             emuProperties.rutaImg = "";
+            emuProperties.fixOption = "0";
         }
 };
 

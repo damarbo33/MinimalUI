@@ -15,6 +15,7 @@
 					<Add option="-Os" />
 					<Add directory="src" />
 					<Add directory="src/vlcplayer" />
+					<Add directory="../../../ExternalLibs/curl-7.34.0-devel-mingw32/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -31,7 +32,7 @@
 				<Option output="bin/raspberry/MinimalUI2" prefix_auto="0" extension_auto="0" />
 				<Option object_output="obj/raspberry/" />
 				<Option type="1" />
-				<Option compiler="raspberry_gcc_compiler" />
+				<Option compiler="raspberry" />
 				<Compiler>
 					<Add option="-Os" />
 					<Add directory="src" />
@@ -57,9 +58,18 @@
 					<Add option="-g" />
 					<Add directory="src" />
 					<Add directory="src/vlcplayer" />
+					<Add directory="../../httpCurl/httpcurl/src" />
 				</Compiler>
 				<Linker>
-					<Add option="-lmingw32 -lSDLmain -lSDL -lSDL_image -lSDL_mixer -lSDL_ttf -lsdlgfx -lzipUtils -lsqllite" />
+					<Add option="-lmingw32" />
+					<Add option="-lSDLmain" />
+					<Add option="-lSDL" />
+					<Add option="-lSDL_image" />
+					<Add option="-lSDL_mixer" />
+					<Add option="-lSDL_ttf" />
+					<Add option="-lsdlgfx" />
+					<Add option="-lzipUtils" />
+					<Add option="-lsqllite" />
 					<Add library="..\..\..\ExternalLibs\libvlc\sdk\lib\libvlc.lib" />
 					<Add library="..\..\..\ExternalLibs\libvlc\sdk\lib\libvlccore.lib" />
 					<Add directory="../../../ExternalLibs/zipUtils/bin/Release" />
@@ -79,6 +89,7 @@
 		</Compiler>
 		<Linker>
 			<Add option="-lUIObjects" />
+			<Add directory="../../httpCurl/httpcurl/bin/Release" />
 		</Linker>
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
@@ -118,6 +129,15 @@
 			<code_completion />
 			<envvars />
 			<debugger />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

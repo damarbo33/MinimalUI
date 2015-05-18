@@ -1,7 +1,6 @@
-
 #include "main.h"
-//#include "roms/listaIni.h"
 #include "Dirutil.h"
+//#include "httputil.h"
 
 bool procesarTeclado(tEvento *evento, Iofrontend *ioFront){
     bool salir = false;
@@ -46,6 +45,11 @@ int main(int argc, char *argv[]){
     Traza *traza = new Traza();
     Iofrontend *ioFront = new Iofrontend();
 
+//    HttpUtil *util = new HttpUtil();
+//    util->download("http://www.walpaper.es/images/wallpapers/espectro-de-colores-8349.jpeg");
+//    util->writeToFile("C:\\espectro-de-colores-8349.jpeg");
+//    delete util;
+
     try{
 
         bool salir = false;
@@ -68,7 +72,7 @@ int main(int argc, char *argv[]){
                 if (LIMITFPS){
                 //Calculamos el tiempo que deberia pasar de frame a frame en un lapso de 1 seg (TIMETOLIMITFRAME) y le restamos
                 //el tiempo que realmente ha pasado (before - SDL_GetTicks()), para esperar el tiempo que indique
-                //esta diferencia
+                //esta diferencia. No es el mejor método pero es sencillo de implementar
                     delay = before - SDL_GetTicks() + TIMETOLIMITFRAME;
                     if(delay > 0) SDL_Delay(delay);
                 }
@@ -86,6 +90,7 @@ int main(int argc, char *argv[]){
     Traza::print("Saliendo de la aplicación", W_DEBUG);
     exit(0);
 }
+
 
 /*
 int main(int argc, char *argv[]){
@@ -108,7 +113,7 @@ int main(int argc, char *argv[]){
         ioFront->setCanFlip(true);
         atexit (Terminate);
 
-        ioFront->setSelMenu(PANTALLAREPRODUCTOR);
+        ioFront->setSelMenu(PANTALLAGROUPLIST);
 
         while (!salir){
 
@@ -136,7 +141,7 @@ int main(int argc, char *argv[]){
             }
         }
     } catch(Excepcion &e) {
-        Traza::print("Error capturado en hilo principal:",e.getCode(), FATAL);
+        Traza::print("Error capturado en hilo principal:",e.getCode(), W_FATAL);
         //exit(e.getCode());
     }
 

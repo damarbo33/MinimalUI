@@ -27,6 +27,7 @@
 #include "uiprogressbar.h"
 #include "uipopupmenu.h"
 
+
 class Iofrontend : public Ioutil{
 
      private :
@@ -36,7 +37,7 @@ class Iofrontend : public Ioutil{
         void setDinamicSizeObjects();
         void mensajeCompilando(tEvento, string, bool);
         bool procesarBoton(const char *, tmenu_gestor_objects *);
-        string casoJOYBUTTONS();
+        string casoJOYBUTTONS(tEvento *evento);
         bool importRetroarchConfig();
         long waitMedia();
         void setPanelMediaVisible(bool );
@@ -85,7 +86,7 @@ class Iofrontend : public Ioutil{
         int accionesListaExplorador(tEvento *);
         bool actualizarRoms();
         string showExplorador(tEvento *);
-        void cargaMenuFromLista(UIList *, tEvento *);
+        void cargaMenuFromLista(UIListCommon *, tEvento *);
         void cargaMenu(int, string, tEvento *);
         bool cargarDatosEmulador(string );
         int accionesBtnEliminarEmu(tEvento *);
@@ -99,6 +100,8 @@ class Iofrontend : public Ioutil{
         void comprobarUnidad(string);
         UIPopupMenu * addPopup(int pantalla, string popupName, string callerName);
         bool procesarPopups(tmenu_gestor_objects *objMenu, tEvento *evento);
+        void comprobarFixesSO(FileLaunch *emulInfo);
+        int accionConfigEmusPopup(tEvento *evento);
 
 
     public :
@@ -121,6 +124,7 @@ class Iofrontend : public Ioutil{
         int getSelMenu(){ return selMenu;}
         int accionesBtnAceptarOpciones(tEvento *);
         int accionCopiarTextoPopup(tEvento *evento);
+        int launchEmuForConfig(tEvento *evento);
 
 
 

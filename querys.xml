@@ -1,16 +1,4 @@
 <BBDD>
-	<QUERY id="juegos">
-		<SENTENCE>
-			SELECT * FROM JUEGOS WHERE ID=? AND PP=?
-		</SENTENCE>
-	</QUERY>
-	
-	<QUERY id="emuladores">
-		<SENTENCE>
-			SELECT * FROM EMULADOR WHERE IDPROG=?
-		</SENTENCE>
-	</QUERY>
-	
 	<QUERY id="deleteroms">
 		<SENTENCE>
 			delete from ROMS
@@ -74,6 +62,24 @@
 		</WHERECLAUSE>
 	</QUERY>
 	
+	<QUERY id="selectListaEmuladores">
+		<SENTENCE>
+			select IDPROG, NOMBREEMU from EMULADOR ORDER BY NOMBREEMU ASC
+		</SENTENCE>
+	</QUERY>
+	
+	<QUERY id="selectListaRoms">
+		<SENTENCE>
+			SELECT ('IDPROG=' || r.IDPROG||',IDROM='||r.IDROM ||',IDRUTA='|| r.IDRUTA) As ID,  
+					CASE WHEN ri.TITLE IS NULL OR TRIM(ri.TITLE) = '' THEN r.NOMBRE ELSE  ri.TITLE END  AS NOMBRES 
+			FROM ROMS r LEFT JOIN ROMINFO ri ON r.IDPROG = ri.IDPROG and 
+					r.IDROM = ri.IDROM 
+		</SENTENCE>
+		<WHERECLAUSE>
+			WHERE IDPROG=? ORDER BY NOMBRES ASC
+		</WHERECLAUSE>
+	</QUERY>
+	
 	<QUERY id="insertRutas">
 		<SENTENCE>
 			INSERT INTO RUTAS (IDPROG, IDRUTA, RUTA) VALUES (?, ?, ?)
@@ -109,4 +115,16 @@
 			WHERE rutaroms LIKE ?
 		</WHERECLAUSE>
 	</QUERY>
+	
+	<QUERY id="updateRutaImgs">
+		<SENTENCE>
+			UPDATE emulador SET imgrutafondo=replace(imgrutafondo, ?, ?)  
+		</SENTENCE>
+		<WHERECLAUSE>
+			WHERE imgrutafondo LIKE ?
+		</WHERECLAUSE>
+	</QUERY>
+	
+	
+	
 </BBDD>
