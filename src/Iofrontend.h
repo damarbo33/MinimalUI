@@ -61,7 +61,7 @@ class Iofrontend : public Ioutil{
         void obtenerImgCateg(tEvento *);
         void setDinamicSizeObjects();
         void mensajeCompilando(tEvento, string, bool);
-        bool procesarBoton(const char *, tmenu_gestor_objects *);
+        bool procesarBoton(Object * obj, tmenu_gestor_objects *gestorMenu);
         string casoJOYBUTTONS(tEvento *evento);
         bool importRetroarchConfig();
         long waitMedia();
@@ -137,6 +137,8 @@ class Iofrontend : public Ioutil{
         int accionesBtnAceptarOpcionesGenerales(tEvento *evento);
         bool cargarOpcionesGenerales();
         bool scrapAllRoms();
+        int accionCombo(tEvento *evento);
+        void loadComboUnidades(string objName, int pantalla, int types);
 
 
 

@@ -192,7 +192,8 @@ void Iofrontend::initUIObjs(){
     ObjectsMenu[PANTALLABROWSER2]->add(OBJLISTABROWSER2, GUILISTBOX, 0, 0, 0, 0, "LISTADODIR", false)->setVerContenedor(false)->setShadow(false);
     ObjectsMenu[PANTALLABROWSER2]->add(BTNACEPTARBROWSER, GUIBUTTON, -(BUTTONW/2 + 5), 0, BUTTONW,BUTTONH, "Aceptar", true)->setIcon(tick);
     ObjectsMenu[PANTALLABROWSER2]->add(BTNCANCELARBROWSER, GUIBUTTON, (BUTTONW/2 + 5), 0, BUTTONW,BUTTONH, "Cancelar", true)->setIcon(cross);
-    ObjectsMenu[PANTALLABROWSER2]->add(ARTDIRBROWSER, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Direccion Browser", false)->setEnabled(false);
+    ObjectsMenu[PANTALLABROWSER2]->add(ARTDIRBROWSER, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), Constant::toAnsiString("Dirección Browser"), false)->setEnabled(false);
+    ObjectsMenu[PANTALLABROWSER2]->add("comboBrowser", GUICOMBOBOX, 0, 0, 0, 0, "", false);
 
     ObjectsMenu[MENUINICIAL]->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Lanzador", false)->setEnabled(false);
 
@@ -286,6 +287,8 @@ void Iofrontend::initUIObjs(){
     addEvent("btnBackward",  &Iofrontend::accionesMediaRetroceder);
     addEvent("progressBarMedia", &Iofrontend::mediaClicked);
 
+	 addEvent("comboBrowser", &Iofrontend::accionCombo);
+
     //Botones para la pantalla de confirmación
     addEvent("btnSiConfirma", &Iofrontend::marcarBotonSeleccionado);
     addEvent("btnNoConfirma", &Iofrontend::marcarBotonSeleccionado);
@@ -328,7 +331,7 @@ void Iofrontend::initUIObjs(){
 bool Iofrontend::drawMenu(tEvento evento){
     Traza::print("Iofrontend::drawMenu Inicio", W_PARANOIC);
     bool salir = false;
-    this->clearScr();
+    this->clearScr(cBlanco);
     Traza::print("Iofrontend::clearScr Fin", W_PARANOIC);
     //Realiza las acciones de cada elemento de pantalla
     salir = casoDEFAULT(evento);
@@ -396,10 +399,10 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
         if (evento->resize)
             resizeMenu();
 
-
-
+        //PINTAMOS ANTES DE PROCESAR LAS ACCIONES. NO SE SI ESTO ES BUENA IDEA
         for (int i=0;i<objMenu->getSize();i++){
             object = objMenu->getObjByPos(i);
+            //Finalmente dibujamos el objeto
             if (drawComp && object != NULL){
                 if (object->getObjectType() == GUICOMBOBOX){
                     objPostProcesado.push_back(object);
@@ -408,8 +411,15 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
                 }
             }
         }
+        //Para los objetos que son prioritarios de pintar, lo hacemos en ultimo lugar
+        //para que se dibujen sobre el resto
+        for(vector<Object *>::iterator it = objPostProcesado.begin(); it < objPostProcesado.end(); ++it){
+            Object * obj = *it;
+            drawObject(obj, evento);
+        }
+        objPostProcesado.clear();
 
-
+        //Procesamos las acciones
         for (int i=0;i<objMenu->getSize();i++){
             object = objMenu->getObjByPos(i);
 
@@ -418,7 +428,7 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
                     switch(object->getObjectType()){
                         case GUIBUTTON:
                             //En el caso de los botones tambien procesamos sus eventos
-                            botonPulsado = procesarBoton(object->getName().c_str(), objMenu);
+                            botonPulsado = procesarBoton(object, objMenu);
                             estado = evento->mouse_state;
                             if (botonPulsado && ( (evento->isMouse && estado == SDL_RELEASED) || evento->isKey || evento->isJoy)){ //Comprobamos si se ha pulsado el elemento
                                 posBoton = findEventPos(object->getName());  //Buscamos la posicion del elemento en el array de punteros a funcion
@@ -429,23 +439,26 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
                                         /**Los botones no pueden hacer que se salga de la aplicacion. Solo ejecutamos la funcion*/
                                         //salir = (*this.*pt2Func[posBoton])(evento); //Ejecutamos la funcion especificada en el puntero a funcion almacenado
                                         (*this.*pt2Func[posBoton])(evento); //Ejecutamos la funcion especificada en el puntero a funcion almacenado
-                                        Traza::print("procesarControles: Evento lanzado para " + object->getName(), W_DEBUG);
+                                        Traza::print("procesarControles: Evento lanzado para " + object->getName(), W_INFO);
                                     }
                                 }
                             }
                             break;
                         case GUILISTBOX:
                         case GUIPROGRESSBAR:
+                        case GUISLIDER:
                         case GUIPOPUPMENU:
                         case GUILISTGROUPBOX:
-                            if (procesarBoton(object->getName().c_str(), objMenu)){ //Comprobamos si se ha pulsado el elemento
+                        case GUICOMBOBOX:
+                        case GUITEXTELEMENTSAREA:
+                            if (procesarBoton(object, objMenu)){ //Comprobamos si se ha pulsado el elemento
                                 posBoton = findEventPos(object->getName());  //Buscamos la posicion del elemento en el array de punteros a funcion
                                 if (posBoton >= 0){ //Si hemos encontrado una funcion
                                     if (this->pt2Func[posBoton] != NULL){
                                         //Forzamos a que se actualicen todos los elementos
                                         objMenu->resetElements();
                                         salir = (*this.*pt2Func[posBoton])(evento); //Ejecutamos la funcion especificada en el puntero a funcion almacenado
-                                        Traza::print("procesarControles: Evento lanzado para " + object->getName(), W_DEBUG);
+                                        Traza::print("procesarControles: Evento lanzado para " + object->getName(), W_INFO);
                                     }
                                 }
                             }
@@ -455,7 +468,11 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
                     } // FIN CASE
                 }
             } // FIN IF
-
+//            //Finalmente dibujamos el objeto
+            /**Aqui iba el dibujado del objeto para aprovechar el bucle pero esto
+            * daba problemas. Se corrige para que tenga su propio bucle al inicio
+            * de las acciones
+            */
             //Comprobamos si el objeto esta lanzando un evento para cambiar el mouse.
             //Solo aceptamos el primer objeto que pida cambiar el mouse
             if (object->getCursor() >= 0){
@@ -465,15 +482,6 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
                 }
             }
         }
-
-        //Para los objetos que son prioritarios de pintar, lo hacemos en ultimo lugar
-        //para que se dibujen sobre el resto
-        for(vector<Object *>::iterator it = objPostProcesado.begin(); it < objPostProcesado.end(); ++it){
-            Object * obj = *it;
-            drawObject(obj, evento);
-        }
-        objPostProcesado.clear();
-
         if (!updateCursor){
             //Reseteamos el cursor al que hay por defecto
             cursorPrincipal = cursor_arrow;
@@ -734,11 +742,19 @@ int Iofrontend::accionesCargaPantalla(tEvento *evento){
 * El campo checked del control se da valor desde la llamada al procEvent del respectivo menu
 * En esta funcion se comprueba el valor checked para saber si se ha pulsado el elemento
 */
-bool Iofrontend::procesarBoton(const char *name, tmenu_gestor_objects *objMenu){
+bool Iofrontend::procesarBoton(Object * obj, tmenu_gestor_objects *gestorMenu){
     try{
         //Traza::print("Checkeando name: " + string(name) + " valor: " + string(objMenu->getObjByName(name)->isChecked()?"S":"N"), W_ERROR);
-        if (objMenu->getObjByName(name)->isChecked()){
-            objMenu->getObjByName(name)->setChecked(false);
+        if (obj->getObjectType() == GUICOMBOBOX){
+            if (((UIComboBox *)obj)->isValueChanged()){
+                ((UIComboBox *)obj)->setValueChanged(false);
+                ((UIComboBox *)obj)->setChecked(false);
+                ((UIComboBox *)obj)->setFocus(false);
+                gestorMenu->findNextFocus();
+                return true;
+            }
+        } else if (obj->isChecked()){
+            obj->setChecked(false);
             return true;
         }
     } catch (Excepcion &e) {
@@ -746,7 +762,6 @@ bool Iofrontend::procesarBoton(const char *name, tmenu_gestor_objects *objMenu){
     }
     return false;
 }
-
 /**
 * Se simula que se ha pulsado la tecla Intro o el boton aceptar del joystick
 */
@@ -922,7 +937,8 @@ void Iofrontend::setDinamicSizeObjects(){
 
 
         //Redimension para el browser de directorios2
-        ObjectsMenu[PANTALLABROWSER2]->getObjByName(OBJLISTABROWSER2)->setTam(0, 2*Constant::getINPUTH() ,this->getWidth(), this->getHeight() - BUTTONH - 2*Constant::getINPUTH() - 10);
+        ObjectsMenu[PANTALLABROWSER2]->getObjByName(OBJLISTABROWSER2)->setTam(0, Constant::getINPUTH() + COMBOHEIGHT + 4,this->getWidth(), this->getHeight() - BUTTONH - Constant::getINPUTH() - COMBOHEIGHT - 10 - 4);
+        ObjectsMenu[PANTALLABROWSER2]->getObjByName("comboBrowser")->setTam(1, Constant::getINPUTH() + 4, 160, 100);
         ObjectsMenu[PANTALLABROWSER2]->getObjByName(BTNACEPTARBROWSER)->setTam( (this->getWidth() / 2) -(BUTTONW + 5), this->getHeight() - BUTTONH - 5, BUTTONW,BUTTONH);
         ObjectsMenu[PANTALLABROWSER2]->getObjByName(BTNCANCELARBROWSER)->setTam( (this->getWidth() / 2) + 5, this->getHeight() - BUTTONH - 5, BUTTONW,BUTTONH);
         ObjectsMenu[PANTALLABROWSER2]->getObjByName(ARTDIRBROWSER)->setTam( 0, 0, this->getWidth(), Constant::getINPUTH());
@@ -1125,7 +1141,7 @@ void Iofrontend::setTextFromExplorador(tEvento *evento, UIInput *objCampoEdit){
 *
 */
 string Iofrontend::showExplorador(tEvento *evento){
-    Traza::print("showExplorador: Inicio", W_PARANOIC);
+    Traza::print("showExplorador: Inicio", W_INFO);
     bool salir = false;
     tEvento askEvento;
     clearEvento(&askEvento);
@@ -1137,8 +1153,10 @@ string Iofrontend::showExplorador(tEvento *evento){
     string fileUri = "";
     string fileTempSelec = "";
     Dirutil dir;
+    static string lastDirOpened;
 
     try{
+        loadComboUnidades("comboBrowser", PANTALLABROWSER2, -1);
         obj = (UIList *)objMenu->getObjByName(OBJLISTABROWSER2);
         obj->setFocus(true);
         obj->setTag("");
@@ -1146,8 +1164,12 @@ string Iofrontend::showExplorador(tEvento *evento){
         //Forzamos a que se actualicen todos los elementos
         objMenu->resetElements();
         //Seleccionamos a la lista que esta en primer lugar
-        objMenu->findNextFocus();
+        //objMenu->findNextFocus();
+        ObjectsMenu[PANTALLABROWSER2]->setFocus(OBJLISTABROWSER2);
 
+        if (!lastDirOpened.empty()){
+            dir.changeDirAbsolute(dir.getFolder(lastDirOpened).c_str());
+        }
 
         long delay = 0;
         unsigned long before = 0;
@@ -1184,7 +1206,7 @@ string Iofrontend::showExplorador(tEvento *evento){
                 objMenu->findNextFocus();
             }
 
-            fps();
+            //fps();
             flipScr();
             salir = (askEvento.isJoy && askEvento.joy == JoyMapper::getJoyMapper(JOY_BUTTON_B)) ||
             ( ((askEvento.isKey && askEvento.key == SDLK_ESCAPE) || !obj->getTag().empty())
@@ -1210,7 +1232,8 @@ string Iofrontend::showExplorador(tEvento *evento){
             int pos = obj->getPosActualLista();
             if (pos >= 0){
                 fileSelec = obj->getListNames()->get(pos);
-                obj->setTag(diractual + tempFileSep + fileSelec);
+                bool tieneFileSep = diractual.substr(diractual.length()-1).compare(Constant::getFileSep()) == 0;
+                obj->setTag(diractual + (!tieneFileSep ? Constant::getFileSep() : "") + fileSelec);
             }
         }
         fileUri = obj->getTag();
@@ -1225,11 +1248,12 @@ string Iofrontend::showExplorador(tEvento *evento){
 
     //No queremos que se seleccionen directorios incorrectos
     if (fileSelec.compare("..") == 0){
-        obj->setTag("");
-        showMessage("Directorio no valido.", 2000);
-        fileUri = showExplorador(evento);
+//        obj->setTag("");
+//        showMessage("Directorio no valido.", 2000);
+//        fileUri = showExplorador(evento);
+        fileUri = fileUri.substr(0, fileUri.find_last_of(tempFileSep));
     }
-
+    lastDirOpened = fileUri;
     return fileUri;
 }
 
@@ -1241,6 +1265,7 @@ int Iofrontend::accionesListaExplorador(tEvento *evento){
     string fileSelec = "";
 
     try{
+        Traza::print("Iofrontend::accionesListaExplorador", W_INFO);
         tmenu_gestor_objects *objMenu = ObjectsMenu[PANTALLABROWSER2];
         UIList * obj = (UIList *)objMenu->getObjByName(OBJLISTABROWSER2);
         Dirutil dir;
@@ -1248,8 +1273,10 @@ int Iofrontend::accionesListaExplorador(tEvento *evento){
         string diractual;
         int pos = obj->getPosActualLista();
 
-
-        if (pos >= 0){
+        if (evento == NULL){
+            pos = 0;
+            dirChanged = true;
+        } else if (pos >= 0){
             string fileSelec = obj->getListNames()->get(pos);
             string valorSelec = obj->getListValues()->get(pos);
             Traza::print("cambiando al directorio: " + fileSelec, W_DEBUG);
@@ -1293,10 +1320,61 @@ int Iofrontend::accionesListaExplorador(tEvento *evento){
         Traza::print("accionesListaExplorador: " + string (e.getMessage()), W_ERROR);
     }
 
-
+    ObjectsMenu[PANTALLABROWSER2]->setFocus(OBJLISTABROWSER2);
     return true;
 }
 
+/**
+*
+*/
+void Iofrontend::loadComboUnidades(string objName, int pantalla, int types){
+    Traza::print("Iofrontend::loadComboUnidades", W_INFO);
+    UIList *combo = (UIList *)ObjectsMenu[pantalla]->getObjByName(objName);
+    combo->clearLista();
+    combo->setPosActualLista(0);
+    vector<t_drive *> drives;
+
+    Dirutil dir;
+    dir.getDrives(&drives);
+    int actualDrive = 0;
+    string actualDir = dir.getDirActual();
+
+    for (int i=0; i < drives.size(); i++){
+        if (types == -1 || types == drives.at(i)->driveType){
+            combo->addElemLista(drives.at(i)->drive.substr(0,2)
+                                + " (" + drives.at(i)->driveTypeString + ") "
+                                + drives.at(i)->label, drives.at(i)->drive, drives.at(i)->ico);
+            if (actualDir.find(drives.at(i)->drive) != string::npos){
+                actualDrive = i;
+            }
+        }
+    }
+    combo->setPosActualLista(actualDrive);
+    combo->calcularScrPos();
+}
+
+/**
+*
+*/
+int Iofrontend::accionCombo(tEvento *evento){
+    Traza::print("Iofrontend::accionCombo", W_INFO);
+    UIComboBox *combo = (UIComboBox *)ObjectsMenu[PANTALLABROWSER2]->getObjByName("comboBrowser");
+    string unidad = combo->getValue(combo->getPosActualLista());
+    Traza::print("Iofrontend::accionCombo. Drive: " + unidad, W_DEBUG);
+    Dirutil dir;
+    bool cambioDir = dir.changeDirAbsolute(unidad.c_str());
+
+    if (cambioDir){
+        Traza::print("Iofrontend::accionCombo. EXITO Drive: " + unidad, W_DEBUG);
+    } else {
+        Traza::print("Iofrontend::accionCombo. ERROR Drive: " + unidad, W_ERROR);
+    }
+
+    clearEvento(evento);
+    this->accionesListaExplorador(NULL);
+    ObjectsMenu[PANTALLABROWSER2]->setFocus(OBJLISTABROWSER2);
+    return 0;
+}
 
 /***************************************************************************************************************/
 /**                                ACCIONES DE LOS CAMPOS DE LA APLICACION                                     */
