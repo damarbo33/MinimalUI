@@ -611,7 +611,7 @@
 	<stdint.h>
 	<windows.h>
 
-1474455667 c:\github\proyectos\minimalui\src\roms\estructuras.h
+1401208921 c:\github\proyectos\minimalui\src\roms\estructuras.h
 	"fileprops.h"
 	"Traza.h"
 	"listaIni.h"
@@ -652,7 +652,7 @@
 	<stdio.h>
 	<windows.h>
 
-1474455667 c:\github\proyectos\minimalui\src\roms\emuproperties.h
+1433839121 c:\github\proyectos\minimalui\src\roms\emuproperties.h
 
 1305393898 c:\github\externallibs\uiobjects\src\tinyxml\tinyxml.h
 	<ctype.h>
@@ -680,13 +680,13 @@
 	"SDL/SDL_image.h"
 	"SDL/SDL_rotozoom.h"
 
-1474464852 source:c:\github\proyectos\minimalui\src\iofrontend.cpp
+1474474518 source:c:\github\proyectos\minimalui\src\iofrontend.cpp
 	"Iofrontend.h"
 	"uilistgroup.h"
 	"beans/listgroupcol.h"
 	"uilistcommon.h"
 
-1474457134 c:\github\proyectos\minimalui\src\iofrontend.h
+1474471930 c:\github\proyectos\minimalui\src\iofrontend.h
 	<string>
 	<vector>
 	"Ioutil.h"
@@ -863,8 +863,8 @@
 	<pthread.h>
 	<pthread.h>
 
-1474455667 c:\github\proyectos\minimalui\src\roms\gestorroms.h
-	"../Database.h"
+1434381992 c:\github\proyectos\minimalui\src\roms\gestorroms.h
+	"bbdd/Database.h"
 	"ListaSimple.h"
 	"Dirutil.h"
 	"Menuobject.h"
@@ -872,6 +872,11 @@
 	"fileprops.h"
 	"EmuProperties.h"
 	"uilist.h"
+	"httpcurl/httputil.h"
+	"roms/romwebinfo.h"
+	"roms/thegamesdb.h"
+	"roms/bdrominfoout.h"
+	"roms/mamehistoryparser.h"
 
 1459963209 c:\github\externallibs\uiobjects\src\colorutil.h
 	<stdio.h>
@@ -924,10 +929,10 @@
 
 1461324637 c:\github\externallibs\ziputils\unzip\crypt.h
 
-1474457234 c:\github\externallibs\uiobjects\src\filelaunch.h
+1474472045 c:\github\externallibs\uiobjects\src\filelaunch.h
 	<string>
 
-1474465355 c:\github\proyectos\minimalui\src\vlcplayer\vlcplayer.h
+1474471809 c:\github\proyectos\minimalui\src\vlcplayer\vlcplayer.h
 	<stdio.h>
 	<stdint.h>
 	<math.h>
@@ -989,19 +994,23 @@
 1474455667 source:c:\github\proyectos\minimalui\src\launcher.cpp
 	"Launcher.h"
 
-1474455667 source:c:\github\proyectos\minimalui\src\main.cpp
+1434443923 source:c:\github\proyectos\minimalui\src\main.cpp
 	"main.h"
 	"Dirutil.h"
+	"image/uiimgdownloader.h"
+	"roms/mamehistoryparser.h"
+	<iostream>
+	<fstream>
 
-1474455667 c:\github\proyectos\minimalui\src\main.h
+1386709284 c:\github\proyectos\minimalui\src\main.h
 	<stdio.h>
 	"Ioutil.h"
 	"Iofrontend.h"
 
-1474455667 source:c:\github\proyectos\minimalui\src\roms\estructuras.cpp
+1433765603 source:c:\github\proyectos\minimalui\src\roms\estructuras.cpp
 	"estructuras.h"
 
-1474457996 source:c:\github\proyectos\minimalui\src\roms\gestorroms.cpp
+1450867634 source:c:\github\proyectos\minimalui\src\roms\gestorroms.cpp
 	"gestorroms.h"
 
 1474455667 source:c:\github\proyectos\minimalui\src\sdl\sdl_draw.c
@@ -1080,7 +1089,7 @@
 1474455667 source:c:\github\proyectos\minimalui\src\unzip\unziptool.cpp
 	"unziptool.h"
 
-1474455667 source:c:\github\proyectos\minimalui\src\vlcplayer\vlcplayer.cpp
+1430819604 source:c:\github\proyectos\minimalui\src\vlcplayer\vlcplayer.cpp
 	"vlcplayer.h"
 
 1432727672 c:\github\externallibs\uiobjects\src\cursor.h
@@ -1131,4 +1140,124 @@
 	"cursor.h"
 	"listaIni.h"
 	"Colorutil.h"
+
+1457027851 c:\github\externallibs\uiobjects\src\launcher.h
+	<string.h>
+	<unistd.h>
+	<sys/types.h>
+	<errno.h>
+	<stdio.h>
+	<sys/wait.h>
+	<stdlib.h>
+	<vector>
+	"unzip/unziptool.h"
+	"Dirutil.h"
+	"filelaunch.h"
+	<algorithm>
+	<functional>
+	<cctype>
+	<locale>
+	<fcntl.h>
+
+1461325394 c:\github\externallibs\uiobjects\src\unzip\unziptool.h
+	<unistd.h>
+	"zlib.h"
+	"unzip.h"
+	"crypt.h"
+	<stdio.h>
+	<iostream>
+	<fstream>
+	"Fileio.h"
+	"Dirutil.h"
+
+1433314135 c:\github\externallibs\uiobjects\src\bbdd\database.h
+	"sqlite3.h"
+	"Excepcion.h"
+	"Dirutil.h"
+	"tinyxml/tinyxml.h"
+	<string>
+	<vector>
+	<iostream>
+
+1433416355 c:\github\externallibs\uiobjects\src\httpcurl\httputil.h
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	<unistd.h>
+	<fcntl.h>
+	<iostream>
+	<string>
+	<fstream>
+	<map>
+
+1434102835 c:\github\proyectos\minimalui\src\roms\romwebinfo.h
+	"Constant.h"
+	"thegamesdb.h"
+	"Dirutil.h"
+	"image/uiimgdownloader.h"
+
+1433312320 c:\github\proyectos\minimalui\src\roms\thegamesdb.h
+	"httpcurl/httputil.h"
+	"Constant.h"
+	<gumbo.h>
+	"traza.h"
+	"tinyxml/tinyxml.h"
+
+1386174180 c:\github\externallibs\gumbo-parser-master\src\gumbo.h
+	<stdbool.h>
+	<stddef.h>
+
+1433424001 c:\github\externallibs\uiobjects\src\image\uiimgdownloader.h
+	"Dirutil.h"
+	"httpcurl/httputil.h"
+	"SDL/SDL.h"
+	"ImagenGestor.h"
+	"image/uiimgencoder.h"
+
+1472556517 c:\github\externallibs\uiobjects\src\image\uiimgencoder.h
+	<SDL/SDL.h>
+	<stdlib.h>
+	<stdio.h>
+	<setjmp.h>
+	<jpeglib.h>
+	<jerror.h>
+	"SDL_imagesave/IMG_saveend.h"
+	<iostream>
+
+1433412280 c:\github\externallibs\libjpeg\src\libjpeg\jpeglib.h
+	"jconfig.h"
+	"jmorecfg.h"
+	"jpegint.h"
+	"jerror.h"
+
+1433491523 c:\github\externallibs\libjpeg\src\libjpeg\jconfig.h
+
+1433413563 c:\github\externallibs\libjpeg\src\libjpeg\jmorecfg.h
+
+1433413563 c:\github\externallibs\libjpeg\src\libjpeg\jpegint.h
+
+877179550 c:\github\externallibs\libjpeg\src\libjpeg\jerror.h
+
+1369139268 c:\github\externallibs\uiobjects\src\image\sdl_imagesave\img_saveend.h
+	<SDL/SDL_byteorder.h>
+
+1433757316 c:\github\proyectos\minimalui\src\roms\bdrominfoout.h
+
+1434364230 c:\github\proyectos\minimalui\src\roms\mamehistoryparser.h
+	<map>
+	<stdexcept>
+	<vector>
+	<fstream>
+	"Constant.h"
+	"zlib.h"
+	<iostream>
+
+1450867654 source:c:\github\proyectos\minimalui\src\roms\mamehistoryparser.cpp
+	"mamehistoryparser.h"
+
+1474474324 source:c:\github\proyectos\minimalui\src\roms\romwebinfo.cpp
+	"romwebinfo.h"
+
+1433430451 source:c:\github\proyectos\minimalui\src\roms\thegamesdb.cpp
+	"thegamesdb.h"
 

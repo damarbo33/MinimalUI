@@ -1,6 +1,10 @@
 #include "main.h"
 #include "Dirutil.h"
-//#include "httputil.h"
+#include "image/uiimgdownloader.h"
+#include "roms/mamehistoryparser.h"
+// using ofstream constructors.
+#include <iostream>
+#include <fstream>
 
 bool procesarTeclado(tEvento *evento, Iofrontend *ioFront){
     bool salir = false;
@@ -45,11 +49,6 @@ int main(int argc, char *argv[]){
     Traza *traza = new Traza();
     Iofrontend *ioFront = new Iofrontend();
 
-//    HttpUtil *util = new HttpUtil();
-//    util->download("http://www.walpaper.es/images/wallpapers/espectro-de-colores-8349.jpeg");
-//    util->writeToFile("C:\\espectro-de-colores-8349.jpeg");
-//    delete util;
-
     try{
 
         bool salir = false;
@@ -90,6 +89,137 @@ int main(int argc, char *argv[]){
     Traza::print("Saliendo de la aplicación", W_DEBUG);
     exit(0);
 }
+
+
+/**PARA CREAR ROMS FICTICIAS*/
+/*
+int main(int argc, char *argv[]){
+
+   Database *db = new Database("C:\\Program Files (x86)\\Codeblocks\\Projects\\MinimalUI\\MinimalUI\\doc\\Recursos\\romgestor.sqlite");
+   string directOut = "C:\\Program Files (x86)\\Codeblocks\\Projects\\MinimalUI\\MinimalUI\\doc\\roms\\mame2\\";
+   string output;
+
+    try{
+        if (db != NULL) {
+            vector<vector<string> > result = db->query("SELECT nombre FROM ROMS Where idprog = 759");
+            for (int i=0; i < result.size(); i++){
+                cout << result.at(i).at(0) << endl;
+                output = directOut + result.at(i).at(0);
+                std::ofstream outfile (output.c_str());
+                outfile.close();
+            }
+        }
+    } catch(Excepcion &e){
+        Traza::print("gestorroms::fillMenuByQuery" + string(e.getMessage()), W_ERROR);
+    }
+
+    return 0;
+}
+*/
+/*
+int main(int argc, char *argv[]){
+    MameHistoryParser *mame = new MameHistoryParser();
+    mame->loadHistory("C:\\history.dat");
+    cout << "HISTORY_TITLE: " << mame->getRomSection("joust", HISTORY_TITLE) << endl;
+    cout << "HISTORY_YEAR: " << mame->getRomSection("joust", HISTORY_YEAR) << endl;
+    cout << "HISTORY_DEVELOPER: " << mame->getRomSection("joust", HISTORY_DEVELOPER) << endl;
+    cout << "HISTORY_PLAYERS: " << mame->getRomSection("joust", HISTORY_PLAYERS) << endl;
+    cout << "HISTORY_DESC: " << mame->getRomSection("joust", HISTORY_DESC) << endl;
+    cout << "HISTORY_TECH: " << mame->getRomSection("joust", HISTORY_TECH) << endl;
+    cout << "HISTORY_TRIV: " << mame->getRomSection("joust", HISTORY_TRIV) << endl;
+    cout << "HISTORY_SCOR: " << mame->getRomSection("joust", HISTORY_SCOR) << endl;
+    cout << "HISTORY_TIPS: " << mame->getRomSection("joust", HISTORY_TIPS) << endl;
+    delete mame;
+    return 0;
+}
+*/
+
+/**
+void pruebaConexion(){
+    RequestQuery queryGame;
+    queryGame.id = "2684";
+    //queryGame.name = "Alex Kidd";
+    //queryGame.exactName = "Alex Kidd";
+    TheGamesDB gamesDB;
+    ResponseQuery response;
+
+    int petOK = gamesDB.download2(&queryGame, &response);
+    cout << "Recuperados: " << response.gameList.size() << endl;
+
+    for (int i=0; i < response.gameList.size(); i++){
+            cout << "El id es: " << response.gameList.at(i)->id << endl;
+            cout << "El titulo es: " << response.gameList.at(i)->gameTitle << endl;
+            cout << "El platformId es: " << response.gameList.at(i)->platformId << endl;
+            cout << "El platform es: " << response.gameList.at(i)->platform << endl;
+            cout << "El releaseDate es: " << response.gameList.at(i)->releaseDate << endl;
+            cout << "El genres es: " << response.gameList.at(i)->genres.size() << endl;
+            cout << "El players es: " << response.gameList.at(i)->players << endl;
+            cout << "El publisher es: " << response.gameList.at(i)->publisher << endl;
+            cout << "El developer es: " << response.gameList.at(i)->developer << endl;
+            cout << "El rating es: " << response.gameList.at(i)->rating << endl;
+            cout << "El baseImgUrl es: " << response.gameList.at(i)->baseImgUrl << endl;
+            cout << "El boxart es: " << response.gameList.at(i)->boxart.size() << endl;
+            cout << "El fanart es: " << response.gameList.at(i)->fanart.size() << endl;
+            cout << "******************************" << endl << endl;
+    }
+
+    switch (petOK){
+        case QUERYOK :
+            cout << "Peticion OK" << endl;
+            break;
+        case GAMENOTFOUND:
+            cout << "Juego no encontrado: " << response.error << endl;
+            break;
+        case CONNECTERROR:
+            cout << "Problema de conexion" << endl;
+            break;
+        default:
+            cout << "Error no determinado" << endl;
+            break;
+    }
+
+}*/
+/*
+void generarQuery(){
+    vector <string> parms;
+
+    parms.push_back("420");
+//    parms.push_back("'?¿PRUEBA 2?'");
+//    parms.push_back("'?¿WHAT IS REALITY?'");
+
+    string query = " SELECT IDPROG, NOMBREEMU, RUTAEMU,PARMSEMU, RUTAROMS, EXTENSIONES, DESCOMPRIMIR, IMGRUTAFONDO, SHOWTITLE, FIXOPTION, PLATFORM FROM EMULADOR WHERE IDPROG=?";
+
+    int last = query.length();
+    cout <<  "query.length(): "<< query.length() << endl;
+
+    for (int i= parms.size() - 1; i >= 0 ; i--){
+        last = query.find_last_of('?', last);
+        cout << last << endl;
+        query = Constant::replace(query, "?", parms.at(i), last);
+    }
+
+    cout << query << endl;
+
+
+}
+
+*/
+
+void loadAndSave(){
+    UIImgDownloader imgDownloader;
+    //imgDownloader.download("http://fotos.pccomponentes.com/procesadores/procesadores_intel_socket_1150/intel_core_i7_4790k_4_0_ghz_box.jpg",
+    //                       "C:\\corei7_res2.jpg", 50, 50);
+
+//    imgDownloader.download("http://www.smalldog.com/SmallDogPriceList.txt",
+//                           "C:\\Error.jpg", 50, 50);
+}
+
+/*
+int main(int argc, char *argv[]){
+    loadAndSave();
+    return 0;
+}
+*/
 
 
 /*
@@ -153,63 +283,7 @@ int main(int argc, char *argv[]){
     exit(0);
 }
 */
-/*
-int main(int argc, char *argv[]){
-    string ss = "";
 
-//    ss +="--OBTENEMOS EL MAXIMO NUMERO DE OPERACIONES DE LOS CAJEROS \n";
-//    ss +=" select A.deviceid as Cajero, substring(A.maximo,0,charindex(';',A.maximo)) as Operaciones from(\n";
-//    ss +=" SELECT deviceid, max(substring(orgmessage,charindex('OP=',orgmessage)+3,9)) as maximo\n";
-//    ss +=" FROM event WHERE messageno = 51001 and servertimestamp >= CONVERT(DATETIME,'2014/02/%1% 06:00:00 AM',20) and servertimestamp >= CONVERT(DATETIME,'2014/02/%2% 05:30:00 AM',20) group by deviceid) as A\n";
-//    ss +=" ,basedata b, device c, deviceprofile d where A.deviceid = b.id and b.reference = 999995\n";
-//    ss +=" and A.deviceid = c.deviceid\n";
-//    ss +=" and c.devicetype = d.devicetype\n";
-//    ss +=" and A.deviceid in (\n";
-//    ss +=" --OBTENEMOS LOS CAJEROS QUE HAN REINICIADO EN EL MISMO DIA\n";
-//    ss +=" select distinct Cajero from(\n";
-//    ss +=" select A.deviceid as Cajero, substring(A.OP,0,charindex(';',A.OP)) as OP, A.FEC from(\n";
-//    ss +=" SELECT deviceid, substring(orgmessage,charindex('OP=',orgmessage)+3,9) as OP, substring(orgmessage,charindex('FEC=',orgmessage)+4,19) as FEC, charindex('FEC=',orgmessage) as indice\n";
-//    ss +=" FROM event WHERE messageno = 51001 and servertimestamp >= CONVERT(DATETIME,'2014/02/%1% 05:00:00 AM',20) and servertimestamp < CONVERT(DATETIME,'2014/02/%1% 08:00:00 AM',20)) \n";
-//    ss +=" as A where indice > 0)  as B where OP = 0)\n";
-
-
-  ss += " select Cajero, max(Convert(int, Operaciones)) as Operaciones from (\n";
-   ss += " select A.deviceid as Cajero, substring(A.maximo,0,charindex(';',A.maximo)) as Operaciones, servertimestamp from(\n";
-   ss += " SELECT deviceid, substring(orgmessage,charindex('OP=',orgmessage)+3,9) as maximo, servertimestamp\n";
-   ss += " FROM event WHERE messageno = 51001 and servertimestamp >= CONVERT(DATETIME,'2014-02-%1% 06:00:00',120) and servertimestamp < CONVERT(DATETIME,'2014-02-%2% 05:30:00',120) )  as A\n";
-   ss += " ,basedata b, device c, deviceprofile d where A.deviceid = b.id and b.reference = 999995\n";
-   ss += " and A.deviceid = c.deviceid\n";
-   ss += " and c.devicetype = d.devicetype\n";
-   ss += " and A.deviceid in (\n";
-   ss += "   --OBTENEMOS LOS CAJEROS QUE HAN REINICIADO EN EL MISMO DIA\n";
-   ss += "   select distinct Cajero from(\n";
-   ss += "  select A.deviceid as Cajero, substring(A.OP,0,charindex(';',A.OP)) as OP from(\n";
-   ss += "   SELECT deviceid, substring(orgmessage,charindex('OP=',orgmessage)+3,9) as OP\n";
-   ss += "   FROM event WHERE messageno = 51001 and servertimestamp >= CONVERT(DATETIME,'2014-02-%1% 05:00:00',120) and servertimestamp < CONVERT(DATETIME,'2014-02-%1% 08:00:00',120)) \n";
-   ss += "   as A )  as B where OP in ('0','1'))\n";
-   ss += " ) RESULTADO group by Cajero\n";
-
-    string res  = "select Cajero, Operaciones, b.value as Localizacion, d.devicedescr as Descripcion  from (\n";
-           res += "select Cajero, SUM(CAST(Operaciones AS INT)) as Operaciones from (\n";
-
-    string temp = "";
-    int maximo = 7;
-
-    for (int i=1; i <= maximo; i++){
-        temp = Constant::replaceAll(ss,"%1%",Constant::pad(Constant::TipoToStr(i),2,'0'));
-        temp = Constant::replaceAll(temp,"%2%",Constant::pad(Constant::TipoToStr(i+1),2,'0'));
-        res += temp;
-        if (i < maximo) res += "union\n";
-    }
-
-    res += ") AS F group by Cajero) AS G\n";
-    res += ", basedata b, device c, deviceprofile d where G.Cajero = b.id and b.reference = 999995\n";
-    res += "and G.Cajero = c.deviceid\n";
-    res += "and c.devicetype = d.devicetype\n";
-    cout << res << endl;
-    return 0;
-}
-*/
 /*
 int main(int argc, char *argv[]){
     cout << "Inicio"<<endl;

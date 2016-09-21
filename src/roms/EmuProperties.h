@@ -11,8 +11,9 @@ class Emuinfo{
         ~Emuinfo(){};
 
         struct struct_emu {
-            string idEmu, nombreEmu, rutaEmu, parmsEmu, rutaRoms, emuRomExt, rutaImg, fixOption;
-            bool descomp, titleRom;
+            string idEmu, nombreEmu, rutaEmu, parmsEmu, rutaRoms, emuRomExt, rutaImg;
+            string platform;
+            bool descomp, titleRom, fixOption;
         } emuProperties;
 
         void clear(){
@@ -24,7 +25,8 @@ class Emuinfo{
             emuProperties.parmsEmu = "";
             emuProperties.rutaRoms = "";
             emuProperties.rutaImg = "";
-            emuProperties.fixOption = "0";
+            emuProperties.fixOption = false;
+            emuProperties.platform = "";
         }
 };
 

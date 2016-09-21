@@ -29,8 +29,6 @@ Rominfo::~Rominfo(){
         delete vectorFileProps;
         Traza::print("eliminando vectorFileProps OK", W_DEBUG);
     }
-
-
 }
 
 /**

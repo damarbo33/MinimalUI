@@ -30,7 +30,7 @@
 //*********************************************************************************/
 //Cuidado con no sobrepasar el numero de elementos que define la constante MAXMENU
 //*********************************************************************************/
-typedef enum { MENUINICIAL,     //0
+ typedef enum { MENUINICIAL,     //0
             MENUJUEGOS,
             MENUOPCIONES,
             PANTALLAOPCIONRUTAS,
@@ -48,9 +48,10 @@ typedef enum { MENUINICIAL,     //0
             MENUUTILS,
             MENUPOPUPS,
             PANTALLAGROUPLIST,
+            PANTALLAOPCIONESROM,
+            MENUOPCIONESGENERALES,
             MAXMENU
     } enumMenus;
-
 
 class Iofrontend : public Ioutil{
 
@@ -67,6 +68,7 @@ class Iofrontend : public Ioutil{
         void setPanelMediaVisible(bool );
         bool bucleReproductor(string);
         int calculaPosPanelMedia();
+        Gestorroms *gestorRoms;
 
         //Funciones para anyadir punteros a funciones
         typedef int (Iofrontend::*typept2Func)(tEvento *); //Se declara el puntero a funcion
@@ -116,7 +118,6 @@ class Iofrontend : public Ioutil{
         int accionesBtnEliminarEmu(tEvento *);
         bool lanzarPrograma(string);
         bool browser(int, string, int, string, string);
-        string dirInicial;
         void comprobarUnicode(int);
         VlcPlayer player;
         void setTextFromExplorador(tEvento *, UIInput *);
@@ -126,6 +127,17 @@ class Iofrontend : public Ioutil{
         bool procesarPopups(tmenu_gestor_objects *objMenu, tEvento *evento);
         void comprobarFixesSO(FileLaunch *emulInfo);
         int accionConfigEmusPopup(tEvento *evento);
+        bool procesarMenuActual(tmenu_gestor_objects *objMenu, tEvento *evento);
+        DWORD setInfoRomValues();
+        void crearComboSistemas();
+        //Muestra el menu especificado como si fuera emergente
+        void showMenuEmergente(int menu, string objImagenFondo);
+        int buscarInfoRoms(tEvento *evento);
+        int volverInfoRoms(tEvento *evento);
+        int accionesBtnAceptarOpcionesGenerales(tEvento *evento);
+        bool cargarOpcionesGenerales();
+        bool scrapAllRoms();
+
 
 
     public :
@@ -149,9 +161,6 @@ class Iofrontend : public Ioutil{
         int accionesBtnAceptarOpciones(tEvento *);
         int accionCopiarTextoPopup(tEvento *evento);
         int launchEmuForConfig(tEvento *evento);
-
-
-
 
 };
 #endif //Iofrontend_H

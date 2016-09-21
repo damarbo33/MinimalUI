@@ -11,11 +11,10 @@
 */
 Iofrontend::Iofrontend(){
     Traza::print("Constructor de IoFrontend", W_DEBUG);
-    setWindowTitle("Emulation Frontend");
+    gestorRoms = new Gestorroms(dirInicial);
+
     convColor = new Colorutil();
     imgGestor = new ImagenGestor();
-    dirInicial = Constant::getAppDir();
-    Traza::print("Dir Inicial: " + dirInicial, W_DEBUG);
 
     Traza::print("Creando objetos de cada menu", W_PARANOIC);
     for (int i=0; i < MAXMENU; i++){
@@ -32,7 +31,10 @@ Iofrontend::Iofrontend(){
     selMenu = MENUINICIAL;
     comprobarUnidad(dirInicial);
 
+    //buscarInfoRoms();
 }
+
+
 
 /**
 * Destructor
@@ -55,7 +57,6 @@ Iofrontend::~Iofrontend(){
 * del lanzador.
 */
 void Iofrontend::comprobarUnidad(string diractual){
-    Gestorroms *gestor = new Gestorroms(dirInicial);
     string unidadActual = "", unidadRoms = "";
     bool errorRutas = false;
     //Obtenemos la unidad del directorio inicial
@@ -63,7 +64,7 @@ void Iofrontend::comprobarUnidad(string diractual){
         unidadActual = diractual.substr(0,2);
     }
     //Comprobamos si la unidad actual corresponde con la almacenada en las tablas
-    errorRutas = gestor->comprobarUnidad(diractual, &unidadRoms);
+    errorRutas = gestorRoms->comprobarUnidad(diractual, &unidadRoms);
 
     //Si hay error, lanzamos aviso para actualizar las roms a la unidad correcta
     if (errorRutas){
@@ -72,10 +73,9 @@ void Iofrontend::comprobarUnidad(string diractual){
         + unidadRoms + ". ¿Deseas actualizar?";
         bool confirmed = casoPANTALLACONFIRMAR("Confirmacion", pregunta);
         if (confirmed){
-            gestor->updateRutas(unidadRoms, unidadActual);
+            gestorRoms->updateRutas(unidadRoms, unidadActual);
         }
     }
-    delete gestor;
 }
 
 /**
@@ -111,16 +111,35 @@ void Iofrontend::initUIObjs(){
     listaObj->addElemLista("Salir","salir", application_xp_terminal);
     objMenu->findNextFocus();
 
+    /**Pantalla con el listado del menu de opciones*/
     objMenu = ObjectsMenu[MENUOPCIONES];
     UIList *listaObj2 = (UIList *) objMenu->getObjByName("ListaMenuOpciones");
     listaObj2->addElemLista("Alta emulador", "", add, PANTALLAOPCIONRUTAS);
     listaObj2->addElemLista("Modificar emulador","", application_form_edit, PANTALLAEDITAREMU);
-    listaObj2->addElemLista("Escanear roms","scan", folder_explore, MENUOPCIONES);
-    listaObj2->addElemLista("Importar ajustes de Retroarch","importRetroarch", folder_explore, MENUOPCIONES);
+    listaObj2->addElemLista("Escanear roms","scan", arrow_refresh, MENUOPCIONES);
+    listaObj2->addElemLista("Actualizar carátulas e info restante","scrapAll", folder_explore, MENUOPCIONES);
+    listaObj2->addElemLista("Importar ajustes de Retroarch","importRetroarch", database_add, MENUOPCIONES);
     listaObj2->addElemLista("Asignar botones", "configJoy", controller, MENUOPCIONES);
+    listaObj2->addElemLista("Opciones generales", "", page_white_gear, MENUOPCIONESGENERALES);
     listaObj2->addElemLista("Volver", "", bullet_go, MENUINICIAL);
 
+
+    /**Pantalla de opciones generales*/
     int centroY = (-200 + ((zoomText > 1) ? -Constant::getMENUSPACE() : 0));
+    ObjectsMenu[MENUOPCIONESGENERALES]->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Opciones Generales", false)->setEnabled(false);
+    ObjectsMenu[MENUOPCIONESGENERALES]->add("ComboFixesGeneral", GUICOMBOBOX, 0, centroY, 150, Constant::getCOMBOLISTHEIGHT(), "Corregir problemas en ddraw", true)->setVerContenedor(true);
+    objMenu = ObjectsMenu[MENUOPCIONESGENERALES];
+    UIComboBox * comboGeneral = (UIComboBox *) objMenu->getObjByName("ComboFixesGeneral");
+    comboGeneral->addElemLista("Sin Fix", "0");
+    comboGeneral->addElemLista("Windows 8", "1");
+    comboGeneral->addElemLista("Windows 8.1", "2");
+
+    centroY += (55 + ((zoomText > 1) ? Constant::getMENUSPACE() : 0));
+    ObjectsMenu[MENUOPCIONESGENERALES]->add("btnAceptarGeneralOpt",  GUIBUTTON, -(BUTTONW + 5), centroY, BUTTONW -15,BUTTONH, "Aceptar" , true)->setIcon(tick);
+    ObjectsMenu[MENUOPCIONESGENERALES]->add("btnCancelarGeneralOpt", GUIBUTTON, (BUTTONW + 5) , centroY, BUTTONW -15,BUTTONH, "Cancelar", true)->setIcon(cross);
+
+    /**Pantalla de opciones de cada emulador*/
+    centroY = (-200 + ((zoomText > 1) ? -Constant::getMENUSPACE() : 0));
     ObjectsMenu[PANTALLAOPCIONRUTAS]->add("EmuName", GUIINPUTWIDE, 0, centroY, INPUTW, Constant::getINPUTH(), "Nombre emulador:", true);
     centroY += (55 + ((zoomText > 1) ? Constant::getMENUSPACE() : 0));
     ObjectsMenu[PANTALLAOPCIONRUTAS]->add("EmuRuta", GUIINPUTWIDE, - 15 , centroY, INPUTW - 30, Constant::getINPUTH(), "Ruta emulador:", true);
@@ -138,20 +157,13 @@ void Iofrontend::initUIObjs(){
     ObjectsMenu[PANTALLAOPCIONRUTAS]->add("EmuImg", GUIINPUTWIDE, 0, centroY, INPUTW, Constant::getINPUTH(), "Imagen emulador:", true);
     ObjectsMenu[PANTALLAOPCIONRUTAS]->add("btnEmuImg", GUIBUTTON, INPUTW/2 + 20 * zoomText, centroY,MINIBUTTONH,MINIBUTTONH, "...", true)->setTag("EmuImg");
     centroY += (55 + ((zoomText > 1) ? Constant::getMENUSPACE() : 0));
-
-    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("ComboFixes", GUICOMBOBOX, -195, centroY, 150, Constant::getINPUTH(), "Corregir problemas en ddraw", true)->setVerContenedor(true);
-    objMenu = ObjectsMenu[PANTALLAOPCIONRUTAS];
-    UIComboBox * comboObj = (UIComboBox *) objMenu->getObjByName("ComboFixes");
-    comboObj->addElemLista("Sin Fix", "0");
-    comboObj->addElemLista("Windows 8", "1");
-    comboObj->addElemLista("Windows 8.1", "2");
-
+    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("ComboPlatform", GUICOMBOBOX, 130, centroY, 280, Constant::getCOMBOLISTHEIGHT(), "Sistema para obtener info", true)->setVerContenedor(true);
+    crearComboSistemas();
     centroY += (55 + ((zoomText > 1) ? Constant::getMENUSPACE() : 0));
+    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("CheckComboFixes", GUICHECK, -195, centroY, 150, Constant::getCOMBOLISTHEIGHT(), "Corregir problemas en ddraw", true);
     ObjectsMenu[PANTALLAOPCIONRUTAS]->add("CheckDescomprimir", GUICHECK, -263, centroY, CHECKW, CHECKH, "Descomprimir roms", true);
     ObjectsMenu[PANTALLAOPCIONRUTAS]->add("CheckFindTitleRom", GUICHECK, -50, centroY, CHECKW, CHECKH, "Buscar descripción de rom", true);
     centroY += (40 + ((zoomText > 1) ? Constant::getMENUSPACE() : 0));
-
-
 
     UIPopupMenu * popup1 = addPopup(PANTALLAOPCIONRUTAS, "popupParmsRom", "EmuParms");
     if (popup1 != NULL){
@@ -195,7 +207,6 @@ void Iofrontend::initUIObjs(){
     ObjectsMenu[PANTALLAROMS]->add("ListaMenuRoms", GUILISTBOX, 0, 0, 0, 0, "ListaMenuRoms", true)->setVerContenedor(false);
     ObjectsMenu[PANTALLAROMS]->getObjByName("ImgEmulador")->setAlpha(150);
 
-
     ObjectsMenu[PANTALLAREPRODUCTOR]->add("panelMedia", GUIPANEL, 0,0,0,0, "", true)->setEnabled(false);
     ObjectsMenu[PANTALLAREPRODUCTOR]->add("btnBackward", GUIBUTTON, 0,0,0,0, "", true)->setIcon(control_rewind)->setVerContenedor(false);
     ObjectsMenu[PANTALLAREPRODUCTOR]->add("btnPlay",     GUIBUTTON, 0,0,0,0, "", true)->setIcon(control_play)->setVerContenedor(false);
@@ -204,66 +215,65 @@ void Iofrontend::initUIObjs(){
     ObjectsMenu[PANTALLAREPRODUCTOR]->add("mediaTimerTotal",  GUILABEL,  0,0,0,0, "0:00:00", false)->setEnabled(false);;
     ObjectsMenu[PANTALLAREPRODUCTOR]->add("mediaTimer",  GUILABEL,  0,0,0,0, "0:00:00", false)->setEnabled(false);;
     ObjectsMenu[PANTALLAREPRODUCTOR]->add("progressBarMedia", GUIPROGRESSBAR, 20, 20, 200, 20, "", true)->setShadow(false);
-
     ObjectsMenu[PANTALLAREPRODUCTOR]->getObjByName("panelMedia")->setAlpha(150);
+
+
+    ObjectsMenu[PANTALLAOPCIONESROM]->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Opciones Roms", false)->setEnabled(false);
+    ObjectsMenu[PANTALLAOPCIONESROM]->add("ImgFondoRoms", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgFondoRoms", true)->setEnabled(false);
+    ObjectsMenu[PANTALLAOPCIONESROM]->add("panelMedia", GUIPANEL, 0,0,500,350, "", true)->setEnabled(false);
+    ObjectsMenu[PANTALLAOPCIONESROM]->add("btnScrapGame", GUIBUTTON, -(BUTTONW/2 + 5), -BUTTONH *2, BUTTONW,BUTTONH, "Buscar info", true)->setTag("");
+    ObjectsMenu[PANTALLAOPCIONESROM]->add("btnCancelarOptRoms", GUIBUTTON, 0, 100, BUTTONW,BUTTONH, "Volver", true)->setIcon(cross);
+    objMenu = ObjectsMenu[PANTALLAOPCIONESROM];
+    UIPanel * panel = (UIPanel *) objMenu->getObjByName("panelMedia");
+    panel->setColor(cGrisClaro);
+
 
     ObjectsMenu[PANTALLAGROUPLIST]->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Roms", false)->setEnabled(false);
     ObjectsMenu[PANTALLAGROUPLIST]->add("ImgEmulador", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgEmulador", true)->setEnabled(false);
-    ObjectsMenu[PANTALLAGROUPLIST]->add("listaGrupoRoms", GUILISTGROUPBOX, 0, 0, 0, 0, "", false);
+    ObjectsMenu[PANTALLAGROUPLIST]->add("listaGrupoRoms", GUILISTGROUPBOX, 0, 0, 0, 0, "", false)->setVerContenedor(false);
+    ObjectsMenu[PANTALLAGROUPLIST]->add("ImgBoxArt", GUIPICTURE, 0, 0, Constant::getIMGBOXARTWIDTH(), Constant::getIMGBOXARTHEIGHT(), "", true)->setEnabled(false);
+    ObjectsMenu[PANTALLAGROUPLIST]->add("textosBox", GUITEXTELEMENTSAREA, 0, 0, 0, 0, "", true)->setVerContenedor(false)->setEnabled(false);
     ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->setAlpha(150);
+    ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->getImgGestor()->setEnabledMoveImg(false);
+
     objMenu = ObjectsMenu[PANTALLAGROUPLIST];
     UIListGroup * listaGrupo = (UIListGroup *) objMenu->getObjByName("listaGrupoRoms");
-
-     vector <ListGroupCol *> miCabecera;
-     miCabecera.push_back(new ListGroupCol("Nombre Rom", ""));
-     miCabecera.push_back(new ListGroupCol("Players", ""));
-     listaGrupo->setHeaderLista(miCabecera);
-     listaGrupo->adjustToHeader(false);
-
-     listaGrupo->addHeaderWith(600);
-     listaGrupo->addHeaderWith(100);
-
-
-    /*
-    listaGrupo->adjustToHeader(false);
     vector <ListGroupCol *> miCabecera;
-    miCabecera.push_back(new ListGroupCol("Cabecera1", "ValorCab1"));
-    miCabecera.push_back(new ListGroupCol("Cabecera2", "ValorCab2"));
-    miCabecera.push_back(new ListGroupCol("Cabecera3", "ValorCab3"));
+    miCabecera.push_back(new ListGroupCol("Nombre Rom", ""));
+    miCabecera.push_back(new ListGroupCol("Nº Jugadores", ""));
     listaGrupo->setHeaderLista(miCabecera);
-    listaGrupo->addHeaderWith(200);
-    listaGrupo->addHeaderWith(150);
-    listaGrupo->addHeaderWith(150);
-    vector <ListGroupCol *> miFila;
-    miFila.push_back(new ListGroupCol("Campo1", "Valor1"));
-    miFila.push_back(new ListGroupCol("Campo2", "Valor2"));
-    miFila.push_back(new ListGroupCol("Campo3", "Valor3"));
-    listaGrupo->addElemLista(miFila);
-    vector <ListGroupCol *> miFila2;
-    miFila2.push_back(new ListGroupCol("Campo1,1", "Valor1,1"));
-    miFila2.push_back(new ListGroupCol("Campo2,1", "Valor2,1"));
-    miFila2.push_back(new ListGroupCol("Campo3,1", "Valor3,1"));
-    listaGrupo->addElemLista(miFila2);
-    vector <ListGroupCol *> miFila3;
-    miFila3.push_back(new ListGroupCol("Campo1,2", "Valor1,2"));
-    miFila3.push_back(new ListGroupCol("Campo2,2", "Valor2,2"));
-    miFila3.push_back(new ListGroupCol("Campo3,2", "Valor3,2"));
-    listaGrupo->addElemLista(miFila3);
-    vector <ListGroupCol *> miFila4;
-    miFila4.push_back(new ListGroupCol("Campo1,3", "Valor1,3"));
-    miFila4.push_back(new ListGroupCol("Campo2,3", "Valor2,3"));
-    miFila4.push_back(new ListGroupCol("Campo3,3", "Valor3,3"));
-    listaGrupo->addElemLista(miFila4);
-    vector <ListGroupCol *> miFila5;
-    miFila5.push_back(new ListGroupCol("Campo1,4", "Valor1,4"));
-    miFila5.push_back(new ListGroupCol("Campo2,4", "Valor2,4"));
-    miFila5.push_back(new ListGroupCol("Campo3,4", "Valor3,4"));
-    listaGrupo->addElemLista(miFila5);
-    vector <ListGroupCol *> miFila6;
-    miFila6.push_back(new ListGroupCol("Campo1,5", "Valor1,5"));
-    miFila6.push_back(new ListGroupCol("Campo2,5", "Valor2,5"));
-    miFila6.push_back(new ListGroupCol("Campo3,5", "Valor3,5"));
-    listaGrupo->addElemLista(miFila6);*/
+    listaGrupo->adjustToHeader(false);
+    listaGrupo->addHeaderWith(500);
+    listaGrupo->addHeaderWith(120);
+
+    UIPicture* pict = ((UIPicture*) objMenu->getObjByName("ImgBoxArt"));
+    //Para mejorar el rendimiento, las imagenes que se descargan de las caratulas ya estan redimensionadas
+    pict->getImgGestor()->setResize(true);
+    pict->getImgGestor()->setEnabledMoveImg(false);
+    pict->getImgGestor()->setFillBackgroundColour(false);
+
+    int margenX = Constant::getIMGBOXARTWIDTH() + IMGBOXARTMARGIN * 2;
+    //Anyadimos los textos en el area que digamos
+    UITextElementsArea *infoTextRom = (UITextElementsArea *)objMenu->getObjByName("textosBox");
+    t_posicion pos = {margenX + 20, Constant::getMENUSPACE() + IMGBOXARTMARGIN,0,0};
+    infoTextRom->addField("txtReleased","RELEASED:","",pos, true);
+    pos.y += 20;
+    infoTextRom->addField("txtPlayers","PLAYERS:","",pos, true);
+    pos.y += 20;
+    infoTextRom->addField("txtPublisher","PUBLISHER:","",pos, true);
+    pos.y += 20;
+    infoTextRom->addField("txtDeveloper","DEVELOPER:","",pos, true);
+    pos.y += 20;
+    infoTextRom->addField("txtGenre","GENRE:","",pos, true);
+    pos.y += 20;
+    infoTextRom->addField("txtRating","RATING:","",pos, true);
+    pos.y += 20;
+    infoTextRom->addField("txtLastPlayed","LAST PLAYED:","",pos, true);
+    pos.y += 20;
+    infoTextRom->addField("txtTimesPlayed","TIMES PLAYED:","",pos, true);
+
+    t_posicion posDesc = {0, 30 + Constant::getIMGBOXARTHEIGHT() + IMGBOXARTMARGIN * 2,0,0};
+    infoTextRom->addField("txtDescripcion","","",posDesc, false);
 
     //objMenu->findNextFocus();
     //Establecemos los elementos que se redimensionan
@@ -300,33 +310,17 @@ void Iofrontend::initUIObjs(){
     addEvent("btnLaunchEmu", &Iofrontend::launchEmuForConfig);
     addEvent("btnAceptarEmu", &Iofrontend::accionesBtnAceptarOpciones);
     addEvent("btnEliminarEmu", &Iofrontend::accionesBtnEliminarEmu);
+    addEvent("btnAceptarGeneralOpt", &Iofrontend::accionesBtnAceptarOpcionesGenerales);
 
     //Acciones por defecto de la lista para directorios
     addEvent("btnCancelarDir", &Iofrontend::accionesGotoPantalla, PANTALLAOPCIONRUTAS);
     addEvent("btnCancelarEmu", &Iofrontend::accionesBtnVolverConfigEmu, PANTALLAEDITAREMU);
+    addEvent("btnCancelarGeneralOpt", &Iofrontend::accionesGotoPantalla, MENUOPCIONES);
     addEvent(OBJLISTABROWSER2, &Iofrontend::accionesListaExplorador);
-
+    addEvent("btnScrapGame", &Iofrontend::buscarInfoRoms);
+    addEvent("btnCancelarOptRoms", &Iofrontend::volverInfoRoms);
     addEvent("listaGrupoRoms", &Iofrontend::accionesMenu);
 }
-
-/*
-void Iofrontend::initUIObjs(){
-
-    ObjectsMenu[MENUINICIAL]->add("ListaMenuInicial", GUILISTBOX, 0, 0, 0, 0, "ListaMenuInicial", true)->setVerContenedor(true);
-    tmenu_gestor_objects *objMenu = ObjectsMenu[MENUINICIAL];
-
-    ObjectsMenu[MENUINICIAL]->add("ComboFixes", GUICOMBOBOX, -195, 65, 150, Constant::getINPUTH(), "Corregir problemas en ddraw", true)->setVerContenedor(true);
-    objMenu = ObjectsMenu[MENUINICIAL];
-    UIComboBox * comboObj = (UIComboBox *) objMenu->getObjByName("ComboFixes");
-    comboObj->addElemLista("Sin Fix", "");
-    comboObj->addElemLista("Windows 8", "");
-    comboObj->addElemLista("Windows 8.1", "");
-    objMenu->findNextFocus();
-
-    //Establecemos los elementos que se redimensionan
-    setDinamicSizeObjects();
-}
-*/
 
 /**
 * Con el menu pasado por parametro lo dibujamos entero
@@ -340,9 +334,6 @@ bool Iofrontend::drawMenu(tEvento evento){
     salir = casoDEFAULT(evento);
     //Muestra un mensaje durante un tiempo determinado
     showAutoMessage();
-    //Procesa otro tipo de elementos como los popups, que pueden estar asociados a cualquier
-    //elemento
-
     //Muestra el contador de cuadros por pantalla
     if (SHOWFPS) fps();
     Traza::print("Iofrontend::drawMenu Fin", W_PARANOIC);
@@ -379,8 +370,15 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
     Object *object;
 
     if (execFunc){
+        //Se llama al action del objeto que esta seleccionado en este momento.
+        //Cada objeto tiene el suyo propio o heredado de Object
         objMenu->procEvent(*evento);
+        //objMenu->procAllEvent(*evento);
+        //Mostramos popups si es necesario
         procesarPopups(objMenu, evento);
+        //Hacemos llamada para hacer otros procesados. Por ahora solo en la pantalla de seleccion
+        //de roms
+        procesarMenuActual(objMenu, evento);
     }
 
     int posBoton = 0;
@@ -388,9 +386,30 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
     bool botonPulsado = false;
     int estado = 0;
     vector<Object *> objPostProcesado;
+    int cursorPrincipal = -1;
+    bool updateCursor = false;
 
     //Recorremos todos los objetos para dibujarlos por pantalla
     try{
+
+         //Procesando el redimensionado de ventana
+        if (evento->resize)
+            resizeMenu();
+
+
+
+        for (int i=0;i<objMenu->getSize();i++){
+            object = objMenu->getObjByPos(i);
+            if (drawComp && object != NULL){
+                if (object->getObjectType() == GUICOMBOBOX){
+                    objPostProcesado.push_back(object);
+                } else {
+                    drawObject(object, evento);
+                }
+            }
+        }
+
+
         for (int i=0;i<objMenu->getSize();i++){
             object = objMenu->getObjByPos(i);
 
@@ -405,10 +424,12 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
                                 posBoton = findEventPos(object->getName());  //Buscamos la posicion del elemento en el array de punteros a funcion
                                 if (posBoton >= 0){ //Si hemos encontrado una funcion
                                     if (this->pt2Func[posBoton] != NULL){
+                                        //Forzamos a que se actualicen todos los elementos
+                                        objMenu->resetElements();
                                         /**Los botones no pueden hacer que se salga de la aplicacion. Solo ejecutamos la funcion*/
                                         //salir = (*this.*pt2Func[posBoton])(evento); //Ejecutamos la funcion especificada en el puntero a funcion almacenado
                                         (*this.*pt2Func[posBoton])(evento); //Ejecutamos la funcion especificada en el puntero a funcion almacenado
-                                        Traza::print("procesarControles: Evento lanzado", W_DEBUG);
+                                        Traza::print("procesarControles: Evento lanzado para " + object->getName(), W_DEBUG);
                                     }
                                 }
                             }
@@ -421,6 +442,8 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
                                 posBoton = findEventPos(object->getName());  //Buscamos la posicion del elemento en el array de punteros a funcion
                                 if (posBoton >= 0){ //Si hemos encontrado una funcion
                                     if (this->pt2Func[posBoton] != NULL){
+                                        //Forzamos a que se actualicen todos los elementos
+                                        objMenu->resetElements();
                                         salir = (*this.*pt2Func[posBoton])(evento); //Ejecutamos la funcion especificada en el puntero a funcion almacenado
                                         Traza::print("procesarControles: Evento lanzado para " + object->getName(), W_DEBUG);
                                     }
@@ -433,18 +456,14 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
                 }
             } // FIN IF
 
-            //Finalmente dibujamos el objeto
-            if (drawComp && object != NULL){
-                if (object->getObjectType() == GUICOMBOBOX){
-                    objPostProcesado.push_back(object);
-                } else {
-                    drawObject(object, evento);
+            //Comprobamos si el objeto esta lanzando un evento para cambiar el mouse.
+            //Solo aceptamos el primer objeto que pida cambiar el mouse
+            if (object->getCursor() >= 0){
+                updateCursor = true;
+                if (cursorPrincipal < 0){
+                    cursorPrincipal = object->getCursor();
                 }
             }
-
-            //Procesando el redimensionado de ventana
-            if (evento->resize)
-                resizeMenu();
         }
 
         //Para los objetos que son prioritarios de pintar, lo hacemos en ultimo lugar
@@ -454,6 +473,15 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
             drawObject(obj, evento);
         }
         objPostProcesado.clear();
+
+        if (!updateCursor){
+            //Reseteamos el cursor al que hay por defecto
+            cursorPrincipal = cursor_arrow;
+        }
+
+        //Dibujamos el cursor solo si procede
+        this->pintarCursor(evento->mouse_x, evento->mouse_y, cursorPrincipal);
+
 
     } catch (Excepcion &e) {
          Traza::print("Excepcion procesarControles: " + string(e.getMessage()), W_ERROR);
@@ -575,7 +603,7 @@ void Iofrontend::cargaMenu(int menucarga, string valorSelec, tEvento *evento){
     if (menucarga >= 0 && menucarga <= MAXMENU){
         this->setSelMenu(menucarga);
         //Damos el foco al primer elemento que haya en el menu
-        this->ObjectsMenu[menucarga]->setFocus(0);
+        this->ObjectsMenu[menucarga]->setFirstFocus();
     }
 
     tmenu_gestor_objects *objsMenu = ObjectsMenu[menucarga];
@@ -595,6 +623,8 @@ void Iofrontend::cargaMenu(int menucarga, string valorSelec, tEvento *evento){
                 importRetroarchConfig();
             } else if (valorSelec.compare("configJoy") == 0){
                 casoJOYBUTTONS(evento);
+            } else if (valorSelec.compare("scrapAll") == 0){
+                scrapAllRoms();
             }
             break;
 
@@ -636,6 +666,9 @@ void Iofrontend::cargaMenu(int menucarga, string valorSelec, tEvento *evento){
             playMedia(evento);
             break;
         case PANTALLAREPRODUCTOR:
+            break;
+        case MENUOPCIONESGENERALES:
+            cargarOpcionesGenerales();
             break;
         default:
             break;
@@ -853,6 +886,41 @@ void Iofrontend::setDinamicSizeObjects(){
             } catch (Excepcion &e){}
         }
 
+        ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("listaGrupoRoms")->setTam(this->getWidth() / 2 , Constant::getINPUTH(), this->getWidth() / 2, this->getHeight()-Constant::getINPUTH());
+
+
+        int widthForImgBox = (this->getWidth() / 4 > 250) ? 250 : this->getWidth() / 4;
+        Constant::setIMGBOXARTWIDTH(widthForImgBox);
+        Constant::setIMGBOXARTHEIGHT(widthForImgBox);
+
+        ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgBoxArt")->setTam(IMGBOXARTMARGIN,
+                                                                          Constant::getINPUTH() + Constant::getMENUSPACE() + INPUTCONTENT,
+                                                                          Constant::getIMGBOXARTWIDTH(), Constant::getIMGBOXARTHEIGHT());
+
+        UITextElementsArea *infoTextRom = (UITextElementsArea *)ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("textosBox");
+        infoTextRom->setTam(0, Constant::getINPUTH(), this->getWidth() / 2, this->getHeight()- Constant::getINPUTH());
+
+        int margenX = Constant::getIMGBOXARTWIDTH() + IMGBOXARTMARGIN;
+        t_posicion pos = {margenX, Constant::getMENUSPACE() + IMGBOXARTMARGIN,0,0};
+        infoTextRom->setPosition("txtReleased",pos);
+        pos.y += Constant::getINPUTH();
+        infoTextRom->setPosition("txtPlayers",pos);
+        pos.y += Constant::getINPUTH();
+        infoTextRom->setPosition("txtPublisher",pos);
+        pos.y += Constant::getINPUTH();
+        infoTextRom->setPosition("txtDeveloper",pos);
+        pos.y += Constant::getINPUTH();
+        infoTextRom->setPosition("txtGenre",pos);
+        pos.y += Constant::getINPUTH();
+        infoTextRom->setPosition("txtRating",pos);
+        pos.y += Constant::getINPUTH();
+        infoTextRom->setPosition("txtLastPlayed",pos);
+        pos.y += Constant::getINPUTH();
+        infoTextRom->setPosition("txtTimesPlayed",pos);
+        t_posicion posDesc = {0, Constant::getINPUTH() + Constant::getIMGBOXARTHEIGHT() + IMGBOXARTMARGIN * 2,0,0};
+        infoTextRom->setPosition("txtDescripcion",posDesc);
+
+
         //Redimension para el browser de directorios2
         ObjectsMenu[PANTALLABROWSER2]->getObjByName(OBJLISTABROWSER2)->setTam(0, 2*Constant::getINPUTH() ,this->getWidth(), this->getHeight() - BUTTONH - 2*Constant::getINPUTH() - 10);
         ObjectsMenu[PANTALLABROWSER2]->getObjByName(BTNACEPTARBROWSER)->setTam( (this->getWidth() / 2) -(BUTTONW + 5), this->getHeight() - BUTTONH - 5, BUTTONW,BUTTONH);
@@ -894,7 +962,7 @@ bool Iofrontend::casoPANTALLACONFIRMAR(string titulo, string txtDetalle){
     SDL_Surface *mySurface = NULL;
     takeScreenShot(&mySurface, iconRectFondo);
 
-    //Seguidamente cambiamos la pantalla a la de la confirmacion
+    //Seguidamente cambiamos la ñpantalla a la de la confirmacion
     setSelMenu(PANTALLACONFIRMAR);
     tmenu_gestor_objects *objMenu = ObjectsMenu[PANTALLACONFIRMAR];
     objMenu->getObjByName("borde")->setLabel(titulo);
@@ -1075,15 +1143,20 @@ string Iofrontend::showExplorador(tEvento *evento){
         obj->setFocus(true);
         obj->setTag("");
         obj->setPosActualLista(-1);
-//        long delay = 0;
-//        unsigned long before = 0;
+        //Forzamos a que se actualicen todos los elementos
+        objMenu->resetElements();
+        //Seleccionamos a la lista que esta en primer lugar
+        objMenu->findNextFocus();
+
+
+        long delay = 0;
+        unsigned long before = 0;
         this->accionesListaExplorador(evento);
 
         do{
-//            before = SDL_GetTicks();
+            before = SDL_GetTicks();
             askEvento = WaitForKey();
             clearScr(cBlanco);
-
             int pos = obj->getPosActualLista();
             //Carga de imagenes de fondo en la pantalla del explorador de ficheros
             if (pos >= 0){
@@ -1107,8 +1180,9 @@ string Iofrontend::showExplorador(tEvento *evento){
             }
 
             procesarControles(objMenu, &askEvento, NULL);
-            if (objMenu->getFocus() < 0)
+            if (objMenu->getFocus() < 0){
                 objMenu->findNextFocus();
+            }
 
             fps();
             flipScr();
@@ -1118,8 +1192,8 @@ string Iofrontend::showExplorador(tEvento *evento){
              || objMenu->getObjByName(BTNCANCELARBROWSER)->getTag().compare("selected") == 0);
 
 
-//            delay = before - SDL_GetTicks() + TIMETOLIMITFRAME;
-//            if(delay > 0) SDL_Delay(delay);
+            delay = before - SDL_GetTicks() + TIMETOLIMITFRAME;
+            if(delay > 0) SDL_Delay(delay);
         } while (!salir);
 
     } catch (Excepcion &e){
@@ -1169,12 +1243,11 @@ int Iofrontend::accionesListaExplorador(tEvento *evento){
     try{
         tmenu_gestor_objects *objMenu = ObjectsMenu[PANTALLABROWSER2];
         UIList * obj = (UIList *)objMenu->getObjByName(OBJLISTABROWSER2);
-        //Forzamos a que se actualice la lista
-        obj->setImgDrawed(false);
         Dirutil dir;
         bool dirChanged = false;
         string diractual;
         int pos = obj->getPosActualLista();
+
 
         if (pos >= 0){
             string fileSelec = obj->getListNames()->get(pos);
@@ -1262,34 +1335,40 @@ int Iofrontend::loadDirFromExplorer(tEvento *evento){
 */
 int Iofrontend::launchEmuForConfig(tEvento *evento){
     try{
+        Traza::print("Lanzando EMU", W_DEBUG);
         //Obtenemos los objetos del menu actual
         tmenu_gestor_objects *objMenu = ObjectsMenu[this->getSelMenu()];
         //Obtenemos el objeto que ha sido seleccionado y que tiene el foco
         Object *obj = objMenu->getObjByPos(objMenu->getFocus());
         //Obtenemos la ruta del emulador que estamos intentando lanzar para configurarlo
         string rutaEmu = ((UIInput *)objMenu->getObjByName("EmuRuta"))->getText();
-
-        //Una vez obtenida la ruta, lanzamos el programa
-        Launcher *launcher = new Launcher();
-        FileLaunch emulInfo;
         Dirutil *dirio = new Dirutil();
-        killSDL();
 
-        emulInfo.rutaexe = dirio->getFolder(rutaEmu);
-        emulInfo.fileexe = dirio->getFileName(rutaEmu);
-        emulInfo.rutaroms = "";
-        emulInfo.nombrerom = "";
-        emulInfo.parmsexe = "";
-        emulInfo.descomprimir = false;
-        Traza::print("Antes de ejecutar programa", W_DEBUG);
-        launcher->lanzarProgramaUNIXFork(&emulInfo);
-        this->clearLastEvento();
+//        if (dirio->existe(rutaEmu)){
+            //Una vez obtenida la ruta, lanzamos el programa
+            Launcher *launcher = new Launcher();
+            FileLaunch emulInfo;
+            killSDL();
+            emulInfo.rutaexe = dirio->getFolder(rutaEmu);
+            emulInfo.fileexe = dirio->getFileName(rutaEmu);
+            emulInfo.rutaroms = "";
+            emulInfo.nombrerom = "";
+            emulInfo.parmsexe = "";
+            emulInfo.descomprimir = false;
+            Traza::print("Antes de ejecutar programa", W_DEBUG);
+            launcher->lanzarProgramaUNIXFork(&emulInfo);
+            this->clearLastEvento();
+            Traza::print("Iniciando SDL", W_DEBUG);
+            initSDL(false);
+            Traza::print("SDL Iniciado con exito", W_DEBUG);
+            delete launcher;
 
-        Traza::print("Iniciando SDL", W_DEBUG);
-        initSDL(false);
-        //Repintamos la imagen de fondo de la pantalla de lanzamiento de las roms
-        drawUIPicture(ObjectsMenu[PANTALLAROMS]->getObjByName("ImgEmulador"));
-        Traza::print("SDL Iniciado con exito", W_DEBUG);
+//        } else {
+//            Traza::print("launchEmuForConfig: No existe el programa en la ruta indicada: " + rutaEmu, W_ERROR);
+//            showMessage("No existe el programa en la ruta indicada", 3000);
+//        }
+        delete dirio;
+
 
     } catch (Excepcion &e){
         Traza::print("launchEmuForConfig: " + string(e.getMessage()), W_ERROR);
@@ -1306,11 +1385,9 @@ int Iofrontend::accionesBtnEliminarEmu(tEvento *evento){
     string pregunta = "¿Está seguro de que desea eliminar el programa?";
     bool confirmed = casoPANTALLACONFIRMAR("Confirmacion", pregunta);
     if (confirmed){
-        Gestorroms *gestor = new Gestorroms(dirInicial);
         tmenu_gestor_objects *objMenu = ObjectsMenu[this->getSelMenu()];
         Object *obj = objMenu->getObjByName("btnEliminarEmu");
-        gestor->deleteEmulador(Constant::strToTipo<int>(obj->getTag()));
-        delete gestor;
+        gestorRoms->deleteEmulador(Constant::strToTipo<int>(obj->getTag()));
         this->setSelMenu(PANTALLAEDITAREMU);
         cargarListaEmuladores(PANTALLAEDITAREMU, PANTALLAOPCIONRUTAS, "listaEditarEmus");
     }
@@ -1325,12 +1402,16 @@ int Iofrontend::accionesBtnVolverConfigEmu(tEvento *evento){
     string tag = objsMenu->getObjByName("btnCancelarEmu")->getTag();
 
     if (tag.compare("FROMEMULIST") == 0){
-        this->setSelMenu(MENUJUEGOS);
         objsMenu->getObjByName("btnCancelarEmu")->setTag("");
+        this->setSelMenu(MENUJUEGOS);
+        ObjectsMenu[MENUJUEGOS]->setFirstFocus();
     } else {
         this->setSelMenu(PANTALLAEDITAREMU);
+        objsMenu = ObjectsMenu[this->getSelMenu()];
+        objsMenu->findNextFocus();
         cargarListaEmuladores(PANTALLAEDITAREMU, PANTALLAOPCIONRUTAS, "listaEditarEmus");
     }
+    //Seleccionamos a que se seleccione el primer elemento del menu
     return 0;
 }
 
@@ -1356,27 +1437,22 @@ int Iofrontend::accionesBtnAceptarOpciones(tEvento *evento){
         emuProps.emuProperties.idEmu      = tagBotonAceptar;
         emuProps.emuProperties.rutaImg    = ((UIInput *)objMenu->getObjByName("EmuImg"))->getText();
         //Obtenemos el valor seleccionado en el combo
-        UIComboBox * comboFixes = (UIComboBox *)objMenu->getObjByName("ComboFixes");
-        unsigned int pos = comboFixes->getPosActualLista();
-        string valorSelec = comboFixes->getListValues()->get(pos);
-        emuProps.emuProperties.fixOption  = valorSelec;
+        emuProps.emuProperties.fixOption  = objMenu->getObjByName("CheckComboFixes")->isChecked();
+        emuProps.emuProperties.platform  = ((UIComboBox *)objMenu->getObjByName("ComboPlatform"))->getSelectedValue();
 
         if (emuProps.emuProperties.nombreEmu.empty() || emuProps.emuProperties.rutaEmu.empty() || emuProps.emuProperties.rutaRoms.empty()){
             showMessage("Falta rellenar alguno de los campos", 2000);
         } else {
-            Gestorroms *gestor = new Gestorroms(dirInicial);
             if (emuProps.emuProperties.idEmu.compare("") == 0){
-                if (gestor->insertEmulador(&emuProps.emuProperties)){
+                if (gestorRoms->insertEmulador(&emuProps.emuProperties)){
                     showMessage("Emulador insertado correctamente", 2000);
                     clearEmuFields();
                 }
             } else {
-                if (gestor->updateEmulador(&emuProps.emuProperties)){
+                if (gestorRoms->updateEmulador(&emuProps.emuProperties)){
                     showMessage("Emulador modificado correctamente", 2000);
                 }
             }
-            delete gestor;
-
         }
     } catch (Excepcion &e) {
          Traza::print("Excepcion accionesBtnAceptarOpciones" + string(e.getMessage()), W_ERROR);
@@ -1397,7 +1473,8 @@ void Iofrontend::clearEmuFields(){
     ((UIInput *)objMenu->getObjByName("EmuImg"))->setText("");
     objMenu->getObjByName("CheckDescomprimir")->setChecked(false);
     objMenu->getObjByName("CheckFindTitleRom")->setChecked(false);
-    ((UIComboBox *)objMenu->getObjByName("ComboFixes"))->setPosActualLista(0);
+    objMenu->getObjByName("CheckComboFixes")->setChecked(false);
+    ((UIComboBox *)objMenu->getObjByName("ComboPlatform"))->setPosActualLista(0);
     objMenu->setFocus("EmuName");
 }
 
@@ -1405,12 +1482,9 @@ void Iofrontend::clearEmuFields(){
 *
 */
 bool Iofrontend::cargarDatosEmulador(string idprog){
-    Gestorroms *gestor = new Gestorroms(dirInicial);
-//    string sql = "SELECT IDPROG, NOMBREEMU, RUTAEMU, PARMSEMU, RUTAROMS, EXTENSIONES,DESCOMPRIMIR,IMGRUTAFONDO,SHOWTITLE,FIXOPTION FROM EMULADOR WHERE IDPROG=" + idprog;
-//    vector<vector<string> > result = gestor->getRowQuery(sql);
-    gestor->getDb()->prepareStatement("selectEmulador");
-    gestor->getDb()->setString(0,idprog);
-    vector<vector<string> > result = gestor->getDb()->executeQuery();
+    gestorRoms->getDb()->prepareStatement("selectEmulador");
+    gestorRoms->getDb()->setString(0,idprog);
+    vector<vector<string> > result = gestorRoms->getDb()->executeQuery();
 
     tmenu_gestor_objects *objMenu = ObjectsMenu[PANTALLAOPCIONRUTAS];
     for(vector<vector<string> >::iterator it = result.begin(); it < result.end(); ++it){
@@ -1423,10 +1497,16 @@ bool Iofrontend::cargarDatosEmulador(string idprog){
         objMenu->getObjByName("CheckDescomprimir")->setChecked((row.at(6).compare("S") == 0 ? true : false));
         ((UIInput *)objMenu->getObjByName("EmuImg"))->setText(row.at(7));
         objMenu->getObjByName("CheckFindTitleRom")->setChecked((row.at(8).compare("S") == 0 ? true : false));
-        ((UIComboBox *)objMenu->getObjByName("ComboFixes"))->selectValueInList(row.at(9));
-    }
+        objMenu->getObjByName("CheckComboFixes")->setChecked((row.at(9).compare("S") == 0 ? true : false));
 
-    delete gestor;
+        if (row.at(10).empty()){
+            ((UIComboBox *)objMenu->getObjByName("ComboPlatform"))->setPosActualLista(0);
+        } else {
+            ((UIComboBox *)objMenu->getObjByName("ComboPlatform"))->selectValueInList(row.at(10));
+        }
+
+
+    }
     return false;
 }
 
@@ -1438,9 +1518,7 @@ bool Iofrontend::cargarListaEmuladores(int menu, int destino, string lista){
         tmenu_gestor_objects *objMenu = ObjectsMenu[menu];
         UIList *obj = (UIList *)objMenu->getObjByName(lista);
         Traza::print("Cargando lista de emuladores de: " + dirInicial, W_DEBUG);
-        Gestorroms *gestor = new Gestorroms(dirInicial);
-        gestor->fillMenuByQuery(obj, "selectListaEmuladores",NULL, destino);
-        delete gestor;
+        gestorRoms->fillMenuByQuery(obj, "selectListaEmuladores",NULL, destino);
 
         if (lista.compare("listaEditarEmus") == 0){
             obj->addElemLista("Volver", "", bullet_go, MENUOPCIONES);
@@ -1461,17 +1539,12 @@ bool Iofrontend::cargarListaRoms(int menu, string idprog, string lista){
     try{
         tmenu_gestor_objects *objMenu = ObjectsMenu[menu];
 
-        //Cargamos el objeto de base de datos
-        Gestorroms *gestor = new Gestorroms(dirInicial);
-
         //Obtenemos el nombre del emulador que seleccionamos en la pantalla anterior
         UIList *objEmu = (UIList *)ObjectsMenu[MENUJUEGOS]->getObjByName("ListaMenuJuegos");
 
-        ((UIArt *)objMenu->getObjByName(TITLESCREEN))->setLabel(objEmu->getListNames()->get(objEmu->getPosActualLista()));
         //Cargamos la imagen de fondo del emulador
-        //string imgruta = gestor->getColQuery(("SELECT IMGRUTAFONDO FROM EMULADOR WHERE IDPROG = " + idprog).c_str());
-        string imgruta = gestor->getImgEmulador(Constant::strToTipo<int>(idprog));
-        Traza::print("cargarListaRoms. imgruta: " + imgruta, W_DEBUG);
+        string imgruta = gestorRoms->getImgEmulador(Constant::strToTipo<int>(idprog));
+        Traza::print("cargarListaRoms. imgruta: " + imgruta, W_PARANOIC);
 
         UIPicture * objImg = (UIPicture *) objMenu->getObjByName("ImgEmulador");
         if (!imgruta.empty())
@@ -1485,20 +1558,20 @@ bool Iofrontend::cargarListaRoms(int menu, string idprog, string lista){
         parms.push_back(idprog);
 
         UIListCommon *objLista = (UIListCommon *)objMenu->getObjByName(lista);
-        gestor->fillMenuByQuery(objLista, "selectListaRoms", &parms, LANZARROM);
-        delete gestor;
+        gestorRoms->fillMenuByQuery(objLista, "selectListaRoms", &parms, LANZARROM);
 
         Object *titulo = objMenu->getObjByName(TITLESCREEN);
-        titulo->setLabel("ROMS: " + Constant::TipoToStr(objLista->getSize()));
+        titulo->setLabel(objEmu->getListNames()->get(objEmu->getPosActualLista()) + " - " + Constant::TipoToStr(objLista->getSize()) + " juegos");
 
         if (objLista->getObjectType() == GUILISTBOX){
-            ((UIList *)objLista)->addElemLista("Volver", "", bullet_go, MENUJUEGOS);
+            ((UIList *)objLista)->addElemLista("Volver", "idprog=" + idprog, bullet_go, MENUJUEGOS);
         } else if (objLista->getObjectType() == GUILISTGROUPBOX){
             vector <ListGroupCol *> miFila;
-            miFila.push_back(new ListGroupCol("Volver", "", bullet_go, MENUJUEGOS));
+            miFila.push_back(new ListGroupCol("Volver", "idprog=" + idprog, bullet_go, MENUJUEGOS));
             miFila.push_back(new ListGroupCol("", "", bullet_go, MENUJUEGOS));
             ((UIListGroup *)objLista)->addElemLista(miFila);
         }
+        setInfoRomValues();
 
 
     } catch (Excepcion &e) {
@@ -1515,16 +1588,14 @@ bool Iofrontend::actualizarRoms(){
         ignoreButtonRepeats = true;
         //tmenu_gestor_objects *objMenu = ObjectsMenu[menu];
         showMessage("Actualizando roms. Espere un momento...", 1);
-        Gestorroms *gestor = new Gestorroms(dirInicial);
 
-        Thread<Gestorroms> *thread = new Thread<Gestorroms>(gestor, &Gestorroms::actualizarRoms);
+        Thread<Gestorroms> *thread = new Thread<Gestorroms>(gestorRoms, &Gestorroms::actualizarRoms);
         if (thread->start())
             std::cout << "Thread started with id: " << thread->getThreadID() << std::endl;
         //thread->join();
         pintarIconoProcesando(thread);
 
         clearScr();
-        delete gestor;
         delete thread;
 
     } catch (Excepcion &e) {
@@ -1533,14 +1604,15 @@ bool Iofrontend::actualizarRoms(){
     return false;
 }
 
+
+
 /**
 *
 */
 bool Iofrontend::importRetroarchConfig(){
     ignoreButtonRepeats = true;
-    Gestorroms *gestor = new Gestorroms(dirInicial);
     showMessage("Importando configuracion. Espere un momento...", 1);
-    Thread<Gestorroms> *thread = new Thread<Gestorroms>(gestor, &Gestorroms::importRetroarchConfig);
+    Thread<Gestorroms> *thread = new Thread<Gestorroms>(gestorRoms, &Gestorroms::importRetroarchConfig);
     if (thread->start())
         std::cout << "Thread started with id: " << thread->getThreadID() << std::endl;
     //thread->join();
@@ -1549,7 +1621,6 @@ bool Iofrontend::importRetroarchConfig(){
     clearScr();
     actualizarRoms();
 
-    delete gestor;
     delete thread;
     return false;
 }
@@ -1560,8 +1631,7 @@ bool Iofrontend::importRetroarchConfig(){
 bool Iofrontend::lanzarPrograma(string claves){
     ignoreButtonRepeats = true;
     string sqlwhere = "";
-    Gestorroms *gestor = new Gestorroms(dirInicial);
-    sqlwhere = gestor->parserSQLWhere(claves);
+    sqlwhere = gestorRoms->parserSQLWhere(claves);
 
     string sql = "select e.RUTAEMU, e.PARMSEMU, r.NOMBRE, e.RUTAROMS || ru.RUTA, e.DESCOMPRIMIR, e.SEPARARUTAPARM, e.FIXOPTION";
     sql.append(" from ROMS r, EMULADOR e, RUTAS ru ");
@@ -1569,8 +1639,7 @@ bool Iofrontend::lanzarPrograma(string claves){
     sql.append(sqlwhere);
 
     Traza::print("Ejecutando query: " + sql, W_DEBUG);
-    vector<vector<string> > result = gestor->getRowQuery(sql);
-    delete gestor;
+    vector<vector<string> > result = gestorRoms->getRowQuery(sql);
 
     FileLaunch emulInfo;
     Dirutil *dirio = new Dirutil();
@@ -1585,7 +1654,7 @@ bool Iofrontend::lanzarPrograma(string claves){
         emulInfo.nombrerom = row.at(2);
         emulInfo.parmsexe = row.at(1);
         emulInfo.descomprimir = (row.at(4) == "S" ? true : false );
-        emulInfo.fixoption = row.at(6);
+        emulInfo.fixoption = (row.at(6) == "S" ? true : false );
         //Realizamos comprobaciones para lanzar el programa. Util para copiar dll's
         //que activan directdraw en windows 8
         comprobarFixesSO(&emulInfo);
@@ -1597,7 +1666,9 @@ bool Iofrontend::lanzarPrograma(string claves){
     Traza::print("Iniciando SDL", W_DEBUG);
     initSDL(false);
     //Repintamos la imagen de fondo de la pantalla de lanzamiento de las roms
-    drawUIPicture(ObjectsMenu[PANTALLAROMS]->getObjByName("ImgEmulador"));
+    ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->setImgDrawed(false);
+    drawUIPicture(ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador"));
+
     Traza::print("SDL Iniciado con exito", W_DEBUG);
     return false;
 }
@@ -1612,16 +1683,17 @@ void Iofrontend::comprobarFixesSO(FileLaunch *emulInfo){
     //Copiaremos la dll correspondiente al directorio del emulador
     string dllOrigen = dirInicial + Constant::getFileSep() + "fixesOS" + Constant::getFileSep();
     string dllDestino = emulInfo->rutaexe + Constant::getFileSep() + "ddraw.dll";
+    string fixddraw = gestorRoms->getParameter("FIXDDRAW");
 
-    if (emulInfo->fixoption == "1"){
+    if (fixddraw == "1"){
         //Se aplica fix para windows 8
         dllOrigen = dllOrigen + "ddraw8.dll";
-    } else if (emulInfo->fixoption == "2"){
+    } else if (fixddraw == "2"){
         //Se aplica fix para windows 8.1
         dllOrigen = dllOrigen + "ddraw8_1.dll";
     }
 
-    if (emulInfo->fixoption != "0" && dir.existe(dllOrigen) && !dir.isDir(dllOrigen)){
+    if (emulInfo->fixoption && dir.existe(dllOrigen) && !dir.isDir(dllOrigen)){
         Traza::print("Copiando dll desde: " + dllOrigen + " a: " + dllDestino, W_DEBUG);
         //Copiamos la dll al directorio del emulador
         dir.copyFile(dllOrigen, dllDestino);
@@ -1865,6 +1937,170 @@ UIPopupMenu * Iofrontend::addPopup(int pantalla, string popupName, string caller
 }
 
 /**
+* Desde este menu podremos mostrar por pantalla la informacion de las roms de cada emulador
+*/
+bool Iofrontend::procesarMenuActual(tmenu_gestor_objects *objMenu, tEvento *evento){
+
+    static unsigned long lastClick = 0;
+    static unsigned long lastTitleUpdate = 0;
+    static int pos = -1;
+
+
+    try{
+        if (SDL_GetTicks() - lastTitleUpdate > 1000){
+            UIArt *titulo = (UIArt *) ObjectsMenu[this->getSelMenu()]->getObjByName(TITLESCREEN);
+            size_t posTextScrapping = titulo->getLabel().find(" | ");
+            string label = titulo->getLabel();
+            if (posTextScrapping != string::npos){
+                label = label.substr(0, posTextScrapping);
+            }
+
+            if (gestorRoms->isScrappingNow()){
+                titulo->setLabel(label + " | " + "Scrapping: " + gestorRoms->getPlatform() + " - " + gestorRoms->getProgress()) ;
+            } else {
+                titulo->setLabel(label);
+            }
+            lastTitleUpdate = SDL_GetTicks();
+        }
+    } catch (Excepcion &e){
+        //No realizamos ninguna accion en el catch porque no es necesario
+    }
+
+
+
+    if (this->getSelMenu() == PANTALLAGROUPLIST){
+        //Implementamos un retraso para cargar la informacion de los emuladores, sino se intentaria cargar
+        //para cada pulsacion del teclado, lo que podria sobrecargar el sistema
+
+        if (SDL_GetTicks() - lastClick > 200 && SDL_GetTicks() - lastClick < 2000){
+            UIListGroup * listaGrupo = (UIListGroup *) ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("listaGrupoRoms");
+            if (pos != listaGrupo->getPosActualLista()){
+                setInfoRomValues();
+                pos = listaGrupo->getPosActualLista();
+            }
+        }
+        //Procesamos los eventos del teclado
+        if (evento->isKey || evento->isJoy || (evento->isMouse && evento->mouse_state == SDL_PRESSED &&
+                                               (evento->mouse == MOUSE_BUTTON_WHEELDOWN || evento->mouse == MOUSE_BUTTON_WHEELUP
+                                                || evento->mouse == MOUSE_BUTTON_LEFT)) ){
+            if (evento->key == SDLK_UP || evento->joy == JoyMapper::getJoyMapper(JOY_BUTTON_UP) || (evento->mouse == MOUSE_BUTTON_WHEELUP)
+                       || evento->key == SDLK_DOWN || evento->joy == JoyMapper::getJoyMapper(JOY_BUTTON_DOWN) || evento->mouse == MOUSE_BUTTON_WHEELDOWN
+                       || evento->key == SDLK_PAGEDOWN || evento->joy == JoyMapper::getJoyMapper(JOY_BUTTON_R) || evento->key == SDLK_PAGEUP
+                       || evento->joy == JoyMapper::getJoyMapper(JOY_BUTTON_L) || evento->key == SDLK_END || evento->key == SDLK_HOME
+                       || (evento->isMouse && evento->mouse == MOUSE_BUTTON_LEFT && evento->mouse_state == SDL_PRESSED)){
+                //Guardamos el momento en el que hemos hecho click para procesar la accion posteriormente. VER LLAMADA a setInfoRomValues();
+                //de mas arriba
+                lastClick = SDL_GetTicks();
+            } else if (evento->key == SDLK_F3 && evento->keyjoydown || evento->joy == JoyMapper::getJoyMapper(JOY_BUTTON_SELECT)){
+                tmenu_gestor_objects *objMenu = ObjectsMenu[getSelMenu()];
+                UIListGroup * listaGrupo = (UIListGroup *) objMenu->getObjByName("listaGrupoRoms");
+                string rom = listaGrupo->getValue(listaGrupo->getSize() - 1);
+
+                showMenuEmergente(PANTALLAOPCIONESROM, "ImgFondoRoms");
+                objMenu = ObjectsMenu[PANTALLAOPCIONESROM];
+                objMenu->getObjByName("btnScrapGame")->setTag(rom);
+            }
+        }
+    }
+}
+
+/**
+* Muestra el menu pasado por parametro como si fuera emergente, dejando el menu anterior
+* difuminado sobre el fondo
+*/
+void Iofrontend::showMenuEmergente(int menu, string objImagenFondo){
+    try{
+        //Procesamos el menu actual para que se vuelva a repintar
+        procesarControles(ObjectsMenu[getSelMenu()], new tEvento(), NULL);
+        //Seleccionamos el menu que queremos mostrar como si fuese emergente
+        tmenu_gestor_objects *objMenu = ObjectsMenu[menu];
+        //Realizamos una captura de pantalla en el objeto imagen de fondo del menu de destino
+        UIPicture * fondoImg = (UIPicture *) objMenu->getObjByName(objImagenFondo);
+        //Le damos un toque mas oscuro a la imagen
+        fondoImg->setAlpha(150);
+        //Obtenemos una captura de la pantalla entera
+        takeScreenShot(&fondoImg->getImgGestor()->surface);
+        //Seleccionamos el menu de destino y procesamos sus controles para que se pinten
+        setSelMenu(menu);
+        tEvento askEvento;
+        clearEvento(&askEvento);
+        procesarControles(objMenu, &askEvento, NULL);
+    } catch (Excepcion &e) {
+         Traza::print("Excepcion showMenuEmergente: " + string(e.getMessage()), W_ERROR);
+    }
+
+}
+
+/**
+*
+*/
+DWORD Iofrontend::setInfoRomValues(){
+    tmenu_gestor_objects *objMenu = ObjectsMenu[PANTALLAGROUPLIST];
+    UIListGroup * listaGrupo = (UIListGroup *) objMenu->getObjByName("listaGrupoRoms");
+    UITextElementsArea *textElems = (UITextElementsArea *)objMenu->getObjByName("textosBox");
+    textElems->setImgDrawed(false);
+    int pos = listaGrupo->getPosActualLista();
+    if (pos >= 0 && pos < listaGrupo->getSize()-1 && listaGrupo->isShowLetraPopup() == false ){
+        string value = listaGrupo->getValue(pos);
+        Traza::print(value, W_PARANOIC);
+        vector <string> infoRom = Constant::split(value,",");
+
+        string idprog = Constant::split(infoRom.at(0), "=").at(1);
+        string idrom = Constant::split(infoRom.at(1), "=").at(1);
+
+        Traza::print("idrom: " + idrom + ";" + "idprog: " + idprog, W_PARANOIC);
+        gestorRoms->getDb()->prepareStatement("selectInfoRom");
+        gestorRoms->getDb()->setString(0,idprog);
+        gestorRoms->getDb()->setString(1,idrom);
+
+        vector<vector<string> > result = gestorRoms->getDb()->executeQuery();
+
+
+        if (result.size() > 0){
+            vector<string> row = result.at(0);
+            textElems->setFieldText("txtPlayers", row.at(0));
+            textElems->setFieldText("txtGenre", row.at(2));
+            textElems->setFieldText("txtReleased", row.at(3));
+            textElems->setFieldText("txtLastPlayed", "0");
+            textElems->setFieldText("txtTimesPlayed", "0");
+            textElems->setFieldText("txtDescripcion", row.at(5));
+            textElems->setFieldText("txtPublisher", row.at(6));
+            textElems->setFieldText("txtDeveloper", row.at(7));
+            textElems->setFieldText("txtRating", row.at(8));
+
+            string directory = Constant::getAppDir()
+            + FILE_SEPARATOR + DIR_IMG_ROMS_IMGS;
+
+            if (!row.at(4).empty() && row.at(4).at(0) == FILE_SEPARATOR){
+                directory.append(row.at(4));
+            } else {
+                directory.append(FILE_SEPARATOR + idprog);
+                directory.append(FILE_SEPARATOR + row.at(4));
+            }
+
+            UIPicture* pict = ((UIPicture*) objMenu->getObjByName("ImgBoxArt"));
+            pict->clearImg();
+            pict->loadImgFromFile(directory);
+            pict->setCentrado(true);
+            pict->setBestfit(true);
+
+        } else {
+            textElems->setFieldText("txtPlayers", "");
+            textElems->setFieldText("txtGenre", "");
+            textElems->setFieldText("txtReleased", "");
+            textElems->setFieldText("txtLastPlayed", "0");
+            textElems->setFieldText("txtTimesPlayed", "0");
+            textElems->setFieldText("txtDescripcion", "");
+            textElems->setFieldText("txtPublisher", "");
+            textElems->setFieldText("txtDeveloper", "");
+            textElems->setFieldText("txtRating", "");
+            ((UIPicture*) objMenu->getObjByName("ImgBoxArt"))->clearImg();
+        }
+    }
+    return 1;
+}
+
+/**
 *
 */
 bool Iofrontend::procesarPopups(tmenu_gestor_objects *objMenu, tEvento *evento){
@@ -1911,6 +2147,8 @@ bool Iofrontend::procesarPopups(tmenu_gestor_objects *objMenu, tEvento *evento){
 
     return true;
 }
+
+
 
 /**
 * Copia el texto seleccionado desde un popup al elemento que lo llama. Por ahora solo lo hace
@@ -1966,4 +2204,147 @@ int Iofrontend::accionConfigEmusPopup(tEvento *evento){
         }
     }
     return 0;
+}
+
+/**
+*
+*/
+void Iofrontend::crearComboSistemas(){
+    tmenu_gestor_objects *objMenu  = ObjectsMenu[PANTALLAOPCIONRUTAS];
+    UIComboBox * comboObj = (UIComboBox *) objMenu->getObjByName("ComboPlatform");
+    comboObj->addElemLista("- Elige -","");
+    comboObj->addElemLista("3DO","3DO");
+    comboObj->addElemLista("Amiga","Amiga");
+    comboObj->addElemLista("Amstrad CPC","Amstrad CPC");
+    comboObj->addElemLista("Android","Android");
+    comboObj->addElemLista("Arcade","Arcade");
+    comboObj->addElemLista("Atari 2600","Atari 2600");
+    comboObj->addElemLista("Atari 5200","Atari 5200");
+    comboObj->addElemLista("Atari 7800","Atari 7800");
+    comboObj->addElemLista("Atari Jaguar","Atari Jaguar");
+    comboObj->addElemLista("Atari Jaguar CD","Atari Jaguar CD");
+    comboObj->addElemLista("Atari Lynx","Atari Lynx");
+    comboObj->addElemLista("Atari XE","Atari XE");
+    comboObj->addElemLista("Colecovision","Colecovision");
+    comboObj->addElemLista("Commodore 64","Commodore 64");
+    comboObj->addElemLista("Fairchild Channel F","Fairchild Channel F");
+    comboObj->addElemLista("Intellivision","Intellivision");
+    comboObj->addElemLista("iOS","iOS");
+    comboObj->addElemLista("Mac OS","Mac OS");
+    comboObj->addElemLista("Magnavox Odyssey 2","Magnavox Odyssey 2");
+    comboObj->addElemLista("Microsoft Xbox","Microsoft Xbox");
+    comboObj->addElemLista("Microsoft Xbox 360","Microsoft Xbox 360");
+    comboObj->addElemLista("Microsoft Xbox One","Microsoft Xbox One");
+    comboObj->addElemLista("MSX","MSX");
+    comboObj->addElemLista("Neo Geo Pocket","Neo Geo Pocket");
+    comboObj->addElemLista("Neo Geo Pocket Color","Neo Geo Pocket Color");
+    comboObj->addElemLista("NeoGeo","NeoGeo");
+    comboObj->addElemLista("Nintendo 3DS","Nintendo 3DS");
+    comboObj->addElemLista("Nintendo 64","Nintendo 64");
+    comboObj->addElemLista("Nintendo DS","Nintendo DS");
+    comboObj->addElemLista("Nintendo (NES)","Nintendo Entertainment System (NES)");
+    comboObj->addElemLista("Nintendo Game Boy","Nintendo Game Boy");
+    comboObj->addElemLista("Nintendo Game Boy Advance","Nintendo Game Boy Advance");
+    comboObj->addElemLista("Nintendo Game Boy Color","Nintendo Game Boy Color");
+    comboObj->addElemLista("Nintendo GameCube","Nintendo GameCube");
+    comboObj->addElemLista("Nintendo Virtual Boy","Nintendo Virtual Boy");
+    comboObj->addElemLista("Nintendo Wii","Nintendo Wii");
+    comboObj->addElemLista("Nintendo Wii U","Nintendo Wii U");
+    comboObj->addElemLista("Ouya","Ouya");
+    comboObj->addElemLista("PC","PC");
+    comboObj->addElemLista("Philips CD-i","Philips CD-i");
+    comboObj->addElemLista("Sega 32X","Sega 32X");
+    comboObj->addElemLista("Sega CD","Sega CD");
+    comboObj->addElemLista("Sega Dreamcast","Sega Dreamcast");
+    comboObj->addElemLista("Sega Game Gear","Sega Game Gear");
+    comboObj->addElemLista("Sega Genesis","Sega Genesis");
+    comboObj->addElemLista("Sega Master System","Sega Master System");
+    comboObj->addElemLista("Sega Mega Drive","Sega Mega Drive");
+    comboObj->addElemLista("Sega Saturn","Sega Saturn");
+    comboObj->addElemLista("Sinclair ZX Spectrum","Sinclair ZX Spectrum");
+    comboObj->addElemLista("Sony Playstation","Sony Playstation");
+    comboObj->addElemLista("Sony Playstation 2","Sony Playstation 2");
+    comboObj->addElemLista("Sony Playstation 3","Sony Playstation 3");
+    comboObj->addElemLista("Sony Playstation 4","Sony Playstation 4");
+    comboObj->addElemLista("Sony Playstation Vita","Sony Playstation Vita");
+    comboObj->addElemLista("Sony PSP","Sony PSP");
+    comboObj->addElemLista("Super Nintendo (SNES)","Super Nintendo (SNES)");
+    comboObj->addElemLista("TurboGrafx 16","TurboGrafx 16");
+    comboObj->addElemLista("WonderSwan","WonderSwan");
+    comboObj->addElemLista("WonderSwan Color","WonderSwan Color");
+}
+
+/**
+*
+*/
+int Iofrontend::accionesBtnAceptarOpcionesGenerales(tEvento *evento){
+    tmenu_gestor_objects *objMenu = ObjectsMenu[MENUOPCIONESGENERALES];
+    try{
+        string valueFixes  = ((UIComboBox *)objMenu->getObjByName("ComboFixesGeneral"))->getSelectedValue();
+        if (gestorRoms->updateParameter("FIXDDRAW", valueFixes)){
+            showMessage("Opciones modificadas", 2000);
+        }
+    } catch (Excepcion &e) {
+         Traza::print("Excepcion accionesBtnAceptarOpcionesGenerales" + string(e.getMessage()), W_ERROR);
+    }
+    return 0;
+}
+
+/**
+*
+*/
+bool Iofrontend::cargarOpcionesGenerales(){
+    tmenu_gestor_objects *objMenu = ObjectsMenu[MENUOPCIONESGENERALES];
+    ((UIComboBox *)objMenu->getObjByName("ComboFixesGeneral"))->selectValueInList(gestorRoms->getParameter("FIXDDRAW"));
+    return true;
+}
+
+/**
+*
+*/
+int Iofrontend::buscarInfoRoms(tEvento *evento){
+    tmenu_gestor_objects *objMenu = ObjectsMenu[PANTALLAOPCIONESROM];
+    string rom = objMenu->getObjByName("btnScrapGame")->getTag();
+
+    vector<string> tmp = Constant::split(rom, ",");
+    if (tmp.size() >= 1){
+        string idprog = Constant::split(tmp.at(0),"=").at(1);
+        if (!idprog.empty()){
+            Traza::print("SCRAPPING: " + idprog, W_DEBUG);
+            gestorRoms->setThEmuID(idprog);
+            Thread<Gestorroms> *thread = new Thread<Gestorroms>(gestorRoms, &Gestorroms::thScrapSystem);
+            thread->start();
+            setSelMenu(PANTALLAGROUPLIST);
+            cargarListaRoms(PANTALLAGROUPLIST, idprog, "listaGrupoRoms");
+        }
+    }
+}
+
+/**
+*
+*/
+bool Iofrontend::scrapAllRoms(){
+    Thread<Gestorroms> *thread = new Thread<Gestorroms>(gestorRoms, &Gestorroms::thScrapAllSystem);
+    thread->start();
+    return true;
+}
+
+/**
+*
+*/
+int Iofrontend::volverInfoRoms(tEvento *evento){
+
+    tmenu_gestor_objects *objMenu = ObjectsMenu[PANTALLAOPCIONESROM];
+    string rom = objMenu->getObjByName("btnScrapGame")->getTag();
+
+    vector<string> tmp = Constant::split(rom, ",");
+    if (tmp.size() >= 1){
+        if (tmp.at(0).find("=") != string::npos){
+            string idprog = Constant::split(tmp.at(0),"=").at(1);
+            if (!idprog.empty()){
+                setSelMenu(PANTALLAGROUPLIST);
+                cargarListaRoms(PANTALLAGROUPLIST, idprog, "listaGrupoRoms");
+            }
+        }
+    }
 }
