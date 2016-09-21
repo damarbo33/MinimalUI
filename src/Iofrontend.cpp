@@ -11,6 +11,7 @@
 */
 Iofrontend::Iofrontend(){
     Traza::print("Constructor de IoFrontend", W_DEBUG);
+    setWindowTitle("Emulation Frontend");
     convColor = new Colorutil();
     imgGestor = new ImagenGestor();
     dirInicial = Constant::getAppDir();
@@ -437,7 +438,7 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
                 if (object->getObjectType() == GUICOMBOBOX){
                     objPostProcesado.push_back(object);
                 } else {
-                    drawObject(object);
+                    drawObject(object, evento);
                 }
             }
 
@@ -450,7 +451,7 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
         //para que se dibujen sobre el resto
         for(vector<Object *>::iterator it = objPostProcesado.begin(); it < objPostProcesado.end(); ++it){
             Object * obj = *it;
-            drawObject(obj);
+            drawObject(obj, evento);
         }
         objPostProcesado.clear();
 

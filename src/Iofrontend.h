@@ -27,6 +27,30 @@
 #include "uiprogressbar.h"
 #include "uipopupmenu.h"
 
+//*********************************************************************************/
+//Cuidado con no sobrepasar el numero de elementos que define la constante MAXMENU
+//*********************************************************************************/
+typedef enum { MENUINICIAL,     //0
+            MENUJUEGOS,
+            MENUOPCIONES,
+            PANTALLAOPCIONRUTAS,
+            PANTALLAEDITAREMU,
+            PANTALLAEDITARRUTAS,
+            PANTALLAPREGUNTA,
+            PANTALLALISTADODIR,
+            PANTALLAROMS,
+            LANZARROM,
+            PANTALLACONTROLES,
+            PANTALLACONFIRMAR,
+            PANTALLABROWSER2,
+            PANTALLAOPENMEDIA,
+            PANTALLAREPRODUCTOR,
+            MENUUTILS,
+            MENUPOPUPS,
+            PANTALLAGROUPLIST,
+            MAXMENU
+    } enumMenus;
+
 
 class Iofrontend : public Ioutil{
 

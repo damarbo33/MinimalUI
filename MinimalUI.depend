@@ -560,3 +560,575 @@
 	<iostream>
 	<vector>
 
+1474455667 source:c:\github\proyectos\minimalui\resource.rc
+
+1474455667 source:c:\github\proyectos\minimalui\src\database.cpp
+	"Database.h"
+
+1474455667 c:\github\proyectos\minimalui\src\database.h
+	"sqlite3.h"
+	"Excepcion.h"
+	"roms/estructuras.h"
+	"Dirutil.h"
+	"roms/EmuProperties.h"
+	"tinyxml/tinyxml.h"
+	<string>
+	<vector>
+	<iostream>
+
+1458681137 c:\github\externallibs\sqllite\src\sqlite3.h
+	<stdarg.h>
+
+1445247084 c:\github\externallibs\uiobjects\src\excepcion.h
+	<iostream>
+	<cmath>
+	"Traza.h"
+	"Constant.h"
+
+1398697644 c:\github\externallibs\uiobjects\src\traza.h
+	<stdio.h>
+	<time.h>
+	<string>
+	<limits.h>
+	<iostream>
+	<fstream>
+	"Constant.h"
+
+1474030063 c:\github\externallibs\uiobjects\src\constant.h
+	<fstream>
+	<sstream>
+	<string.h>
+	<vector>
+	<typeinfo>
+	<ctime>
+	<dirent.h>
+	<stdio.h>
+	<limits.h>
+	<algorithm>
+	<cctype>
+	<iomanip>
+	<cstddef>
+	<stdint.h>
+	<windows.h>
+
+1474455667 c:\github\proyectos\minimalui\src\roms\estructuras.h
+	"fileprops.h"
+	"Traza.h"
+	"listaIni.h"
+
+1401208624 c:\github\externallibs\uiobjects\src\fileprops.h
+	<string>
+
+1461135462 c:\github\externallibs\uiobjects\src\listaini.h
+	"ListaSimple.h"
+
+1461135089 c:\github\externallibs\uiobjects\src\listasimple.h
+	<string.h>
+	<stdio.h>
+	"Excepcion.h"
+	"Fileio.h"
+	<typeinfo>
+	"Constant.h"
+	"fileprops.h"
+
+1433746723 c:\github\externallibs\uiobjects\src\fileio.h
+	<iostream>
+	<fstream>
+	<string>
+	<algorithm>
+	<vector>
+	<iterator>
+	"Excepcion.h"
+	"Traza.h"
+
+1462536181 c:\github\externallibs\uiobjects\src\dirutil.h
+	"fileprops.h"
+	<dirent.h>
+	<sys/stat.h>
+	<sys/types.h>
+	<unistd.h>
+	"Traza.h"
+	"ListaSimple.h"
+	<stdio.h>
+	<windows.h>
+
+1474455667 c:\github\proyectos\minimalui\src\roms\emuproperties.h
+
+1305393898 c:\github\externallibs\uiobjects\src\tinyxml\tinyxml.h
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<assert.h>
+	<string>
+	<iostream>
+	<sstream>
+	"tinystr.h"
+
+1305393898 c:\github\externallibs\uiobjects\src\tinyxml\tinystr.h
+	<assert.h>
+	<string.h>
+
+1474455667 source:c:\github\proyectos\minimalui\src\icogestor.cpp
+	"Icogestor.h"
+
+1474455667 c:\github\proyectos\minimalui\src\icogestor.h
+	"Dirutil.h"
+	"Fileio.h"
+	"Constant.h"
+	"SDL/SDL.h"
+	"SDL/SDL_image.h"
+	"SDL/SDL_rotozoom.h"
+
+1474464852 source:c:\github\proyectos\minimalui\src\iofrontend.cpp
+	"Iofrontend.h"
+	"uilistgroup.h"
+	"beans/listgroupcol.h"
+	"uilistcommon.h"
+
+1474457134 c:\github\proyectos\minimalui\src\iofrontend.h
+	<string>
+	<vector>
+	"Ioutil.h"
+	"Colorutil.h"
+	"Menuobject.h"
+	"ImagenGestor.h"
+	"Icogestor.h"
+	"Launcher.h"
+	"roms/gestorroms.h"
+	"thread.h"
+	"vlcplayer/vlcplayer.h"
+	"roms/EmuProperties.h"
+	"uipicture.h"
+	"uiinput.h"
+	"uipicture.h"
+	"uiart.h"
+	"uibutton.h"
+	"uiprogressbar.h"
+	"uipopupmenu.h"
+
+1474459405 c:\github\proyectos\minimalui\src\ioutil.h
+	<iostream>
+	<map>
+	<cmath>
+	<sstream>
+	"SDL/SDL.h"
+	"SDL/SDL_ttf.h"
+	"SDL/SDL_image.h"
+	"SDL/SDL_rotozoom.h"
+	<SDL/SDL_mixer.h>
+	"Fileio.h"
+	"Constant.h"
+	"ImagenGestor.h"
+	"Traza.h"
+	"Menuobject.h"
+	"Icogestor.h"
+	"joymapper.h"
+	"thread.h"
+	"uiinput.h"
+	"uiprogressbar.h"
+	"uicombobox.h"
+	"cursor.h"
+	"listaIni.h"
+	"Colorutil.h"
+
+1474455667 c:\github\proyectos\minimalui\src\sdl\sdl_draw.h
+	<SDL/SDL.h>
+
+1471420960 c:\github\externallibs\uiobjects\src\imagengestor.h
+	"Fileio.h"
+	"SHA1.h"
+	"ListaSimple.h"
+	"Excepcion.h"
+	"Dirutil.h"
+	"SDL/SDL.h"
+	"SDL/SDL_image.h"
+	"SDL/SDL_rotozoom.h"
+	"common.h"
+
+1386695698 c:\github\externallibs\uiobjects\src\sha1.h
+	<memory.h>
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+
+1459872931 c:\github\externallibs\uiobjects\src\common.h
+
+1459872931 c:\github\externallibs\uiobjects\src\menuobject.h
+	<sstream>
+	<string.h>
+	"Constant.h"
+	"Excepcion.h"
+	"ListaSimple.h"
+	"ImagenGestor.h"
+	"joymapper.h"
+	"object.h"
+	"uilabel.h"
+	"uibutton.h"
+	"uilist.h"
+	"uiprogressbar.h"
+	"uiart.h"
+	"uicheck.h"
+	"uipanel.h"
+	"uipanelborder.h"
+	"uipicture.h"
+	"uiinput.h"
+	"uipopupmenu.h"
+	"uicombobox.h"
+	"uilistgroup.h"
+	"uitextelementsarea.h"
+	"uispectrum.h"
+	"uislider.h"
+
+1391555033 c:\github\externallibs\uiobjects\src\joymapper.h
+	"Constant.h"
+	"ListaSimple.h"
+
+1459963209 c:\github\externallibs\uiobjects\src\object.h
+	"common.h"
+	<stdlib.h>
+	<stdio.h>
+	<iostream>
+	<string>
+	"ImagenGestor.h"
+	"joymapper.h"
+
+1398685384 c:\github\externallibs\uiobjects\src\uilabel.h
+	<object.h>
+
+1432656369 c:\github\externallibs\uiobjects\src\uibutton.h
+	<object.h>
+
+1431678014 c:\github\externallibs\uiobjects\src\uilist.h
+	<uilistcommon.h>
+
+1458148481 c:\github\externallibs\uiobjects\src\uilistcommon.h
+	<object.h>
+
+1459963209 c:\github\externallibs\uiobjects\src\uiprogressbar.h
+	<object.h>
+
+1398883465 c:\github\externallibs\uiobjects\src\uiart.h
+	<object.h>
+
+1398758562 c:\github\externallibs\uiobjects\src\uicheck.h
+	<object.h>
+
+1456832654 c:\github\externallibs\uiobjects\src\uipanel.h
+	<object.h>
+
+1398769372 c:\github\externallibs\uiobjects\src\uipanelborder.h
+	<uipanel.h>
+
+1433100128 c:\github\externallibs\uiobjects\src\uipicture.h
+	<object.h>
+
+1460132505 c:\github\externallibs\uiobjects\src\uiinput.h
+	<object.h>
+
+1401376350 c:\github\externallibs\uiobjects\src\uipopupmenu.h
+	<uilist.h>
+	<SDL/SDL_ttf.h>
+
+1458661342 c:\github\externallibs\uiobjects\src\uicombobox.h
+	<uilist.h>
+
+1432037457 c:\github\externallibs\uiobjects\src\uilistgroup.h
+	"uilistcommon.h"
+	"beans/listgroupcol.h"
+	<algorithm>
+
+1431930073 c:\github\externallibs\uiobjects\src\beans\listgroupcol.h
+	<iostream>
+	<string>
+	<iostream>
+	<vector>
+
+1463466256 c:\github\externallibs\uiobjects\src\uitextelementsarea.h
+	<object.h>
+
+1462280727 c:\github\externallibs\uiobjects\src\uispectrum.h
+	<object.h>
+
+1459872931 c:\github\externallibs\uiobjects\src\uislider.h
+	"uiprogressbar.h"
+
+1458551372 c:\github\externallibs\uiobjects\src\thread.h
+	<Windows.h>
+	<pthread.h>
+	"Constant.h"
+	"gmutex.h"
+
+1458558744 c:\github\externallibs\uiobjects\src\gmutex.h
+	<pthread.h>
+	<pthread.h>
+
+1474455667 c:\github\proyectos\minimalui\src\roms\gestorroms.h
+	"../Database.h"
+	"ListaSimple.h"
+	"Dirutil.h"
+	"Menuobject.h"
+	"estructuras.h"
+	"fileprops.h"
+	"EmuProperties.h"
+	"uilist.h"
+
+1459963209 c:\github\externallibs\uiobjects\src\colorutil.h
+	<stdio.h>
+	<iostream>
+	"Constant.h"
+
+1474455667 c:\github\proyectos\minimalui\src\launcher.h
+	<string.h>
+	<unistd.h>
+	<sys/types.h>
+	<errno.h>
+	<stdio.h>
+	<sys/wait.h>
+	<stdlib.h>
+	<vector>
+	"unzip/unziptool.h"
+	"Dirutil.h"
+	"filelaunch.h"
+	<algorithm>
+	<functional>
+	<cctype>
+	<locale>
+	<fcntl.h>
+
+1474455667 c:\github\proyectos\minimalui\src\unzip\unziptool.h
+	<unistd.h>
+	"zlib.h"
+	"unzip.h"
+	"crypt.h"
+	<stdio.h>
+	<iostream>
+	<fstream>
+	"Fileio.h"
+	"Dirutil.h"
+
+1459803101 c:\github\externallibs\ziputils\zlib\zlib.h
+	"zconf.h"
+
+1459803101 c:\github\externallibs\ziputils\zlib\zconf.h
+	<windows.h>
+	<sys/types.h>
+	<unistd.h>
+	<unixio.h>
+
+1459803100 c:\github\externallibs\ziputils\unzip\unzip.h
+	"../zlib/zlib.h"
+	"ioapi.h"
+
+1459803100 c:\github\externallibs\ziputils\unzip\ioapi.h
+
+1461324637 c:\github\externallibs\ziputils\unzip\crypt.h
+
+1474457234 c:\github\externallibs\uiobjects\src\filelaunch.h
+	<string>
+
+1474465355 c:\github\proyectos\minimalui\src\vlcplayer\vlcplayer.h
+	<stdio.h>
+	<stdint.h>
+	<math.h>
+	<stdlib.h>
+	<assert.h>
+	<SDL/SDL.h>
+	<SDL/SDL_mutex.h>
+	<vlc/vlc.h>
+	<string>
+	<iostream>
+	<limits.h>
+	"Ioutil.h"
+
+1464792123 c:\github\externallibs\vlc-2.2.4\sdk\include\vlc\vlc.h
+	<vlc/libvlc_structures.h>
+	<vlc/libvlc.h>
+	<vlc/libvlc_media.h>
+	<vlc/libvlc_media_player.h>
+	<vlc/libvlc_media_list.h>
+	<vlc/libvlc_media_list_player.h>
+	<vlc/libvlc_media_library.h>
+	<vlc/libvlc_media_discoverer.h>
+	<vlc/libvlc_events.h>
+	<vlc/libvlc_vlm.h>
+	<vlc/deprecated.h>
+
+1464792123 c:\github\externallibs\vlc-2.2.4\sdk\include\vlc\libvlc_structures.h
+	<stdint.h>
+
+1464792123 c:\github\externallibs\vlc-2.2.4\sdk\include\vlc\libvlc.h
+	<stdio.h>
+	<stdarg.h>
+	<vlc/libvlc_structures.h>
+
+1464792123 c:\github\externallibs\vlc-2.2.4\sdk\include\vlc\libvlc_media.h
+
+1464792123 c:\github\externallibs\vlc-2.2.4\sdk\include\vlc\libvlc_media_player.h
+	<stdbool.h>
+
+1464792123 c:\github\externallibs\vlc-2.2.4\sdk\include\vlc\libvlc_media_list.h
+
+1464792123 c:\github\externallibs\vlc-2.2.4\sdk\include\vlc\libvlc_media_list_player.h
+
+1464792123 c:\github\externallibs\vlc-2.2.4\sdk\include\vlc\libvlc_media_library.h
+
+1464792123 c:\github\externallibs\vlc-2.2.4\sdk\include\vlc\libvlc_media_discoverer.h
+
+1464792123 c:\github\externallibs\vlc-2.2.4\sdk\include\vlc\libvlc_events.h
+
+1464792123 c:\github\externallibs\vlc-2.2.4\sdk\include\vlc\libvlc_vlm.h
+
+1464792123 c:\github\externallibs\vlc-2.2.4\sdk\include\vlc\deprecated.h
+
+1474464843 source:c:\github\proyectos\minimalui\src\ioutil.cpp
+	"Ioutil.h"
+	"9001.png.h"
+	"font/Arimo_Regular.ttf.h"
+
+1474455667 source:c:\github\proyectos\minimalui\src\launcher.cpp
+	"Launcher.h"
+
+1474455667 source:c:\github\proyectos\minimalui\src\main.cpp
+	"main.h"
+	"Dirutil.h"
+
+1474455667 c:\github\proyectos\minimalui\src\main.h
+	<stdio.h>
+	"Ioutil.h"
+	"Iofrontend.h"
+
+1474455667 source:c:\github\proyectos\minimalui\src\roms\estructuras.cpp
+	"estructuras.h"
+
+1474457996 source:c:\github\proyectos\minimalui\src\roms\gestorroms.cpp
+	"gestorroms.h"
+
+1474455667 source:c:\github\proyectos\minimalui\src\sdl\sdl_draw.c
+	"SDL_draw.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<wchar.h>
+	"Draw_Pixel.c"
+	"Draw_Pixel.c"
+	"Draw_Pixel.c"
+	"Draw_Pixel.c"
+	"Draw_Line.c"
+	"Draw_Line.c"
+	"Draw_Line.c"
+	"Draw_Line.c"
+	"Draw_Circle.c"
+	"Draw_Circle.c"
+	"Draw_Circle.c"
+	"Draw_Circle.c"
+	"Draw_FillCircle.c"
+	"Draw_FillCircle.c"
+	"Draw_FillCircle.c"
+	"Draw_FillCircle.c"
+	"Draw_HLine.c"
+	"Draw_HLine.c"
+	"Draw_HLine.c"
+	"Draw_HLine.c"
+	"Draw_VLine.c"
+	"Draw_VLine.c"
+	"Draw_VLine.c"
+	"Draw_VLine.c"
+	"Draw_Rect.c"
+	"Draw_Rect.c"
+	"Draw_Rect.c"
+	"Draw_Rect.c"
+	"Draw_Ellipse.c"
+	"Draw_Ellipse.c"
+	"Draw_Ellipse.c"
+	"Draw_Ellipse.c"
+	"Draw_FillEllipse.c"
+	"Draw_FillEllipse.c"
+	"Draw_FillEllipse.c"
+	"Draw_FillEllipse.c"
+	"Draw_Round.c"
+	"Draw_Round.c"
+	"Draw_Round.c"
+	"Draw_Round.c"
+	"Draw_FillRound.c"
+	"Draw_FillRound.c"
+	"Draw_FillRound.c"
+	"Draw_FillRound.c"
+
+1474455667 c:\github\proyectos\minimalui\src\sdl\draw_pixel.c
+
+1474455667 c:\github\proyectos\minimalui\src\sdl\draw_line.c
+
+1474455667 c:\github\proyectos\minimalui\src\sdl\draw_circle.c
+
+1474455667 c:\github\proyectos\minimalui\src\sdl\draw_fillcircle.c
+
+1474455667 c:\github\proyectos\minimalui\src\sdl\draw_hline.c
+
+1474455667 c:\github\proyectos\minimalui\src\sdl\draw_vline.c
+
+1474455667 c:\github\proyectos\minimalui\src\sdl\draw_rect.c
+
+1474455667 c:\github\proyectos\minimalui\src\sdl\draw_ellipse.c
+
+1474455667 c:\github\proyectos\minimalui\src\sdl\draw_fillellipse.c
+
+1474455667 c:\github\proyectos\minimalui\src\sdl\draw_round.c
+
+1474455667 c:\github\proyectos\minimalui\src\sdl\draw_fillround.c
+
+1474455667 source:c:\github\proyectos\minimalui\src\unzip\unziptool.cpp
+	"unziptool.h"
+
+1474455667 source:c:\github\proyectos\minimalui\src\vlcplayer\vlcplayer.cpp
+	"vlcplayer.h"
+
+1432727672 c:\github\externallibs\uiobjects\src\cursor.h
+	"Constant.h"
+	"SDL/SDL.h"
+
+1458256032 c:\github\proyectos\minimalui\src\9001.png.h
+
+1455209140 c:\github\externallibs\uiobjects\src\font\arimo_regular.ttf.h
+
+1474465064 source:c:\github\externallibs\uiobjects\src\common\icogestor.cpp
+	"Icogestor.h"
+
+1474455667 c:\github\externallibs\uiobjects\src\common\icogestor.h
+	"Dirutil.h"
+	"Fileio.h"
+	"Constant.h"
+	"SDL/SDL.h"
+	"SDL/SDL_image.h"
+	"SDL/SDL_rotozoom.h"
+
+1474464843 source:c:\github\externallibs\uiobjects\src\common\ioutil.cpp
+	"Ioutil.h"
+	"9001.png.h"
+	"font/Arimo_Regular.ttf.h"
+
+1474459405 c:\github\externallibs\uiobjects\src\common\ioutil.h
+	<iostream>
+	<map>
+	<cmath>
+	<sstream>
+	"SDL/SDL.h"
+	"SDL/SDL_ttf.h"
+	"SDL/SDL_image.h"
+	"SDL/SDL_rotozoom.h"
+	<SDL/SDL_mixer.h>
+	"Fileio.h"
+	"Constant.h"
+	"ImagenGestor.h"
+	"Traza.h"
+	"Menuobject.h"
+	"Icogestor.h"
+	"joymapper.h"
+	"thread.h"
+	"uiinput.h"
+	"uiprogressbar.h"
+	"uicombobox.h"
+	"cursor.h"
+	"listaIni.h"
+	"Colorutil.h"
+

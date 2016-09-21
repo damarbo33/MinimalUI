@@ -42,13 +42,13 @@ DWORD Gestorroms::importRetroarchConfig(){
             for (unsigned int i=0; i < fileRetroarch->getSize(); i++){
                 linea = fileRetroarch->get(i);
                 if (linea.find("PATH") == 0){
-                    emuProps.emuProperties.rutaRoms = Constant::split(linea, '=').at(1);
+                    emuProps.emuProperties.rutaRoms = Constant::split(linea, "=").at(1);
                 } else if (linea.find("COMMAND") == 0){
-                    emuProps.emuProperties.rutaEmu = Constant::split(linea, '=').at(1);
+                    emuProps.emuProperties.rutaEmu = Constant::split(linea, "=").at(1);
                 } else if (linea.find("NAME") == 0){
-                    emuProps.emuProperties.nombreEmu = Constant::split(linea, '=').at(1);
+                    emuProps.emuProperties.nombreEmu = Constant::split(linea, "=").at(1);
                 } else if (linea.find("EXTENSION") == 0){
-                    emuProps.emuProperties.emuRomExt = Constant::split(linea, '=').at(1);
+                    emuProps.emuProperties.emuRomExt = Constant::split(linea, "=").at(1);
                 }
 
                 emuProps.emuProperties.parmsEmu = "";
@@ -317,7 +317,7 @@ void Gestorroms::cargarInfoRoms(Rominfo *infoDatos){
                 Data dato;
                 dato.setKey(linea.substr(0, pos));
 
-                inforom = Constant::split(linea, ';');
+                inforom = Constant::split(linea, ";");
                 //linea = inforom.size() > 3 ? inforom[3].substr(1) : "";
                 if (inforom.size() > 3){
                     dato.setValue(inforom[3].substr(1));
@@ -525,14 +525,14 @@ string Gestorroms::parserSQLWhere(string claves){
     string sqlwhere = "";
 
     if (claves.find(",") != string::npos){
-        vector<string> vectorClaves = Constant::split(claves, ',');
+        vector<string> vectorClaves = Constant::split(claves, ",");
         vector<string> valorClaves;
         string clave = "";
         string valor = "";
 
         for (unsigned int i=0; i < vectorClaves.size(); i++){
             if (vectorClaves.at(i).find("=") != string::npos){
-                valorClaves = Constant::split(vectorClaves.at(i), '=');
+                valorClaves = Constant::split(vectorClaves.at(i), "=");
                 if (valorClaves.size() > 0){
                     clave = valorClaves.at(0);
                     valor = valorClaves.at(1);

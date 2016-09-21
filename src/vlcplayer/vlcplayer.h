@@ -13,7 +13,7 @@
 #include <string>
 #include <iostream>
 #include <limits.h>
-#include "../Ioutil.h"
+#include "Ioutil.h"
 
 using namespace std;
 

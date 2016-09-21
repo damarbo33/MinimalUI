@@ -15,17 +15,17 @@
 					<Add option="-Os" />
 					<Add directory="src" />
 					<Add directory="src/vlcplayer" />
-					<Add directory="../../../ExternalLibs/curl-7.34.0-devel-mingw32/include" />
+					<Add directory="../../ExternalLibs/curl-7.34.0-devel-mingw32/include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add option="-lmingw32 -lSDLmain -lSDL -lSDL_image -lSDL_mixer -lSDL_ttf -lsdlgfx -lzipUtils -lsqllite" />
-					<Add library="..\..\..\ExternalLibs\libvlc\sdk\lib\libvlc.lib" />
-					<Add library="..\..\..\ExternalLibs\libvlc\sdk\lib\libvlccore.lib" />
-					<Add directory="../../../ExternalLibs/zipUtils/bin/Release" />
-					<Add directory="../../../ExternalLibs/sqllite/bin/Release" />
-					<Add directory="../../../ExternalLibs/libvlc/sdk/lib" />
-					<Add directory="../../../ExternalLibs/UIObjects/bin/Release" />
+					<Add library="../../ExternalLibs/vlc-2.2.4/sdk/lib/libvlc.lib" />
+					<Add library="../../ExternalLibs/vlc-2.2.4/sdk/lib/libvlccore.lib" />
+					<Add directory="../../ExternalLibs/zipUtils/bin/Release" />
+					<Add directory="../../ExternalLibs/sqllite/bin/Release" />
+					<Add directory="../../ExternalLibs/vlc-2.2.4/sdk/lib" />
+					<Add directory="../../ExternalLibs/UIObjects/bin/Release" />
 				</Linker>
 			</Target>
 			<Target title="raspberry">
@@ -36,17 +36,17 @@
 				<Compiler>
 					<Add option="-Os" />
 					<Add directory="src" />
-					<Add directory="../../../ExternalLibs/libvlc/vlc_hw_raspberry/include" />
+					<Add directory="../../ExternalLibs/vlc-2.2.4/vlc_hw_raspberry/include" />
 					<Add directory="src/vlcplayer" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add option="-lSDL -lSDL_gfx -lSDL_ttf -lfreetype -lSDL_image -ljpeg -lpng -lz -lSDL_mixer -lmikmod -lpthread -lzipUtils -lsqllite" />
-					<Add library="..\..\..\ExternalLibs\libvlc\vlc_hw_raspberry\lib\.libs\libvlc.so" />
-					<Add library="..\..\..\ExternalLibs\libvlc\vlc_hw_raspberry\src\.libs\libvlccore.so" />
-					<Add directory="../../../ExternalLibs/zipUtils/bin/raspberry" />
-					<Add directory="../../../ExternalLibs/sqllite/bin/raspberry" />
-					<Add directory="../../../ExternalLibs/UIObjects/bin/raspberry" />
+					<Add library="../../ExternalLibs/vlc-2.2.4/vlc_hw_raspberry/lib/.libs/libvlc.so" />
+					<Add library="../../ExternalLibs/vlc-2.2.4/vlc_hw_raspberry/src/.libs/libvlccore.so" />
+					<Add directory="../../ExternalLibs/zipUtils/bin/raspberry" />
+					<Add directory="../../ExternalLibs/sqllite/bin/raspberry" />
+					<Add directory="../../ExternalLibs/UIObjects/bin/raspberry" />
 				</Linker>
 			</Target>
 			<Target title="Debug">
@@ -55,42 +55,69 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-std=c++11" />
 					<Add option="-g" />
+					<Add directory="../../ExternalLibs/sqllite/src" />
+					<Add directory="../../ExternalLibs/libjpeg/src/libjpeg" />
+					<Add directory="../../ExternalLibs/UIObjects/src" />
+					<Add directory="../../ExternalLibs/libvlc/sdk/include" />
+					<Add directory="../../ExternalLibs/gumbo-parser-master/src" />
+					<Add directory="../../ExternalLibs/zipUtils/zlib" />
+					<Add directory="../../ExternalLibs/zipUtils/unzip" />
+					<Add directory="../../ExternalLibs/curl-7.40.0-devel-mingw32/include" />
+					<Add directory="../../ExternalLibs/sdl_ext/src" />
+					<Add directory="../../ExternalLibs/tidy/include" />
+					<Add directory="../httpCurl/httpcurl/src" />
+					<Add directory="../rijndael" />
+					<Add directory="../httpCurl/httpcurl/src/jsoncpp-0.10.5/include" />
 					<Add directory="src" />
-					<Add directory="src/vlcplayer" />
-					<Add directory="../../httpCurl/httpcurl/src" />
+					<Add directory="../../ExternalLibs/vlc-2.2.4/sdk/include" />
 				</Compiler>
 				<Linker>
+					<Add option="-lsqllite" />
+					<Add option="-lUIObjects" />
+					<Add option="-lsdlgfx" />
 					<Add option="-lmingw32" />
 					<Add option="-lSDLmain" />
 					<Add option="-lSDL" />
-					<Add option="-lSDL_image" />
 					<Add option="-lSDL_mixer" />
 					<Add option="-lSDL_ttf" />
-					<Add option="-lsdlgfx" />
+					<Add option="-lSDL_image" />
 					<Add option="-lzipUtils" />
-					<Add option="-lsqllite" />
-					<Add library="..\..\..\ExternalLibs\libvlc\sdk\lib\libvlc.lib" />
-					<Add library="..\..\..\ExternalLibs\libvlc\sdk\lib\libvlccore.lib" />
-					<Add directory="../../../ExternalLibs/zipUtils/bin/Release" />
-					<Add directory="../../../ExternalLibs/sqllite/bin/Release" />
-					<Add directory="../../../ExternalLibs/libvlc/sdk/lib" />
-					<Add directory="../../../ExternalLibs/UIObjects/bin/Debug" />
+					<Add option="-lhttpcurl" />
+					<Add option="-lcrypto" />
+					<Add option="-lcurl" />
+					<Add option="-lcurldll" />
+					<Add option="-lidn" />
+					<Add option="-lrtmp" />
+					<Add option="-lssh2" />
+					<Add option="-lssh2dll" />
+					<Add option="-lssl" />
+					<Add option="-lz" />
+					<Add option="-lzdll" />
+					<Add option="-ltidy" />
+					<Add option="-lgumboParser" />
+					<Add option="-lws2_32" />
+					<Add library="../../ExternalLibs/libjpeg/bin/Release/libjpeg.a" />
+					<Add library="../../ExternalLibs/vlc-2.2.4/sdk/lib/libvlc.lib" />
+					<Add library="../../ExternalLibs/vlc-2.2.4/sdk/lib/libvlccore.lib" />
+					<Add library="../../ExternalLibs/vlc-2.2.4/sdk/lib/vlc.lib" />
+					<Add library="../../ExternalLibs/vlc-2.2.4/sdk/lib/vlccore.lib" />
+					<Add directory="../../ExternalLibs/UIObjects/bin/Release" />
+					<Add directory="../../ExternalLibs/zipUtils/bin/Release" />
+					<Add directory="../../ExternalLibs/sqllite/bin/Release" />
+					<Add directory="../../ExternalLibs/gumbo-parser-master/bin/Release" />
+					<Add directory="../httpCurl/httpcurl/bin/Release" />
+					<Add directory="../../ExternalLibs/curl-7.40.0-devel-mingw32/lib" />
+					<Add directory="../../ExternalLibs/tidy/bin/Release" />
+					<Add directory="../../../Program Files (x86)/Codeblocks/ExternalLibs/libvlc/sdk/lib" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
-			<Add directory="../../../ExternalLibs/zipUtils/unzip" />
-			<Add directory="../../../ExternalLibs/zipUtils/zlib" />
-			<Add directory="../../../ExternalLibs/sqllite/src" />
-			<Add directory="../../../ExternalLibs/UIObjects/src" />
-			<Add directory="../../../ExternalLibs/libvlc/sdk/include" />
-			<Add directory="src/vlcplayer" />
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
 		</Compiler>
-		<Linker>
-			<Add option="-lUIObjects" />
-			<Add directory="../../httpCurl/httpcurl/bin/Release" />
-		</Linker>
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
