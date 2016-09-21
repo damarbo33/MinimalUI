@@ -1337,7 +1337,7 @@
 	"Excepcion.h"
 	"Traza.h"
 
-1474484697 source:d:\github\codeblocks\externallibs\uiobjects\src\common\ioutil.cpp
+1474487947 source:d:\github\codeblocks\externallibs\uiobjects\src\common\ioutil.cpp
 	"Ioutil.h"
 	"9001.png.h"
 	"font/Arimo_Regular.ttf.h"
@@ -1513,7 +1513,7 @@
 
 1474481219 source:d:\github\codeblocks\proyectos\minimalui\resource.rc
 
-1474483598 source:d:\github\codeblocks\proyectos\minimalui\src\iofrontend.cpp
+1474488001 source:d:\github\codeblocks\proyectos\minimalui\src\iofrontend.cpp
 	"Iofrontend.h"
 	"uilistgroup.h"
 	"beans/listgroupcol.h"
