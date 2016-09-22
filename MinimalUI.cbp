@@ -12,8 +12,68 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-pg" />
 					<Add option="-g" />
+					<Add directory="../../ExternalLibs/sqllite/src" />
+					<Add directory="../../ExternalLibs/libjpeg/src/libjpeg" />
+					<Add directory="../../ExternalLibs/UIObjects/src" />
+					<Add directory="../../ExternalLibs/UIObjects/src/common" />
+					<Add directory="../../ExternalLibs/libvlc/sdk/include" />
+					<Add directory="../../ExternalLibs/gumbo-parser-master/src" />
+					<Add directory="../../ExternalLibs/curl-7.40.0-devel-mingw32/include" />
+					<Add directory="../../ExternalLibs/zipUtils/unzip" />
+					<Add directory="../../ExternalLibs/zipUtils/zlib" />
+					<Add directory="../../ExternalLibs/sdl_ext/src" />
+					<Add directory="../../ExternalLibs/tidy/include" />
+					<Add directory="../../ExternalLibs/vlc-2.2.4/sdk/include" />
+					<Add directory="../httpCurl/httpcurl/src" />
+					<Add directory="../httpCurl/httpcurl/src/jsoncpp-0.10.5/include" />
+					<Add directory="../rijndael" />
+					<Add directory="src" />
+				</Compiler>
+				<Linker>
+					<Add option="-lsqllite" />
+					<Add option="-lUIObjects" />
+					<Add option="-lhttpcurl" />
+					<Add option="-lsdlgfx" />
+					<Add option="-lmingw32" />
+					<Add option="-lSDLmain" />
+					<Add option="-lSDL" />
+					<Add option="-lSDL_mixer" />
+					<Add option="-lSDL_ttf" />
+					<Add option="-lSDL_image" />
+					<Add option="-lzipUtils" />
+					<Add option="-lcrypto" />
+					<Add option="-lcurl" />
+					<Add option="-lcurldll" />
+					<Add option="-lidn" />
+					<Add option="-lrtmp" />
+					<Add option="-lssh2" />
+					<Add option="-lssh2dll" />
+					<Add option="-lssl" />
+					<Add option="-lz" />
+					<Add option="-lzdll" />
+					<Add option="-ltidy" />
+					<Add option="-lgumboParser" />
+					<Add option="-lws2_32" />
+					<Add library="../../ExternalLibs/libjpeg/bin/Release/libjpeg.a" />
+					<Add library="../../ExternalLibs/libvlc/sdk/lib/libvlc.lib" />
+					<Add library="../../ExternalLibs/libvlc/sdk/lib/libvlccore.lib" />
+					<Add directory="../../ExternalLibs/UIObjects/bin/Release" />
+					<Add directory="../../ExternalLibs/zipUtils/bin/Release" />
+					<Add directory="../../ExternalLibs/sqllite/bin/Release" />
+					<Add directory="../../ExternalLibs/gumbo-parser-master/bin/Release" />
+					<Add directory="../httpCurl/httpcurl/bin/Release" />
+					<Add directory="../../ExternalLibs/curl-7.40.0-devel-mingw32/lib" />
+					<Add directory="../../ExternalLibs/tidy/bin/Release" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/MinimalUI" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O3" />
 					<Add directory="../../ExternalLibs/sqllite/src" />
 					<Add directory="../../ExternalLibs/libjpeg/src/libjpeg" />
 					<Add directory="../../ExternalLibs/UIObjects/src" />
@@ -33,9 +93,10 @@
 					<Add directory="../../ExternalLibs/vlc-2.2.4/sdk/include" />
 				</Compiler>
 				<Linker>
-					<Add option="-pg -lgmon" />
+					<Add option="-s" />
 					<Add option="-lsqllite" />
 					<Add option="-lUIObjects" />
+					<Add option="-lhttpcurl" />
 					<Add option="-lsdlgfx" />
 					<Add option="-lmingw32" />
 					<Add option="-lSDLmain" />
@@ -44,7 +105,6 @@
 					<Add option="-lSDL_ttf" />
 					<Add option="-lSDL_image" />
 					<Add option="-lzipUtils" />
-					<Add option="-lhttpcurl" />
 					<Add option="-lcrypto" />
 					<Add option="-lcurl" />
 					<Add option="-lcurldll" />
@@ -59,6 +119,8 @@
 					<Add option="-lgumboParser" />
 					<Add option="-lws2_32" />
 					<Add library="../../ExternalLibs/libjpeg/bin/Release/libjpeg.a" />
+					<Add library="../../ExternalLibs/libvlc/sdk/lib/libvlc.lib" />
+					<Add library="../../ExternalLibs/libvlc/sdk/lib/libvlccore.lib" />
 					<Add directory="../../ExternalLibs/UIObjects/bin/Release" />
 					<Add directory="../../ExternalLibs/zipUtils/bin/Release" />
 					<Add directory="../../ExternalLibs/sqllite/bin/Release" />
@@ -100,8 +162,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/sdl/SDL_draw.h" />
-		<Unit filename="src/unzip/unziptool.cpp" />
-		<Unit filename="src/unzip/unziptool.h" />
 		<Unit filename="src/vlcplayer/glvlcplayer.cpp">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>

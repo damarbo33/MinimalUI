@@ -2,29 +2,34 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="src\roms\romwebinfo.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\roms\gestorroms.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1545" topLine="38" />
+			<Cursor1 position="244" topLine="5" />
+		</Cursor>
+	</File>
+	<File name="src\roms\romwebinfo.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="7048" topLine="147" />
+		</Cursor>
+	</File>
+	<File name="src\roms\romwebinfo.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1497" topLine="15" />
 		</Cursor>
 	</File>
 	<File name="src\roms\thegamesdb.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1098" topLine="35" />
+			<Cursor1 position="283" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="src\roms\thegamesdb.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1341" topLine="38" />
+			<Cursor1 position="160" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="src\sdl\SDL_draw.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="398" topLine="60" />
-		</Cursor>
-	</File>
-	<File name="src\unzip\unziptool.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="935" topLine="114" />
 		</Cursor>
 	</File>
 	<File name="src\vlcplayer\glvlcplayer.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -49,7 +54,7 @@
 	</File>
 	<File name="src\Iofrontend.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1261" topLine="0" />
+			<Cursor1 position="1091" topLine="21" />
 		</Cursor>
 	</File>
 	<File name="src\Iofrontend.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -57,9 +62,9 @@
 			<Cursor1 position="2051" topLine="97" />
 		</Cursor>
 	</File>
-	<File name="src\main.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\main.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="441" topLine="24" />
+			<Cursor1 position="1386" topLine="46" />
 		</Cursor>
 	</File>
 	<File name="src\main.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -85,11 +90,6 @@
 	<File name="src\roms\gestorroms.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="24824" topLine="657" />
-		</Cursor>
-	</File>
-	<File name="src\roms\gestorroms.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="440" topLine="5" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

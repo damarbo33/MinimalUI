@@ -168,12 +168,8 @@ string RomWebInfo::findBoxartFront(ResponseQuery *response, string idprog){
         #endif // WIN
 
         if (!dirUtil.existe(directory)){
-            //        Traza::print("Creando dir: " + dirUtil.getFolder(directory), W_DEBUG);
+//            Traza::print("Creando dir: " + dirUtil.getFolder(directory), W_DEBUG);
             dirUtil.mkpath(dirUtil.getFolder(directory).c_str(), 0777);
-    //        Traza::print("Descargando imagen: " + response->baseImgUrl + result, W_DEBUG);
-//            utilHttp.download(response->baseImgUrl + result);
-    //        Traza::print("Guardando imagen en: " + directory, W_DEBUG);
- //           utilHttp.writeToFile(directory);
             UIImgDownloader imgDownloader;
             imgDownloader.download(response->baseImgUrl + result, directory, 250, 250);
         }
