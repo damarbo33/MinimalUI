@@ -229,8 +229,8 @@ void Iofrontend::initUIObjs(){
 
 
     ObjectsMenu[PANTALLAGROUPLIST]->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Roms", false)->setEnabled(false);
-    ObjectsMenu[PANTALLAGROUPLIST]->add("listaGrupoRoms", GUILISTGROUPBOX, 0, 0, 0, 0, "", false)->setVerContenedor(false);
     ObjectsMenu[PANTALLAGROUPLIST]->add("ImgEmulador", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgEmulador", true)->setEnabled(false);
+    ObjectsMenu[PANTALLAGROUPLIST]->add("listaGrupoRoms", GUILISTGROUPBOX, 0, 0, 0, 0, "", false)->setVerContenedor(false);
     ObjectsMenu[PANTALLAGROUPLIST]->add("textosBox", GUITEXTELEMENTSAREA, 0, 0, 0, 0, "", true)->setVerContenedor(false)->setEnabled(true);
     ObjectsMenu[PANTALLAGROUPLIST]->add("ImgBoxArt", GUIPICTURE, 0, 0, Constant::getIMGBOXARTWIDTH(), Constant::getIMGBOXARTHEIGHT(), "", true)->setEnabled(false);
     ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->setAlpha(150);
