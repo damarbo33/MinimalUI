@@ -139,29 +139,29 @@ void Iofrontend::initUIObjs(){
 
     /**Pantalla de opciones de cada emulador*/
     centroY = (-200 + ((zoomText > 1) ? -Constant::getMENUSPACE() : 0));
-    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("EmuName", GUIINPUTWIDE, 0, centroY, INPUTW, Constant::getINPUTH(), "Nombre emulador:", true);
+    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("EmuName", GUIINPUTWIDE, 0, centroY, INPUTW, Constant::getINPUTH(), "Nombre emulador:", true)->setColor(cNegro);
     centroY += (55 + ((zoomText > 1) ? Constant::getMENUSPACE() : 0));
-    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("EmuRuta", GUIINPUTWIDE, - 15 , centroY, INPUTW - 30, Constant::getINPUTH(), "Ruta emulador:", true);
+    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("EmuRuta", GUIINPUTWIDE, - 15 , centroY, INPUTW - 30, Constant::getINPUTH(), "Ruta emulador:", true)->setColor(cNegro);
     ObjectsMenu[PANTALLAOPCIONRUTAS]->add("btnEmuRuta", GUIBUTTON, INPUTW/2 * zoomText - 10, centroY,MINIBUTTONH,MINIBUTTONH, "...", true)->setTag("EmuRuta");
     ObjectsMenu[PANTALLAOPCIONRUTAS]->add("btnLaunchEmu", GUIBUTTON, INPUTW/2 * zoomText + 20, centroY,MINIBUTTONH,MINIBUTTONH, "", true)->setIcon(bullet_wrench);;
     centroY += (55 + ((zoomText > 1) ? Constant::getMENUSPACE() : 0));
 
-    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("EmuParms", GUIINPUTWIDE, 0, centroY, INPUTW, Constant::getINPUTH(), "Parametros emulador:", true);
+    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("EmuParms", GUIINPUTWIDE, 0, centroY, INPUTW, Constant::getINPUTH(), "Parametros emulador:", true)->setColor(cNegro);
     centroY += (55 + ((zoomText > 1) ? Constant::getMENUSPACE() : 0));
-    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("EmuRutaRom", GUIINPUTWIDE, 0, centroY, INPUTW, Constant::getINPUTH(), "Ruta roms:", true);
+    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("EmuRutaRom", GUIINPUTWIDE, 0, centroY, INPUTW, Constant::getINPUTH(), "Ruta roms:", true)->setColor(cNegro);
     ObjectsMenu[PANTALLAOPCIONRUTAS]->add("btnRomRuta", GUIBUTTON, INPUTW/2 + 20 * zoomText, centroY,MINIBUTTONH,MINIBUTTONH, "...", true)->setTag("EmuRutaRom");
     centroY += (55 + ((zoomText > 1) ? Constant::getMENUSPACE() : 0));
-    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("EmuRomExtension", GUIINPUTWIDE, 0, centroY, INPUTW, Constant::getINPUTH(), "Extension:", true);
+    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("EmuRomExtension", GUIINPUTWIDE, 0, centroY, INPUTW, Constant::getINPUTH(), "Extension:", true)->setColor(cNegro);
     centroY += (55 + ((zoomText > 1) ? Constant::getMENUSPACE() : 0));
-    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("EmuImg", GUIINPUTWIDE, 0, centroY, INPUTW, Constant::getINPUTH(), "Imagen emulador:", true);
+    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("EmuImg", GUIINPUTWIDE, 0, centroY, INPUTW, Constant::getINPUTH(), "Imagen emulador:", true)->setColor(cNegro);
     ObjectsMenu[PANTALLAOPCIONRUTAS]->add("btnEmuImg", GUIBUTTON, INPUTW/2 + 20 * zoomText, centroY,MINIBUTTONH,MINIBUTTONH, "...", true)->setTag("EmuImg");
     centroY += (55 + ((zoomText > 1) ? Constant::getMENUSPACE() : 0));
     ObjectsMenu[PANTALLAOPCIONRUTAS]->add("ComboPlatform", GUICOMBOBOX, 130, centroY, 280, Constant::getCOMBOLISTHEIGHT(), "Sistema para obtener info", true)->setVerContenedor(true);
     crearComboSistemas();
     centroY += (55 + ((zoomText > 1) ? Constant::getMENUSPACE() : 0));
-    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("CheckComboFixes", GUICHECK, -195, centroY, 150, Constant::getCOMBOLISTHEIGHT(), "Corregir problemas en ddraw", true);
-    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("CheckDescomprimir", GUICHECK, -263, centroY, CHECKW, CHECKH, "Descomprimir roms", true);
-    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("CheckFindTitleRom", GUICHECK, -50, centroY, CHECKW, CHECKH, "Buscar descripción de rom", true);
+    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("CheckComboFixes", GUICHECK, -195, centroY - 60, 150, CHECKH, "Corregir problemas en ddraw", true);
+    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("CheckDescomprimir", GUICHECK, -195, centroY, 150, CHECKH, "Descomprimir roms", true);
+    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("CheckFindTitleRom", GUICHECK, -20, centroY, 150, CHECKH, "Buscar descripción de rom", true);
     centroY += (40 + ((zoomText > 1) ? Constant::getMENUSPACE() : 0));
 
     UIPopupMenu * popup1 = addPopup(PANTALLAOPCIONRUTAS, "popupParmsRom", "EmuParms");
@@ -229,12 +229,13 @@ void Iofrontend::initUIObjs(){
 
 
     ObjectsMenu[PANTALLAGROUPLIST]->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Roms", false)->setEnabled(false);
-    ObjectsMenu[PANTALLAGROUPLIST]->add("ImgEmulador", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgEmulador", true)->setEnabled(false);
     ObjectsMenu[PANTALLAGROUPLIST]->add("listaGrupoRoms", GUILISTGROUPBOX, 0, 0, 0, 0, "", false)->setVerContenedor(false);
+    ObjectsMenu[PANTALLAGROUPLIST]->add("ImgEmulador", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgEmulador", true)->setEnabled(false);
     ObjectsMenu[PANTALLAGROUPLIST]->add("textosBox", GUITEXTELEMENTSAREA, 0, 0, 0, 0, "", true)->setVerContenedor(false)->setEnabled(true);
     ObjectsMenu[PANTALLAGROUPLIST]->add("ImgBoxArt", GUIPICTURE, 0, 0, Constant::getIMGBOXARTWIDTH(), Constant::getIMGBOXARTHEIGHT(), "", true)->setEnabled(false);
     ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->setAlpha(150);
     ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->getImgGestor()->setEnabledMoveImg(false);
+
 
     objMenu = ObjectsMenu[PANTALLAGROUPLIST];
     UIListGroup * listaGrupo = (UIListGroup *) objMenu->getObjByName("listaGrupoRoms");
@@ -641,6 +642,7 @@ void Iofrontend::cargaMenu(int menucarga, string valorSelec, tEvento *evento){
 
         case PANTALLAGROUPLIST:
             cargarListaRoms(menucarga, valorSelec, "listaGrupoRoms");
+            objsMenu->setFocus("listaGrupoRoms");
             break;
 
         case PANTALLAEDITAREMU:
