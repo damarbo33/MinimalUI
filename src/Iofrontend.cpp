@@ -30,7 +30,6 @@ Iofrontend::Iofrontend(){
     Traza::print("Fin Constructor de IoFrontend", W_PARANOIC);
     selMenu = MENUINICIAL;
     comprobarUnidad(dirInicial);
-
     //buscarInfoRoms();
 }
 

@@ -36,11 +36,16 @@ int TheGamesDB::download(RequestQuery* queryGame, ResponseQuery *response){
 int TheGamesDB::download2(RequestQuery* queryGame, ResponseQuery *response){
     HttpUtil util;
     util.setTimeout(5); //Un timeout de 5 segundos para cualquier query
+
     string url = gameQueryUrl + makeParms(queryGame);
     Traza::print("url: " + url, W_DEBUG);
+
     if (util.download(url)){
         TiXmlDocument doc;
-        if (doc.Parse((const char*)util.getData(), 0, TIXML_ENCODING_UTF8) != NULL){
+        if (util.getDataLength() == 0){
+            Traza::print("No se ha obtenido respuesta del servidor",W_ERROR);
+            return PARSEERROR;
+        } else if (doc.Parse((const char*)util.getData(), 0, TIXML_ENCODING_UTF8) != NULL){
             loadXmlGame( &doc , response);
             if (response->error.empty())
                 return QUERYOK;
@@ -50,7 +55,6 @@ int TheGamesDB::download2(RequestQuery* queryGame, ResponseQuery *response){
             Traza::print("Ha ocurrido un error al parsear la respuesta",W_DEBUG);
             return PARSEERROR;
         }
-
     } else {
         return CONNECTERROR;
     }

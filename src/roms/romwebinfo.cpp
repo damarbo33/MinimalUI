@@ -176,7 +176,6 @@ string RomWebInfo::findBoxartFront(ResponseQuery *response, string idprog){
  //           utilHttp.writeToFile(directory);
             UIImgDownloader imgDownloader;
             imgDownloader.download(response->baseImgUrl + result, directory, 250, 250);
-
         }
     }
     return result;

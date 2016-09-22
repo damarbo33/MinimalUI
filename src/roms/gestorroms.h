@@ -9,7 +9,6 @@
 #include "fileprops.h"
 #include "EmuProperties.h"
 #include "uilist.h"
-#include "httpcurl/httputil.h"
 #include "roms/romwebinfo.h"
 #include "roms/thegamesdb.h"
 #include "roms/bdrominfoout.h"

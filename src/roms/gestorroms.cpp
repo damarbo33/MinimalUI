@@ -619,11 +619,15 @@ string Gestorroms::getImgEmulador(int idEmu){
 * Actualiza la informacion de todos los emuladores
 */
 DWORD Gestorroms::thScrapAllSystem(){
-
-    db->prepareStatement("selectListaEmuladores");
-    vector<vector<string> > result = db->executeQuery();
-    for (int i=0; i < result.size(); i++){
-        scrapsystem(result.at(i).at(0));
+    try{
+        db->prepareStatement("selectListaEmuladores");
+        Traza::print("Gestorroms::thScrapAllSystem. Obteniendo lista de sistemas", W_DEBUG);
+        vector<vector<string> > result = db->executeQuery();
+        for (int i=0; i < result.size(); i++){
+            scrapsystem(result.at(i).at(0));
+        }
+    } catch (Excepcion &e) {
+         Traza::print("Excepcion Gestorroms::thScrapAllSystem" + string(e.getMessage()), W_ERROR);
     }
     return 0;
 }
@@ -632,7 +636,7 @@ DWORD Gestorroms::thScrapAllSystem(){
 * Funcion para llamar desde el thread principal
 */
 DWORD Gestorroms::thScrapSystem() {
-        return scrapsystem(getThEmuID());
+    return scrapsystem(getThEmuID());
 }
 
 /**
@@ -645,6 +649,7 @@ DWORD Gestorroms::scrapsystem(string idEmu){
     try{
         scrappingNow = true;
         if (db != NULL) {
+            Traza::print("Gestorroms::scrapsystem. Obteniendo datos de emu " + idEmu, W_DEBUG);
             vector<vector<string> > result = getDatosEmulador(Constant::strToTipo<int>(idEmu));
             if (result.size() > 0){
                 platform = result.at(0).at(10);

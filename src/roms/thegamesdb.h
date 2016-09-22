@@ -1,7 +1,7 @@
 #ifndef THEGAMESDB_H
 #define THEGAMESDB_H
 
-#include "httpcurl/httputil.h"
+#include "httputil.h"
 #include "Constant.h"
 #include <gumbo.h>
 #include "traza.h"

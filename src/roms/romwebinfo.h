@@ -1,6 +1,7 @@
 #ifndef ROMWEBINFO_H
 #define ROMWEBINFO_H
 
+#include "httputil.h"
 #include "Constant.h"
 #include "thegamesdb.h"
 #include "Dirutil.h"

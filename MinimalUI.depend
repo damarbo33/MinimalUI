@@ -680,13 +680,13 @@
 	"SDL/SDL_image.h"
 	"SDL/SDL_rotozoom.h"
 
-1474474518 source:c:\github\proyectos\minimalui\src\iofrontend.cpp
+1474549240 source:c:\github\proyectos\minimalui\src\iofrontend.cpp
 	"Iofrontend.h"
 	"uilistgroup.h"
 	"beans/listgroupcol.h"
 	"uilistcommon.h"
 
-1474471930 c:\github\proyectos\minimalui\src\iofrontend.h
+1474525183 c:\github\proyectos\minimalui\src\iofrontend.h
 	<string>
 	<vector>
 	"Ioutil.h"
@@ -863,7 +863,7 @@
 	<pthread.h>
 	<pthread.h>
 
-1434381992 c:\github\proyectos\minimalui\src\roms\gestorroms.h
+1474554408 c:\github\proyectos\minimalui\src\roms\gestorroms.h
 	"bbdd/Database.h"
 	"ListaSimple.h"
 	"Dirutil.h"
@@ -872,7 +872,6 @@
 	"fileprops.h"
 	"EmuProperties.h"
 	"uilist.h"
-	"httpcurl/httputil.h"
 	"roms/romwebinfo.h"
 	"roms/thegamesdb.h"
 	"roms/bdrominfoout.h"
@@ -994,7 +993,7 @@
 1474455667 source:c:\github\proyectos\minimalui\src\launcher.cpp
 	"Launcher.h"
 
-1434443923 source:c:\github\proyectos\minimalui\src\main.cpp
+1474554747 source:c:\github\proyectos\minimalui\src\main.cpp
 	"main.h"
 	"Dirutil.h"
 	"image/uiimgdownloader.h"
@@ -1010,7 +1009,7 @@
 1433765603 source:c:\github\proyectos\minimalui\src\roms\estructuras.cpp
 	"estructuras.h"
 
-1450867634 source:c:\github\proyectos\minimalui\src\roms\gestorroms.cpp
+1474533307 source:c:\github\proyectos\minimalui\src\roms\gestorroms.cpp
 	"gestorroms.h"
 
 1474455667 source:c:\github\proyectos\minimalui\src\sdl\sdl_draw.c
@@ -1111,7 +1110,7 @@
 	"SDL/SDL_image.h"
 	"SDL/SDL_rotozoom.h"
 
-1474464843 source:c:\github\externallibs\uiobjects\src\common\ioutil.cpp
+1474525165 source:c:\github\externallibs\uiobjects\src\common\ioutil.cpp
 	"Ioutil.h"
 	"9001.png.h"
 	"font/Arimo_Regular.ttf.h"
@@ -1190,14 +1189,15 @@
 	<fstream>
 	<map>
 
-1434102835 c:\github\proyectos\minimalui\src\roms\romwebinfo.h
+1474554447 c:\github\proyectos\minimalui\src\roms\romwebinfo.h
+	"httputil.h"
 	"Constant.h"
 	"thegamesdb.h"
 	"Dirutil.h"
 	"image/uiimgdownloader.h"
 
-1433312320 c:\github\proyectos\minimalui\src\roms\thegamesdb.h
-	"httpcurl/httputil.h"
+1474554477 c:\github\proyectos\minimalui\src\roms\thegamesdb.h
+	"httputil.h"
 	"Constant.h"
 	<gumbo.h>
 	"traza.h"
@@ -1207,9 +1207,8 @@
 	<stdbool.h>
 	<stddef.h>
 
-1433424001 c:\github\externallibs\uiobjects\src\image\uiimgdownloader.h
+1474554297 c:\github\externallibs\uiobjects\src\image\uiimgdownloader.h
 	"Dirutil.h"
-	"httpcurl/httputil.h"
 	"SDL/SDL.h"
 	"ImagenGestor.h"
 	"image/uiimgencoder.h"
@@ -1255,10 +1254,10 @@
 1450867654 source:c:\github\proyectos\minimalui\src\roms\mamehistoryparser.cpp
 	"mamehistoryparser.h"
 
-1474474324 source:c:\github\proyectos\minimalui\src\roms\romwebinfo.cpp
+1474554915 source:c:\github\proyectos\minimalui\src\roms\romwebinfo.cpp
 	"romwebinfo.h"
 
-1433430451 source:c:\github\proyectos\minimalui\src\roms\thegamesdb.cpp
+1474539878 source:c:\github\proyectos\minimalui\src\roms\thegamesdb.cpp
 	"thegamesdb.h"
 
 1474481138 source:d:\github\codeblocks\externallibs\uiobjects\src\common\icogestor.cpp
@@ -1885,4 +1884,146 @@
 
 1474481220 source:d:\github\codeblocks\proyectos\minimalui\src\vlcplayer\vlcplayer.cpp
 	"vlcplayer.h"
+
+1384199304 c:\github\externallibs\libvlc\sdk\include\vlc\vlc.h
+	<vlc/libvlc_structures.h>
+	<vlc/libvlc.h>
+	<vlc/libvlc_media.h>
+	<vlc/libvlc_media_player.h>
+	<vlc/libvlc_media_list.h>
+	<vlc/libvlc_media_list_player.h>
+	<vlc/libvlc_media_library.h>
+	<vlc/libvlc_media_discoverer.h>
+	<vlc/libvlc_events.h>
+	<vlc/libvlc_vlm.h>
+	<vlc/deprecated.h>
+
+1384199304 c:\github\externallibs\libvlc\sdk\include\vlc\libvlc_structures.h
+	<stdint.h>
+
+1384199304 c:\github\externallibs\libvlc\sdk\include\vlc\libvlc.h
+	<stdio.h>
+	<stdarg.h>
+	<vlc/libvlc_structures.h>
+
+1384199304 c:\github\externallibs\libvlc\sdk\include\vlc\libvlc_media.h
+
+1384199304 c:\github\externallibs\libvlc\sdk\include\vlc\libvlc_media_player.h
+	<stdbool.h>
+
+1384199304 c:\github\externallibs\libvlc\sdk\include\vlc\libvlc_media_list.h
+
+1384199304 c:\github\externallibs\libvlc\sdk\include\vlc\libvlc_media_list_player.h
+
+1384199304 c:\github\externallibs\libvlc\sdk\include\vlc\libvlc_media_library.h
+
+1384199304 c:\github\externallibs\libvlc\sdk\include\vlc\libvlc_media_discoverer.h
+
+1384199304 c:\github\externallibs\libvlc\sdk\include\vlc\libvlc_events.h
+
+1384199304 c:\github\externallibs\libvlc\sdk\include\vlc\libvlc_vlm.h
+
+1384199304 c:\github\externallibs\libvlc\sdk\include\vlc\deprecated.h
+
+1474554665 c:\github\proyectos\httpcurl\httpcurl\src\httputil.h
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	<unistd.h>
+	<fcntl.h>
+	<iostream>
+	<string>
+	<fstream>
+	<map>
+	"filecipher.h"
+	<curl/curl.h>
+	"Traza.h"
+	"unzip/GZipHelper.h"
+
+1459803212 c:\github\proyectos\rijndael\filecipher.h
+	<iostream>
+	<fstream>
+	<stdio.h>
+	<string.h>
+	"rijndael.h"
+	"sha256.h"
+	<sstream>
+	<iostream>
+	<cstdlib>
+	"Constant.h"
+
+1459803212 c:\github\proyectos\rijndael\rijndael.h
+	<iostream>
+
+1459803212 c:\github\proyectos\rijndael\sha256.h
+	<string>
+
+1419777366 c:\github\externallibs\curl-7.40.0-devel-mingw32\include\curl\curl.h
+	"curlver.h"
+	"curlbuild.h"
+	"curlrules.h"
+	<stdio.h>
+	<limits.h>
+	<osreldate.h>
+	<sys/types.h>
+	<time.h>
+	<winsock2.h>
+	<ws2tcpip.h>
+	<sys/select.h>
+	<sys/socket.h>
+	<sys/time.h>
+	<support/SupportDefs.h>
+	"easy.h"
+	"multi.h"
+	"typecheck-gcc.h"
+
+1420708698 c:\github\externallibs\curl-7.40.0-devel-mingw32\include\curl\curlver.h
+
+1420708698 c:\github\externallibs\curl-7.40.0-devel-mingw32\include\curl\curlbuild.h
+	<sys/types.h>
+	<sys/socket.h>
+
+1415109076 c:\github\externallibs\curl-7.40.0-devel-mingw32\include\curl\curlrules.h
+
+1402512750 c:\github\externallibs\curl-7.40.0-devel-mingw32\include\curl\easy.h
+
+1415109076 c:\github\externallibs\curl-7.40.0-devel-mingw32\include\curl\multi.h
+	"curl.h"
+
+1415109076 c:\github\externallibs\curl-7.40.0-devel-mingw32\include\curl\typecheck-gcc.h
+
+1461321039 c:\github\externallibs\uiobjects\src\unzip\gziphelper.h
+	"GZipHelper.h"
+	"zutil.h"
+
+1459803101 c:\github\externallibs\ziputils\zlib\zutil.h
+	"zlib.h"
+	<stddef.h>
+	<string.h>
+	<stdlib.h>
+	<errno.h>
+	<alloc.h>
+	<malloc.h>
+	<unix.h>
+	<stdio.h>
+
+1474556756 c:\github\proyectos\httpcurl\httpcurl\src\image\uiimgdownloader.h
+	"httputil.h"
+	"Dirutil.h"
+	"SDL/SDL.h"
+	"ImagenGestor.h"
+	"uiimgencoder.h"
+
+1472556517 c:\github\proyectos\httpcurl\httpcurl\src\image\uiimgencoder.h
+	<SDL/SDL.h>
+	<stdlib.h>
+	<stdio.h>
+	<setjmp.h>
+	<jpeglib.h>
+	<jerror.h>
+	"SDL_imagesave/IMG_saveend.h"
+	<iostream>
+
+1369139268 c:\github\proyectos\httpcurl\httpcurl\src\image\sdl_imagesave\img_saveend.h
+	<SDL/SDL_byteorder.h>
 

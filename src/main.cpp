@@ -31,10 +31,15 @@ void Terminate(void)
 */
 
 int main(int argc, char *argv[]){
-
     #ifdef WIN
         string appDir = argv[0];
-        appDir = appDir.substr(0, appDir.rfind(Constant::getFileSep()));
+        int pos = appDir.rfind(Constant::getFileSep());
+        if (pos == string::npos){
+            FILE_SEPARATOR = FILE_SEPARATOR_UNIX;
+            pos = appDir.rfind(FILE_SEPARATOR);
+            tempFileSep[0] = FILE_SEPARATOR;
+        }
+        appDir = appDir.substr(0, pos);
         if (appDir[appDir.length()-1] == '.'){
             appDir.substr(0, appDir.rfind(Constant::getFileSep()));
         }
@@ -46,7 +51,23 @@ int main(int argc, char *argv[]){
         Constant::setAppDir(dir.getDirActual());
     #endif // UNIX
 
-    Traza *traza = new Traza();
+    string rutaTraza = appDir + Constant::getFileSep() + "Traza.txt";
+
+    Traza *traza = new Traza(rutaTraza.c_str());
+
+    Traza::print("Hello world!", W_DEBUG);
+    Constant::setPROXYIP("10.129.8.100");
+    Constant::setPROXYPORT("8080");
+    Constant::setPROXYUSER("dmarcobo");
+    Constant::setPROXYPASS("bC6E4X0V3c");
+
+    HttpUtil util;
+    util.setTimeout(5); //Un timeout de 5 segundos para cualquier query
+    Traza::print("*************************************", W_DEBUG);
+    util.download("http://thegamesdb.net/api/GetGame.php?platform=Sega%20Master%20System&exactname=star%20wars");
+    Traza::print("Size Descarga ", util.getDataLength(), W_DEBUG);
+    Traza::print("*************************************", W_DEBUG);
+
     Iofrontend *ioFront = new Iofrontend();
 
     try{
