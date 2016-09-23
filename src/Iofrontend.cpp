@@ -28,8 +28,9 @@ Iofrontend::Iofrontend(){
     Traza::print("Asignando elementos y acciones", W_PARANOIC);
     initUIObjs();
     Traza::print("Fin Constructor de IoFrontend", W_PARANOIC);
-    selMenu = MENUINICIAL;
     comprobarUnidad(dirInicial);
+    selMenu = MENUJUEGOS;
+    cargaMenu(selMenu, "", NULL);
     //buscarInfoRoms();
 }
 
@@ -91,6 +92,8 @@ void Iofrontend::initUIObjs(){
     ObjectsMenu[MENUJUEGOS]->add("ListaMenuJuegos", GUILISTBOX, 0, 0, 0, 0, "ListaMenuJuegos", true)->setVerContenedor(false);
     ((UIPicture*) ObjectsMenu[MENUJUEGOS]->getObjByName("ImgFondo"))->loadImgFromFile(dirInicial +  Constant::getFileSep() + "emuImgs" + Constant::getFileSep() + "Recreativas-Taito-Station-Osaka.jpg");
     ObjectsMenu[MENUJUEGOS]->getObjByName("ImgFondo")->setAlpha(150);
+
+    ((UIList *)ObjectsMenu[MENUJUEGOS]->getObjByName("ListaMenuJuegos"))->setListScheme(SCHEMEICONS);
 
     UIPopupMenu * popupJuegos = addPopup(MENUJUEGOS, "popupEmusConfig", "ListaMenuJuegos");
     if (popupJuegos != NULL){
@@ -231,7 +234,7 @@ void Iofrontend::initUIObjs(){
     ObjectsMenu[PANTALLAGROUPLIST]->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Roms", false)->setEnabled(false);
     ObjectsMenu[PANTALLAGROUPLIST]->add("ImgEmulador", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgEmulador", true)->setEnabled(false);
     ObjectsMenu[PANTALLAGROUPLIST]->add("listaGrupoRoms", GUILISTGROUPBOX, 0, 0, 0, 0, "", false)->setVerContenedor(false);
-    ObjectsMenu[PANTALLAGROUPLIST]->add("textosBox", GUITEXTELEMENTSAREA, 0, 0, 0, 0, "", true)->setVerContenedor(false)->setEnabled(true);
+    ObjectsMenu[PANTALLAGROUPLIST]->add("textosBox", GUITEXTELEMENTSAREA, 0, 0, 0, 0, "", true)->setVerContenedor(true)->setEnabled(true);
     ObjectsMenu[PANTALLAGROUPLIST]->add("ImgBoxArt", GUIPICTURE, 0, 0, Constant::getIMGBOXARTWIDTH(), Constant::getIMGBOXARTHEIGHT(), "", true)->setEnabled(false);
     ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->setAlpha(150);
     ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->getImgGestor()->setEnabledMoveImg(false);
@@ -916,7 +919,7 @@ void Iofrontend::setDinamicSizeObjects(){
         UITextElementsArea *infoTextRom = (UITextElementsArea *)ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("textosBox");
         infoTextRom->setTam(0, Constant::getINPUTH(), this->getWidth() / 2, this->getHeight()- Constant::getINPUTH());
 
-        int margenX = Constant::getIMGBOXARTWIDTH() + IMGBOXARTMARGIN;
+        int margenX = Constant::getIMGBOXARTWIDTH() + IMGBOXARTMARGIN + 3;
         t_posicion pos = {margenX, Constant::getMENUSPACE() + IMGBOXARTMARGIN,0,0};
         infoTextRom->setPosition("txtReleased",pos);
         pos.y += Constant::getINPUTH();
@@ -1617,10 +1620,8 @@ bool Iofrontend::cargarListaEmuladores(int menu, int destino, string lista){
 bool Iofrontend::cargarListaRoms(int menu, string idprog, string lista){
     try{
         tmenu_gestor_objects *objMenu = ObjectsMenu[menu];
-
         //Obtenemos el nombre del emulador que seleccionamos en la pantalla anterior
         UIList *objEmu = (UIList *)ObjectsMenu[MENUJUEGOS]->getObjByName("ListaMenuJuegos");
-
         //Cargamos la imagen de fondo del emulador
         string imgruta = gestorRoms->getImgEmulador(Constant::strToTipo<int>(idprog));
         Traza::print("cargarListaRoms. imgruta: " + imgruta, W_PARANOIC);
@@ -1638,6 +1639,7 @@ bool Iofrontend::cargarListaRoms(int menu, string idprog, string lista){
 
         UIListCommon *objLista = (UIListCommon *)objMenu->getObjByName(lista);
         gestorRoms->fillMenuByQuery(objLista, "selectListaRoms", &parms, LANZARROM);
+
 
         Object *titulo = objMenu->getObjByName(TITLESCREEN);
         titulo->setLabel(objEmu->getListNames()->get(objEmu->getPosActualLista()) + " - " + Constant::TipoToStr(objLista->getSize()) + " juegos");
@@ -2117,6 +2119,7 @@ DWORD Iofrontend::setInfoRomValues(){
     tmenu_gestor_objects *objMenu = ObjectsMenu[PANTALLAGROUPLIST];
     UIListGroup * listaGrupo = (UIListGroup *) objMenu->getObjByName("listaGrupoRoms");
     UITextElementsArea *textElems = (UITextElementsArea *)objMenu->getObjByName("textosBox");
+    textElems->setOffsetDesplazamiento(0);
     textElems->setImgDrawed(false);
     int pos = listaGrupo->getPosActualLista();
     if (pos >= 0 && pos < listaGrupo->getSize()-1 && listaGrupo->isShowLetraPopup() == false ){
