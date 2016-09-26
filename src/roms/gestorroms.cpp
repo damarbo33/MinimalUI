@@ -524,7 +524,7 @@ int Gestorroms::fillMenuByQuery(Object *refMenu, string query, vector<string> *s
                 //Anyadimos los elementos que iran dentro de la lista
                 for(vector<vector<string> >::iterator it = result.begin(); it < result.end(); ++it){
                     vector<string> row = *it;
-                        refMenuList->addElemLista(row.at(1), row.at(0), controller, destino);
+                        refMenuList->addElemLista(row.at(1), row.at(0), controller, row.at(2), destino);
                 }
             } else if (refMenu->getObjectType() == GUILISTGROUPBOX){
                 UIListGroup *refMenuList = (UIListGroup *)refMenu;

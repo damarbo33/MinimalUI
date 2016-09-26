@@ -90,8 +90,9 @@ void Iofrontend::initUIObjs(){
 
     ObjectsMenu[MENUJUEGOS]->add("ImgFondo", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgFondo", true)->setEnabled(false);
     ObjectsMenu[MENUJUEGOS]->add("ListaMenuJuegos", GUILISTBOX, 0, 0, 0, 0, "ListaMenuJuegos", true)->setVerContenedor(false);
-    ((UIPicture*) ObjectsMenu[MENUJUEGOS]->getObjByName("ImgFondo"))->loadImgFromFile(dirInicial +  Constant::getFileSep() + "emuImgs" + Constant::getFileSep() + "Recreativas-Taito-Station-Osaka.jpg");
-    ObjectsMenu[MENUJUEGOS]->getObjByName("ImgFondo")->setAlpha(150);
+    ((UIPicture*) ObjectsMenu[MENUJUEGOS]->getObjByName("ImgFondo"))->loadImgFromFile(dirInicial +  Constant::getFileSep()
+        + "emuImgs" + Constant::getFileSep() + "54573da0d72cc.jpeg");
+    ObjectsMenu[MENUJUEGOS]->getObjByName("ImgFondo")->setAlpha(100);
 
     ((UIList *)ObjectsMenu[MENUJUEGOS]->getObjByName("ListaMenuJuegos"))->setListScheme(SCHEMEICONS);
 
@@ -234,9 +235,9 @@ void Iofrontend::initUIObjs(){
     ObjectsMenu[PANTALLAGROUPLIST]->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Roms", false)->setEnabled(false);
     ObjectsMenu[PANTALLAGROUPLIST]->add("ImgEmulador", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgEmulador", true)->setEnabled(false);
     ObjectsMenu[PANTALLAGROUPLIST]->add("listaGrupoRoms", GUILISTGROUPBOX, 0, 0, 0, 0, "", false)->setVerContenedor(false);
-    ObjectsMenu[PANTALLAGROUPLIST]->add("textosBox", GUITEXTELEMENTSAREA, 0, 0, 0, 0, "", true)->setVerContenedor(true)->setEnabled(true);
+    ObjectsMenu[PANTALLAGROUPLIST]->add("textosBox", GUITEXTELEMENTSAREA, 0, 0, 0, 0, "", true)->setVerContenedor(false)->setEnabled(true);
     ObjectsMenu[PANTALLAGROUPLIST]->add("ImgBoxArt", GUIPICTURE, 0, 0, Constant::getIMGBOXARTWIDTH(), Constant::getIMGBOXARTHEIGHT(), "", true)->setEnabled(false);
-    ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->setAlpha(150);
+    ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->setAlpha(200);
     ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->getImgGestor()->setEnabledMoveImg(false);
 
 
@@ -1603,9 +1604,9 @@ bool Iofrontend::cargarListaEmuladores(int menu, int destino, string lista){
         gestorRoms->fillMenuByQuery(obj, "selectListaEmuladores",NULL, destino);
 
         if (lista.compare("listaEditarEmus") == 0){
-            obj->addElemLista("Volver", "", bullet_go, MENUOPCIONES);
+            obj->addElemLista("Configuración", "", bullet_go, MENUOPCIONES);
         } else {
-            obj->addElemLista("Volver", "", bullet_go, MENUINICIAL);
+            obj->addElemLista("Configuración", "", bullet_go, MENUINICIAL);
         }
 
     } catch (Excepcion &e) {
@@ -2310,10 +2311,12 @@ void Iofrontend::crearComboSistemas(){
     comboObj->addElemLista("Colecovision","Colecovision");
     comboObj->addElemLista("Commodore 64","Commodore 64");
     comboObj->addElemLista("Fairchild Channel F","Fairchild Channel F");
+    comboObj->addElemLista("Final Burn Alpha","fba");
     comboObj->addElemLista("Intellivision","Intellivision");
     comboObj->addElemLista("iOS","iOS");
     comboObj->addElemLista("Mac OS","Mac OS");
     comboObj->addElemLista("Magnavox Odyssey 2","Magnavox Odyssey 2");
+    comboObj->addElemLista("Mame","mame");
     comboObj->addElemLista("Microsoft Xbox","Microsoft Xbox");
     comboObj->addElemLista("Microsoft Xbox 360","Microsoft Xbox 360");
     comboObj->addElemLista("Microsoft Xbox One","Microsoft Xbox One");
