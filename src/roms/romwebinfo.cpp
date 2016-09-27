@@ -47,9 +47,11 @@ void RomWebInfo::updateGameInfo(){
         int petOK = 0;
 
         Traza::print("Descargando " + romname + "...", W_DEBUG);
-        petOK = gamesDB.download2(&queryGame, &response);
-        Traza::print("Encontrados: " + Constant::TipoToStr(response.gameList.size()) + " roms para idprog: " + idprog
-                     + " y idrom: " + idrom, W_DEBUG);
+        if (scrapped.empty()){
+            petOK = gamesDB.download2(&queryGame, &response);
+            Traza::print("Encontrados: " + Constant::TipoToStr(response.gameList.size()) + " roms para idprog: " + idprog
+                         + " y idrom: " + idrom, W_DEBUG);
+        }
 
         //Si no hemos obtenido ningun juego, lo intentamos con otra llamada al servicio
         if (response.gameList.size() == 0){
@@ -58,7 +60,7 @@ void RomWebInfo::updateGameInfo(){
             petOK = gamesDB.download2(&queryGame, &response);
             matched = findSimilarTitle(&response.gameList , queryGame.name);
             Traza::print("Encontrados: " + Constant::TipoToStr(response.gameList.size()) + " roms para idprog: " + idprog
-                     + " y idrom: " + idrom + " matched: " + Constant::TipoToStr(matched) + " name: " + ((matched >= 0) ? response.gameList.at(matched)->gameTitle : "") ,  W_DEBUG);
+                     + " y idrom: " + idrom + " matchedPos: " + Constant::TipoToStr(matched) + " name: " + ((matched >= 0) ? response.gameList.at(matched)->gameTitle : "") ,  W_DEBUG);
         }
 
         if (response.gameList.size() > 0 && matched >= 0){
@@ -94,34 +96,32 @@ int RomWebInfo::findSimilarTitle(vector<ResponseGame *> *listaJuegos, string tit
     int countWords = 0;
     int elementMatched = -1;
     Constant::lowerCase(&tituloBuscado);
-    vector<string> tituloSplit = Constant::split(Constant::removeEspecialChars(tituloBuscado), " ");
+    vector<string> tituloSplit = Constant::split(Constant::removeEspecialCharsAll(tituloBuscado), " ");
     string gameTitle = "";
-//    vector<string> wordsNotFound;
 
     for (int i=0; i < listaJuegos->size(); i++){
         gameTitle = listaJuegos->at(i)->gameTitle;
         Constant::lowerCase(&gameTitle);
-        Traza::print("gameTitle: " + Constant::toAnsiString(gameTitle), W_DEBUG);
+        Traza::print("gameTitle: " + gameTitle, W_DEBUG);
         countWords = 0;
-//        wordsNotFound.clear();
+
         for (int j=0; j < tituloSplit.size(); j++){
-            Traza::print("tituloSplit.at(j): " + tituloSplit.at(j), W_DEBUG);
-            if (gameTitle.find(Constant::removeEspecialChars(tituloSplit.at(j))) != string::npos
-                || Constant::isEspecialChar(tituloSplit.at(j)))
+            if (gameTitle.find(Constant::removeEspecialCharsAll(tituloSplit.at(j))) != string::npos
+                && !Constant::isEspecialCharAll(tituloSplit.at(j))
+            ){
                 countWords++;
-//            else
-//                wordsNotFound.push_back(tituloSplit.at(j));
+                Traza::print("tituloSplit.at(j): " + tituloSplit.at(j), W_DEBUG);
+            }
+
         }
-//        string noEncontradas = "";
-//        for (int k= 0; k < wordsNotFound.size(); k++){
-//            noEncontradas += wordsNotFound.at(k) + ";";
-//        }
-//        Traza::print(Constant::TipoToStr(countWords) + " Palabras encontradas. " + Constant::TipoToStr(wordsNotFound.size())
-//                     + " Palabras no encontradas: " + noEncontradas, W_DEBUG);
 
         if (tituloSplit.size() > 0){
-            Traza::print("percent: " + Constant::TipoToStr(countWords / (double)tituloSplit.size()), W_DEBUG);
-            if (countWords > maxWords && (countWords / (double)tituloSplit.size() >= 0.3)){ //tituloSplit.size() == countWords){
+            Traza::print("Words found: " + Constant::TipoToStr(countWords) + ", percent: "
+                         + Constant::TipoToStr(countWords / (double)tituloSplit.size()), W_DEBUG);
+
+            if (countWords > maxWords && ((countWords / (double)tituloSplit.size() >= 0.3 && countWords >= 3)
+                                          || (tituloSplit.size() == countWords && countWords < 3)) ){
+//            if (countWords > maxWords && (countWords / (double)tituloSplit.size() >= 0.3)){
                 elementMatched = i;
                 maxWords = countWords;
                 countWords = 0;

@@ -737,8 +737,8 @@ DWORD Gestorroms::addRomInfo(vector<vector<string> > *listaRoms, int posRomProce
             db->setString(3,resp->releaseDate);
             db->setString(4,resp->boxartFront);
             db->setString(5,Constant::replaceAll(resp->overview,"'","''"));
-            db->setString(6,resp->publisher);
-            db->setString(7,resp->developer);
+            db->setString(6,Constant::replaceAll(resp->publisher,"'","''"));
+            db->setString(7,Constant::replaceAll(resp->developer,"'","''"));
             db->setString(8,resp->rating);
             db->setString(9,Constant::replaceAll(resp->platform,"'","''"));
             db->setString(10,"S");
