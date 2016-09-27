@@ -301,6 +301,22 @@ DWORD Gestorroms::actualizarRoms(int idEmulador){
     Traza::print("Creando querys y borrando de BBDD", W_DEBUG);
     vector<vector<string> > result = getDatosEmulador(idEmulador);
 
+
+    //Borramos la tabla temporal
+    db->prepareStatement("deletetmprominfo");
+    if (idEmulador < 0)
+        db->setClauseWhere(false);
+    else
+        db->setInt(0,idEmulador);
+    db->execute();
+
+    db->prepareStatement("deletetmproms");
+    if (idEmulador < 0)
+        db->setClauseWhere(false);
+    else
+        db->setInt(0,idEmulador);
+    db->execute();
+
     //Antes de borrar rominfo hacemos una copia de seguridad
     db->prepareStatement("coyInTmpRomInfo");
     if (idEmulador < 0)
@@ -659,7 +675,7 @@ DWORD Gestorroms::scrapsystem(string idEmu){
                     db->setClauseWhere(true);
                     db->setString(0, idEmu);
                     if (Constant::isUPDATE_MISSING()){
-                        db->setRaw(1, " and ifnull(ri.SCRAPPED,'') != 'S'  ");
+                        db->setRaw(1, " and ifnull(ri.SCRAPPED,'N') = 'N' ");
                     } else {
                         db->setRaw(1, "");
                     }
@@ -701,20 +717,20 @@ DWORD Gestorroms::addRomInfo(vector<vector<string> > *listaRoms, int posRomProce
     string idrom = "";
     for (int j=0; j < Constant::getMAXTHREADSDOWN(); j++){
         ResponseGame *resp = objRom->getResponse();
+        //Cuando haya terminado, debemos anaydirlos a la bbdd. Esta parte esta sincronizada
+        //cuando todos los threads han terminado
+        idprog = listaRoms->at(posRomProcess).at(0);
+        idrom = listaRoms->at(posRomProcess).at(1);
+        scrapped = listaRoms->at(posRomProcess).at(4);
+
+        if (scrapped.empty()){
+            db->prepareStatement("insertInfoRom");
+        } else {
+            db->prepareStatement("updateInfoRom");
+            db->setClauseWhere(true);
+        }
+
         if (resp != NULL){
-            //Cuando haya terminado, debemos anaydirlos a la bbdd. Esta parte esta sincronizada
-            //cuando todos los threads han terminado
-            idprog = listaRoms->at(posRomProcess).at(0);
-            idrom = listaRoms->at(posRomProcess).at(1);
-            scrapped = listaRoms->at(posRomProcess).at(4);
-
-            if (scrapped.empty()){
-                db->prepareStatement("insertInfoRom");
-            } else if (scrapped.compare("S") == 0 || scrapped.compare("P") == 0){
-                db->prepareStatement("updateInfoRom");
-                db->setClauseWhere(true);
-            }
-
             db->setString(0,resp->players);
             db->setString(1,Constant::replaceAll(resp->gameTitle,"'","''"));
             db->setString(2,resp->genres.size() > 0 ? resp->genres.at(0) : "");
@@ -729,8 +745,24 @@ DWORD Gestorroms::addRomInfo(vector<vector<string> > *listaRoms, int posRomProce
             db->setString(11,idprog);
             db->setString(12,idrom);
             db->execute();
-            delete objRom;
+
+        } else {
+            db->setString(0, "");
+            db->setString(1, "");
+            db->setString(2, "");
+            db->setString(3, "");
+            db->setString(4, "");
+            db->setString(5, "");
+            db->setString(6, "");
+            db->setString(7, "");
+            db->setString(8, "");
+            db->setString(9, "");
+            db->setString(10,"P");
+            db->setString(11,idprog);
+            db->setString(12,idrom);
+            db->execute();
         }
+        delete objRom;
     }
     return 0;
 }
@@ -939,7 +971,7 @@ void Gestorroms::createRomInfo(Rominfo *rominfo, bool isFindInfoRoms, string fil
     db->setString(9,  infoRom.Getdeveloper()); //DEVELOPER
     db->setString(10, ""); //RATING
     db->setString(11, ""); //PLATFORM
-    db->setString(12, someFound ? "S" : "P"); //SCRAPPED
+    db->setString(12, someFound ? "S" : "N"); //SCRAPPED
     db->executeNoCommit();
 
     //Aumentamos el contador

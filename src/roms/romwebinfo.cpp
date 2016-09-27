@@ -94,22 +94,24 @@ int RomWebInfo::findSimilarTitle(vector<ResponseGame *> *listaJuegos, string tit
     int countWords = 0;
     int elementMatched = -1;
     Constant::lowerCase(&tituloBuscado);
-    vector<string> tituloSplit = Constant::split(tituloBuscado, " ");
+    vector<string> tituloSplit = Constant::split(Constant::removeEspecialChars(tituloBuscado), " ");
     string gameTitle = "";
 //    vector<string> wordsNotFound;
 
     for (int i=0; i < listaJuegos->size(); i++){
         gameTitle = listaJuegos->at(i)->gameTitle;
         Constant::lowerCase(&gameTitle);
+        Traza::print("gameTitle: " + Constant::toAnsiString(gameTitle), W_DEBUG);
         countWords = 0;
 //        wordsNotFound.clear();
         for (int j=0; j < tituloSplit.size(); j++){
-            if (gameTitle.find(Constant::removeEspecialChars(tituloSplit.at(j))) != string::npos || Constant::isEspecialChar(tituloSplit.at(j)))
+            Traza::print("tituloSplit.at(j): " + tituloSplit.at(j), W_DEBUG);
+            if (gameTitle.find(Constant::removeEspecialChars(tituloSplit.at(j))) != string::npos
+                || Constant::isEspecialChar(tituloSplit.at(j)))
                 countWords++;
 //            else
 //                wordsNotFound.push_back(tituloSplit.at(j));
         }
-
 //        string noEncontradas = "";
 //        for (int k= 0; k < wordsNotFound.size(); k++){
 //            noEncontradas += wordsNotFound.at(k) + ";";
@@ -117,10 +119,13 @@ int RomWebInfo::findSimilarTitle(vector<ResponseGame *> *listaJuegos, string tit
 //        Traza::print(Constant::TipoToStr(countWords) + " Palabras encontradas. " + Constant::TipoToStr(wordsNotFound.size())
 //                     + " Palabras no encontradas: " + noEncontradas, W_DEBUG);
 
-        if (countWords > maxWords && tituloSplit.size() == countWords){
-            elementMatched = i;
-            maxWords = countWords;
-            countWords = 0;
+        if (tituloSplit.size() > 0){
+            Traza::print("percent: " + Constant::TipoToStr(countWords / (double)tituloSplit.size()), W_DEBUG);
+            if (countWords > maxWords && (countWords / (double)tituloSplit.size() >= 0.3)){ //tituloSplit.size() == countWords){
+                elementMatched = i;
+                maxWords = countWords;
+                countWords = 0;
+            }
         }
     }
     return elementMatched;
