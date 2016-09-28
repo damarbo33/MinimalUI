@@ -660,7 +660,7 @@ DWORD Gestorroms::thScrapSystem() {
 */
 DWORD Gestorroms::scrapsystem(string idEmu){
     int errorCode = 0;
-    int i=0;
+
 
     try{
         scrappingNow = true;
@@ -690,12 +690,7 @@ DWORD Gestorroms::scrapsystem(string idEmu){
 //                    rom.push_back("");//scrapped
 //                    vector<vector<string> > listaRoms;
 //                    listaRoms.push_back(rom);
-                    for ( i; i < listaRoms.size(); i++){
-                        this->progress = Constant::TipoToStr((int)(i/(float)listaRoms.size() * 100)) + "%";
-                        RomWebInfo *objRom = new RomWebInfo(i, &listaRoms, platform);
-                        objRom->updateGameInfo();
-                        addRomInfo(&listaRoms, i, objRom);
-                    }
+                    updateRom(&listaRoms);
                 }
             }
         }
@@ -706,6 +701,23 @@ DWORD Gestorroms::scrapsystem(string idEmu){
     scrappingNow = false;
 
     return 0;
+}
+
+/**
+*
+*/
+void Gestorroms::updateRom(vector<vector<string> > *listaRoms){
+    int i=0;
+    for (i; i < listaRoms->size(); i++){
+        this->progress = Constant::TipoToStr((int)(i/(float)listaRoms->size() * 100)) + "%";
+        RomWebInfo *objRom = new RomWebInfo(i, listaRoms, platform);
+        objRom->updateGameInfo();
+        addRomInfo(listaRoms, i, objRom);
+    }
+}
+
+DWORD Gestorroms::updateRom(){
+    updateRom(&thListaRoms);
 }
 
 /**

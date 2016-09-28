@@ -32,6 +32,7 @@ class Gestorroms
         bool deleteEmulador(int);
         vector<vector<string> > getDatosEmulador(int);
 
+
         void listarDirRecursivo(string dir,  Rominfo *);
         unsigned int listarDirSinOrden(const char *strdir, vector <FileProps> * tempFilelist, Rominfo *);
         string parserSQLWhere(string);
@@ -51,7 +52,12 @@ class Gestorroms
         string getThEmuID(){return thEmuID;}
         bool isScrappingNow(){return scrappingNow;}
         string getPlatform(){return platform;}
+        void setPlatform(string var){platform = var;}
         string getProgress(){return progress;}
+
+        void updateRom(vector<vector<string> > *listaRoms);
+        DWORD updateRom();
+        vector<vector<string> > * getThListaRoms(){return &thListaRoms;}
 
     protected:
     private:
@@ -72,6 +78,8 @@ class Gestorroms
         void comprobarVersion();
         void createRomInfo(Rominfo *rominfo, bool isFindInfoRoms, string filename);
         MameHistoryParser mame;
+
+        vector<vector<string> > thListaRoms;
 
 };
 

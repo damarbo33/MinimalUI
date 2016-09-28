@@ -280,6 +280,12 @@ void Iofrontend::initUIObjs(){
     t_posicion posDesc = {0, 30 + Constant::getIMGBOXARTHEIGHT() + IMGBOXARTMARGIN * 2,0,0};
     infoTextRom->addField("txtDescripcion","","",posDesc, false);
 
+    UIPopupMenu * popupJuegosG = addPopup(PANTALLAGROUPLIST, "popupEmusConfig", "listaGrupoRoms");
+    if (popupJuegosG != NULL){
+        popupJuegosG->addElemLista("Config. Emu ", "ConfigEmu", controller);
+        popupJuegosG->addElemLista("Actualizar Información ", "RefreshArtwork", arrow_refresh);
+    }
+
     //objMenu->findNextFocus();
     //Establecemos los elementos que se redimensionan
     setDinamicSizeObjects();
@@ -1515,6 +1521,10 @@ int Iofrontend::accionesBtnVolverConfigEmu(tEvento *evento){
         objsMenu->getObjByName("btnCancelarEmu")->setTag("");
         this->setSelMenu(MENUJUEGOS);
         ObjectsMenu[MENUJUEGOS]->setFirstFocus();
+    } else if (tag.compare("FROMEMUGROUPLIST") == 0){
+        objsMenu->getObjByName("btnCancelarEmu")->setTag("");
+        this->setSelMenu(PANTALLAGROUPLIST);
+        ObjectsMenu[PANTALLAGROUPLIST]->setFirstFocus();
     } else {
         this->setSelMenu(PANTALLAEDITAREMU);
         objsMenu = ObjectsMenu[this->getSelMenu()];
@@ -1667,8 +1677,6 @@ bool Iofrontend::cargarListaRoms(int menu, string idprog, string lista){
 
         UIListCommon *objLista = (UIListCommon *)objMenu->getObjByName(lista);
         gestorRoms->fillMenuByQuery(objLista, "selectListaRoms", &parms, LANZARROM);
-
-
         Object *titulo = objMenu->getObjByName(TITLESCREEN);
         titulo->setLabel(objEmu->getListNames()->get(objEmu->getPosActualLista()) + " - " + Constant::TipoToStr(objLista->getSize()) + " juegos");
 
@@ -1702,8 +1710,11 @@ bool Iofrontend::actualizarRoms(){
         if (thread->start())
             std::cout << "Thread started with id: " << thread->getThreadID() << std::endl;
         //thread->join();
-        pintarIconoProcesando(thread);
-
+        //pintarIconoProcesando(thread);
+        pintarIconoProcesando(true);
+        while(thread->isRunning()){
+            pintarIconoProcesando(false);
+        }
         clearScr();
         delete thread;
 
@@ -1725,7 +1736,10 @@ bool Iofrontend::importRetroarchConfig(){
     if (thread->start())
         std::cout << "Thread started with id: " << thread->getThreadID() << std::endl;
     //thread->join();
-    pintarIconoProcesando(thread);
+    pintarIconoProcesando(true);
+    while(thread->isRunning()){
+        pintarIconoProcesando(false);
+    }
 
     clearScr();
     actualizarRoms();
@@ -2305,19 +2319,89 @@ int Iofrontend::accionConfigEmusPopup(tEvento *evento){
     if (obj->getObjectType() == GUIPOPUPMENU){
         UIPopupMenu *objPopup = (UIPopupMenu *)obj;
         //Obtenemos el valor del elemento seleccionado en el popup
-        string selected = objPopup->getListValues()->get(objPopup->getPosActualLista());
+        string selected = objPopup->getValue(objPopup->getPosActualLista());
         if (objPopup->getCallerPopup() != NULL){
-            //Obtenemos el objeto llamador
-            if (objPopup->getCallerPopup()->getObjectType() == GUILISTBOX){
-                UIList *objList = (UIList *)objPopup->getCallerPopup();
-                string codEmu = objList->getListValues()->get(objList->getPosActualLista());
-                cargaMenu(PANTALLAOPCIONRUTAS, codEmu, NULL);
-                tmenu_gestor_objects *objsMenu = ObjectsMenu[PANTALLAOPCIONRUTAS];
-                objsMenu->getObjByName("btnCancelarEmu")->setTag("FROMEMULIST");
+            UIListCommon *objList = (UIListCommon *)objPopup->getCallerPopup();
+            if (objPopup->getPosActualLista() == 0){
+                //Obtenemos el objeto llamador
+                if (objPopup->getCallerPopup()->getObjectType() == GUILISTBOX){
+                    string codEmu = objList->getValue(objList->getPosActualLista());
+                    cargaMenu(PANTALLAOPCIONRUTAS, codEmu, NULL);
+                    tmenu_gestor_objects *objsMenu = ObjectsMenu[PANTALLAOPCIONRUTAS];
+                    objsMenu->getObjByName("btnCancelarEmu")->setTag("FROMEMULIST");
+                } else if (objPopup->getCallerPopup()->getObjectType() == GUILISTGROUPBOX){
+                    string elemSel = objList->getValue(objList->getPosActualLista());
+                    int posIni = elemSel.find("IDPROG=") + strlen("IDPROG=");
+                    int posFin = elemSel.find(",",posIni);
+                    string codEmu = elemSel.substr(posIni, posFin - posIni);
+                    cargaMenu(PANTALLAOPCIONRUTAS, codEmu, NULL);
+                    tmenu_gestor_objects *objsMenu = ObjectsMenu[PANTALLAOPCIONRUTAS];
+                    objsMenu->getObjByName("btnCancelarEmu")->setTag("FROMEMUGROUPLIST");
+                }
+            } else if (objPopup->getPosActualLista() == 1){
+                refreshArtWork(objList);
             }
         }
     }
     return 0;
+}
+
+/**
+*
+*/
+void Iofrontend::refreshArtWork(UIListCommon *objList){
+    string idprog, idrom, namerom, scrapped, platform;
+
+    if (objList->getObjectType() == GUILISTGROUPBOX){
+        string elemSel = objList->getValue(objList->getPosActualLista());
+        int posIni = elemSel.find("IDPROG=") + strlen("IDPROG=");
+        int posFin = elemSel.find(",",posIni);
+        idprog = elemSel.substr(posIni, posFin - posIni);
+
+        posIni = elemSel.find("IDROM=") + strlen("IDROM=");
+        posFin = elemSel.find(",",posIni);
+        idrom = elemSel.substr(posIni, posFin - posIni);
+
+        posIni = elemSel.find("SCRAPPED=") + strlen("SCRAPPED=");
+        posFin = elemSel.find(",",posIni);
+        scrapped = elemSel.substr(posIni, 1);
+
+        UIListGroup *objListGroup = (UIListGroup *)objList;
+        namerom = objListGroup->getCol(objList->getPosActualLista(), 0)->getTexto();
+
+    }
+
+    Traza::print("refreshArtWork. idprog=" + idprog + "; idrom=" + idrom
+                 + "; namerom=" + namerom + "; scrapped=" + scrapped, W_DEBUG);
+
+    vector<vector<string> > result = gestorRoms->getDatosEmulador(Constant::strToTipo<int>(idprog));
+    if (result.size() > 0){
+        platform = result.at(0).at(10);
+    }
+
+    vector<string> rom;
+    rom.push_back(idprog);//IDPROG
+    rom.push_back(idrom);//IDROM
+    rom.push_back(namerom);//title
+    rom.push_back("");//nplayers
+    rom.push_back(!scrapped.empty() ? "P" : "");//scrapped
+    //vector<vector<string> > listaRoms;
+    gestorRoms->getThListaRoms()->clear();
+    gestorRoms->getThListaRoms()->push_back(rom);
+    gestorRoms->setPlatform(platform);
+
+    Thread<Gestorroms> *thread = new Thread<Gestorroms>(gestorRoms, &Gestorroms::updateRom);
+    if (thread->start())
+        std::cout << "Thread started with id: " << thread->getThreadID() << std::endl;
+
+    pintarIconoProcesando(true);
+    while(thread->isRunning()){
+        pintarIconoProcesando(false);
+    }
+    clearScr();
+    delete thread;
+
+
 }
 
 /**

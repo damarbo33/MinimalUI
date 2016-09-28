@@ -680,13 +680,13 @@
 	"SDL/SDL_image.h"
 	"SDL/SDL_rotozoom.h"
 
-1475055456 source:c:\github\proyectos\minimalui\src\iofrontend.cpp
+1475077617 source:c:\github\proyectos\minimalui\src\iofrontend.cpp
 	"Iofrontend.h"
 	"uilistgroup.h"
 	"beans/listgroupcol.h"
 	"uilistcommon.h"
 
-1475055443 c:\github\proyectos\minimalui\src\iofrontend.h
+1475069629 c:\github\proyectos\minimalui\src\iofrontend.h
 	<string>
 	<vector>
 	"Ioutil.h"
@@ -863,7 +863,7 @@
 	<pthread.h>
 	<pthread.h>
 
-1474905182 c:\github\proyectos\minimalui\src\roms\gestorroms.h
+1475076992 c:\github\proyectos\minimalui\src\roms\gestorroms.h
 	"bbdd/Database.h"
 	"ListaSimple.h"
 	"Dirutil.h"
@@ -1009,7 +1009,7 @@
 1433765603 source:c:\github\proyectos\minimalui\src\roms\estructuras.cpp
 	"estructuras.h"
 
-1474989487 source:c:\github\proyectos\minimalui\src\roms\gestorroms.cpp
+1475076939 source:c:\github\proyectos\minimalui\src\roms\gestorroms.cpp
 	"gestorroms.h"
 
 1474455667 source:c:\github\proyectos\minimalui\src\sdl\sdl_draw.c
@@ -1110,7 +1110,7 @@
 	"SDL/SDL_image.h"
 	"SDL/SDL_rotozoom.h"
 
-1475051123 source:c:\github\externallibs\uiobjects\src\common\ioutil.cpp
+1475077317 source:c:\github\externallibs\uiobjects\src\common\ioutil.cpp
 	"Ioutil.h"
 	"9001.png.h"
 	"font/Arimo_Regular.ttf.h"

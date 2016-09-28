@@ -140,7 +140,7 @@ class Iofrontend : public Ioutil{
         bool scrapAllRoms();
         int accionCombo(tEvento *evento);
         void loadComboUnidades(string objName, int pantalla, int types);
-
+        void refreshArtWork(UIListCommon *objList);
 
 
     public :
