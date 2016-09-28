@@ -47,11 +47,11 @@ void RomWebInfo::updateGameInfo(){
         int petOK = 0;
 
         Traza::print("Descargando " + romname + "...", W_DEBUG);
-        if (scrapped.empty()){
-            petOK = gamesDB.download2(&queryGame, &response);
-            Traza::print("Encontrados: " + Constant::TipoToStr(response.gameList.size()) + " roms para idprog: " + idprog
-                         + " y idrom: " + idrom, W_DEBUG);
-        }
+//        if (scrapped.empty()){
+        petOK = gamesDB.download2(&queryGame, &response);
+        Traza::print("Encontrados: " + Constant::TipoToStr(response.gameList.size()) + " roms para idprog: " + idprog
+                     + " y idrom: " + idrom, W_DEBUG);
+//        }
 
         //Si no hemos obtenido ningun juego, lo intentamos con otra llamada al servicio
         if (response.gameList.size() == 0){

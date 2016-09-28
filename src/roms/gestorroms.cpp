@@ -484,7 +484,7 @@ void Gestorroms::cargarInfoRoms(Rominfo *infoDatos){
 * El formato de las claves será "clave1:valor1,clave2:valor2,clave3:valor3,...,claven:valorn"
 * el string de resultado sera: and clave1=valor1 and clave2=valor2...
 */
-string Gestorroms::parserSQLWhere(string claves){
+string Gestorroms::parserSQLWhere(string claves, string esquema){
     string sqlwhere = "";
 
     if (claves.find(",") != string::npos){
@@ -499,7 +499,7 @@ string Gestorroms::parserSQLWhere(string claves){
                 if (valorClaves.size() > 0){
                     clave = valorClaves.at(0);
                     valor = valorClaves.at(1);
-                    sqlwhere.append(" and r." + clave + "=" + valor);
+                    sqlwhere.append(" and " + esquema + "." + clave + "=" + valor);
                     Traza::print("clave=" + clave + " valor=" + valor, W_DEBUG);
                 }
             }
@@ -640,7 +640,8 @@ DWORD Gestorroms::thScrapAllSystem(){
         Traza::print("Gestorroms::thScrapAllSystem. Obteniendo lista de sistemas", W_DEBUG);
         vector<vector<string> > result = db->executeQuery();
         for (int i=0; i < result.size(); i++){
-            scrapsystem(result.at(i).at(0));
+            if (result.at(i).at(3).compare("S") != 0)
+                scrapsystem(result.at(i).at(0));
         }
     } catch (Excepcion &e) {
          Traza::print("Excepcion Gestorroms::thScrapAllSystem" + string(e.getMessage()), W_ERROR);

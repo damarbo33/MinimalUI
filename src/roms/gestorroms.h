@@ -35,7 +35,7 @@ class Gestorroms
 
         void listarDirRecursivo(string dir,  Rominfo *);
         unsigned int listarDirSinOrden(const char *strdir, vector <FileProps> * tempFilelist, Rominfo *);
-        string parserSQLWhere(string);
+        string parserSQLWhere(string, string);
         DWORD importRetroarchConfig();
         void setRutaInicial(string var){rutaInicial = var;}
         string getRutaInicial(){return rutaInicial;}

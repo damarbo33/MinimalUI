@@ -1754,7 +1754,12 @@ bool Iofrontend::importRetroarchConfig(){
 bool Iofrontend::lanzarPrograma(string claves){
     ignoreButtonRepeats = true;
     string sqlwhere = "";
-    sqlwhere = gestorRoms->parserSQLWhere(claves);
+
+    if (claves.find(",SCRAPPED=") != string::npos){
+        claves = claves.substr(0, claves.find(",SCRAPPED="));
+    }
+
+    sqlwhere = gestorRoms->parserSQLWhere(claves, "r");
 
     string sql = "select e.RUTAEMU, e.PARMSEMU, r.NOMBRE, e.RUTAROMS || ru.RUTA, e.DESCOMPRIMIR, e.SEPARARUTAPARM, e.FIXOPTION";
     sql.append(" from ROMS r, EMULADOR e, RUTAS ru ");
