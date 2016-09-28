@@ -185,7 +185,7 @@ void Iofrontend::initUIObjs(){
     ObjectsMenu[PANTALLAPREGUNTA]->add("btnCancelarPregunta", GUIBUTTON, (BUTTONW/2 + 5), 30,BUTTONW,BUTTONH, "Cancelar", true)->setIcon(cross);
     ObjectsMenu[PANTALLAPREGUNTA]->add("borde", GUIPANELBORDER,0,0,0,0, "Introduzca el dato", false);
 
-    ObjectsMenu[PANTALLACONFIRMAR]->add("labelConfirm", GUILABEL, 0, -20 * zoomText, 0, 0, "Aceptar o Cancelar la pregunta", true);
+    ObjectsMenu[PANTALLACONFIRMAR]->add("labelConfirm", GUILABEL, 0, -20 * zoomText, 50, getFontHeight(), "Aceptar o Cancelar la pregunta", true)->setTextColor(cBlanco);
     ObjectsMenu[PANTALLACONFIRMAR]->add("btnSiConfirma", GUIBUTTON, -(BUTTONW/2 + 5), 30,BUTTONW,BUTTONH, "Aceptar", true)->setIcon(tick);
     ObjectsMenu[PANTALLACONFIRMAR]->add("btnNoConfirma", GUIBUTTON, (BUTTONW/2 + 5), 30,BUTTONW,BUTTONH, "Cancelar", true)->setIcon(cross);
     ObjectsMenu[PANTALLACONFIRMAR]->add("borde", GUIPANELBORDER,0,0,0,0, "Seleccione una opcion", false);
@@ -493,6 +493,8 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
 
         //Dibujamos el cursor solo si procede
         this->pintarCursor(evento->mouse_x, evento->mouse_y, cursorPrincipal);
+        //Comprobar si al cerrar
+        this->ComprobarPopupsCerrados(objMenu, evento);
 
 
     } catch (Excepcion &e) {
@@ -988,6 +990,8 @@ bool Iofrontend::casoPANTALLACONFIRMAR(string titulo, string txtDetalle){
     tmenu_gestor_objects *objMenu = ObjectsMenu[PANTALLACONFIRMAR];
     objMenu->getObjByName("borde")->setLabel(titulo);
     objMenu->getObjByName("labelConfirm")->setLabel(txtDetalle);
+    int txtLen = fontStrLen(txtDetalle);
+    objMenu->getObjByName("labelConfirm")->setW(txtLen);
 
     //Generamos el tamanyo de la ventana que formara el popup
 
@@ -1380,6 +1384,29 @@ int Iofrontend::accionCombo(tEvento *evento){
     ObjectsMenu[PANTALLABROWSER2]->setFocus(OBJLISTABROWSER2);
     return 0;
 }
+
+/**
+*
+*/
+void Iofrontend::ComprobarPopupsCerrados(tmenu_gestor_objects *objMenu, tEvento *evento){
+    //Comprobacion para evitar problemas con popups
+    Object *object = objMenu->getObjByPos(objMenu->getFocus());
+    if (object != NULL){
+        if (object->isPopup() == false && object->isFocus() == false && evento
+            && objMenu->getObjByName(object->getName())->getObjectType() == GUIPOPUPMENU)
+        {
+            if (evento->isMouse && (evento->mouse == MOUSE_BUTTON_RIGHT || evento->mouse == MOUSE_BUTTON_LEFT)
+                && evento->mouse_state == SDL_PRESSED)
+            {
+                UIPopupMenu *objPopup = (UIPopupMenu *)objMenu->getObjByName(object->getName());
+                objMenu->setFocus(objPopup->getCallerPopup()->getName());
+                Traza::print("ComprobarPopupsCerrados. Foco a: " + objPopup->getCallerPopup()->getName(), W_DEBUG);
+            }
+        }
+    }
+}
+
+
 
 /***************************************************************************************************************/
 /**                                ACCIONES DE LOS CAMPOS DE LA APLICACION                                     */
@@ -2191,6 +2218,10 @@ bool Iofrontend::procesarPopups(tmenu_gestor_objects *objMenu, tEvento *evento){
         if (object != NULL){
             try{
                 //Comprobamos si el elemento que estamos pintando deberia mostrar su menu de popup
+//                Traza::print("object->isPopup()",object->isPopup(), W_DEBUG);
+//                Traza::print("object->isFocus()",object->isFocus(), W_DEBUG);
+//                Traza::print("object->getName(): " + object->getName(), W_DEBUG);
+
                 if (object->isPopup() && object->isFocus()){
                     Traza::print("procesarPopups", W_DEBUG);
                     //Obtenemos el objeto popup

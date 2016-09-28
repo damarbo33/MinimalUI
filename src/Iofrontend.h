@@ -64,6 +64,7 @@ class Iofrontend : public Ioutil{
         bool procesarBoton(Object * obj, tmenu_gestor_objects *gestorMenu);
         string casoJOYBUTTONS(tEvento *evento);
         bool importRetroarchConfig();
+        void ComprobarPopupsCerrados(tmenu_gestor_objects *objMenu,tEvento *evento);
         long waitMedia();
         void setPanelMediaVisible(bool );
         bool bucleReproductor(string);
