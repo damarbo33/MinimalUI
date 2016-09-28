@@ -58,6 +58,15 @@ class Gestorroms
         void updateRom(vector<vector<string> > *listaRoms);
         DWORD updateRom();
         vector<vector<string> > * getThListaRoms(){return &thListaRoms;}
+        DWORD scrapsystemMulti(string idEmu, int inicio, int fin);
+        DWORD thScrapSystemMulti();
+        void setThScrapIni(int var){thScrapIni = var;}
+        void setThScrapFin(int var){thScrapFin = var;}
+        int getThScrapIni(){return thScrapIni;}
+        int getThScrapFin(){return thScrapFin;}
+        int getRomsNotScrapped(string idEmu);
+        void setThScrapTotal(int var){thScrapTotal = var;}
+        static SDL_mutex *mutex;
 
     protected:
     private:
@@ -80,6 +89,11 @@ class Gestorroms
         MameHistoryParser mame;
 
         vector<vector<string> > thListaRoms;
+        int thScrapIni;
+        int thScrapFin;
+        int thScrapTotal;
+        static int thScrapCount;
+
 
 };
 

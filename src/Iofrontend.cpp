@@ -99,6 +99,7 @@ void Iofrontend::initUIObjs(){
     UIPopupMenu * popupJuegos = addPopup(MENUJUEGOS, "popupEmusConfig", "ListaMenuJuegos");
     if (popupJuegos != NULL){
         popupJuegos->addElemLista("Config. Emu ", "ConfigEmu", controller);
+        popupJuegos->addElemLista("Actualizar Información ", "ConfigEmu", arrow_refresh);
     }
 
     ObjectsMenu[MENUOPCIONES]->add("ListaMenuOpciones", GUILISTBOX, 0, 0, 0, 0, "ListaMenuOpciones", true);
@@ -2344,11 +2345,49 @@ int Iofrontend::accionConfigEmusPopup(tEvento *evento){
                     objsMenu->getObjByName("btnCancelarEmu")->setTag("FROMEMUGROUPLIST");
                 }
             } else if (objPopup->getPosActualLista() == 1){
-                refreshArtWork(objList);
+                if (objPopup->getCallerPopup()->getObjectType() == GUILISTBOX){
+                    refreshArtWorkOptim(objList);
+                } else if (objPopup->getCallerPopup()->getObjectType() == GUILISTGROUPBOX){
+                    refreshArtWork(objList);
+                }
             }
         }
     }
     return 0;
+}
+
+/**
+*
+*/
+void Iofrontend::refreshArtWorkOptim(UIListCommon *objList){
+    Traza::print("refreshArtWorkOptim", W_DEBUG);
+    string codEmu = objList->getValue(objList->getPosActualLista());
+    const int nThreads = 5;
+    const int totalRoms = gestorRoms->getRomsNotScrapped(codEmu);
+    const int interval = totalRoms / nThreads;
+    Gestorroms::mutex = SDL_CreateMutex();
+
+    Gestorroms *ArrGestRom[nThreads];
+    Thread<Gestorroms> *ArrTh[nThreads];
+
+    for (int i=0; i < nThreads; i++){
+        ArrGestRom[i] = new Gestorroms(dirInicial);
+        ArrGestRom[i]->setThEmuID(codEmu);
+        ArrGestRom[i]->setThScrapIni(interval * i);
+        ArrGestRom[i]->setThScrapFin( (i == nThreads-1) ? totalRoms - 1 : interval * i + interval - 1);
+        ArrGestRom[i]->setThScrapTotal(totalRoms);
+        Traza::print("refreshArtWorkOptim. rango para emu " + codEmu
+                         + "; Inicio: " + Constant::TipoToStr(ArrGestRom[i]->getThScrapIni())
+                         + "; fin: " + Constant::TipoToStr(ArrGestRom[i]->getThScrapFin()), W_DEBUG);
+
+        ArrTh[i] = new Thread<Gestorroms>(ArrGestRom[i], &Gestorroms::thScrapSystemMulti);
+    }
+
+    for (int i=0; i < nThreads; i++){
+        ArrTh[i]->start();
+    }
+
+
 }
 
 /**
@@ -2405,8 +2444,6 @@ void Iofrontend::refreshArtWork(UIListCommon *objList){
     }
     clearScr();
     delete thread;
-
-
 }
 
 /**

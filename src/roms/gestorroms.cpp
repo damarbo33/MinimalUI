@@ -1,5 +1,8 @@
 #include "gestorroms.h"
 
+SDL_mutex *Gestorroms::mutex;
+int Gestorroms::thScrapCount = 0;
+
 Gestorroms::Gestorroms(string ruta){
     //ctor
     db = NULL;
@@ -632,6 +635,16 @@ string Gestorroms::getImgEmulador(int idEmu){
 }
 
 /**
+* Obtiene el numero de juegos sin scrapear
+*/
+int Gestorroms::getRomsNotScrapped(string idEmu){
+    db->prepareStatement("countRomsNotScrapped");
+    db->setString(0,idEmu);
+    vector<vector<string> > result = db->executeQuery();
+    return Constant::strToTipo<int>(db->getColQuery(&result, 0));
+}
+
+/**
 * Actualiza la informacion de todos los emuladores
 */
 DWORD Gestorroms::thScrapAllSystem(){
@@ -657,6 +670,71 @@ DWORD Gestorroms::thScrapSystem() {
 }
 
 /**
+* Funcion para llamar desde el thread principal
+*/
+DWORD Gestorroms::thScrapSystemMulti() {
+    return scrapsystemMulti(getThEmuID(), getThScrapIni(), getThScrapFin());
+}
+
+/**
+* Obtiene la informacion de todas las roms del emulador que se le pasa por parametro
+*/
+DWORD Gestorroms::scrapsystemMulti(string idEmu, int inicio, int fin){
+    int errorCode = 0;
+
+    try{
+        scrappingNow = true;
+        SDL_LockMutex(mutex);
+        thScrapCount = 0;
+        SDL_UnlockMutex(mutex);
+
+        if (db != NULL) {
+            Traza::print("Gestorroms::scrapsystem. Obteniendo datos de emu " + idEmu
+                         + "; Inicio: " + Constant::TipoToStr(inicio)
+                         + "; fin: " + Constant::TipoToStr(fin), W_DEBUG);
+
+            vector<vector<string> > result = getDatosEmulador(Constant::strToTipo<int>(idEmu));
+            if (result.size() > 0){
+                platform = result.at(0).at(10);
+                if (!platform.empty()){
+                    db->prepareStatement("selectRomsForInfo");
+                    //Si hay parametros, generamos la query con parametros
+                    db->setClauseWhere(true);
+                    db->setString(0, idEmu);
+
+                    string strLimite = " and r.idrom between " + Constant::TipoToStr(inicio)
+                    + " and " + Constant::TipoToStr(fin);
+
+                    if (Constant::isUPDATE_MISSING()){
+                        db->setRaw(1, strLimite + " and ifnull(ri.SCRAPPED,'N') = 'N' ");
+                    } else {
+                        db->setRaw(1, strLimite);
+                    }
+
+                    //Lanzamos la query
+                    vector<vector<string> > listaRoms = db->executeQuery();
+//                    vector<string> rom;
+//                    rom.push_back("744");//IDPROG
+//                    rom.push_back("12");//IDROM
+//                    rom.push_back("Alex Kidd in Miracle World");//title
+//                    rom.push_back("");//nplayers
+//                    rom.push_back("");//scrapped
+//                    vector<vector<string> > listaRoms;
+//                    listaRoms.push_back(rom);
+                    updateRom(&listaRoms);
+                }
+            }
+        }
+    } catch(Excepcion &e){
+        Traza::print("scrapsystem: " + string(e.getMessage()), W_ERROR);
+        errorCode = e.getCode();
+    }
+    scrappingNow = false;
+
+    return 0;
+}
+
+/**
 * Obtiene la informacion de todas las roms del emulador que se le pasa por parametro
 */
 DWORD Gestorroms::scrapsystem(string idEmu){
@@ -665,6 +743,8 @@ DWORD Gestorroms::scrapsystem(string idEmu){
 
     try{
         scrappingNow = true;
+
+
         if (db != NULL) {
             Traza::print("Gestorroms::scrapsystem. Obteniendo datos de emu " + idEmu, W_DEBUG);
             vector<vector<string> > result = getDatosEmulador(Constant::strToTipo<int>(idEmu));
@@ -710,10 +790,13 @@ DWORD Gestorroms::scrapsystem(string idEmu){
 void Gestorroms::updateRom(vector<vector<string> > *listaRoms){
     int i=0;
     for (i; i < listaRoms->size(); i++){
-        this->progress = Constant::TipoToStr((int)(i/(float)listaRoms->size() * 100)) + "%";
         RomWebInfo *objRom = new RomWebInfo(i, listaRoms, platform);
         objRom->updateGameInfo();
+        SDL_LockMutex(mutex);
+        thScrapCount++;
+        this->progress = Constant::TipoToStr((int)(thScrapCount/(float)thScrapTotal * 100)) + "%";
         addRomInfo(listaRoms, i, objRom);
+        SDL_UnlockMutex(mutex);
     }
 }
 

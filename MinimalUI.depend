@@ -1512,13 +1512,13 @@
 
 1474481219 source:d:\github\codeblocks\proyectos\minimalui\resource.rc
 
-1475085775 source:d:\github\codeblocks\proyectos\minimalui\src\iofrontend.cpp
+1475098254 source:d:\github\codeblocks\proyectos\minimalui\src\iofrontend.cpp
 	"Iofrontend.h"
 	"uilistgroup.h"
 	"beans/listgroupcol.h"
 	"uilistcommon.h"
 
-1475082642 d:\github\codeblocks\proyectos\minimalui\src\iofrontend.h
+1475091769 d:\github\codeblocks\proyectos\minimalui\src\iofrontend.h
 	<string>
 	<vector>
 	"Ioutil.h"
@@ -1588,7 +1588,7 @@
 1461349467 d:\github\codeblocks\externallibs\uiobjects\src\filelaunch.h
 	<string>
 
-1475085513 d:\github\codeblocks\proyectos\minimalui\src\roms\gestorroms.h
+1475096612 d:\github\codeblocks\proyectos\minimalui\src\roms\gestorroms.h
 	"bbdd/Database.h"
 	"ListaSimple.h"
 	"Dirutil.h"
@@ -1780,13 +1780,13 @@
 1474481219 source:d:\github\codeblocks\proyectos\minimalui\src\roms\estructuras.cpp
 	"estructuras.h"
 
-1475089911 source:d:\github\codeblocks\proyectos\minimalui\src\roms\gestorroms.cpp
+1475097057 source:d:\github\codeblocks\proyectos\minimalui\src\roms\gestorroms.cpp
 	"gestorroms.h"
 
 1474481219 source:d:\github\codeblocks\proyectos\minimalui\src\roms\mamehistoryparser.cpp
 	"mamehistoryparser.h"
 
-1475084817 source:d:\github\codeblocks\proyectos\minimalui\src\roms\romwebinfo.cpp
+1475093846 source:d:\github\codeblocks\proyectos\minimalui\src\roms\romwebinfo.cpp
 	"romwebinfo.h"
 
 1474564654 source:d:\github\codeblocks\proyectos\minimalui\src\roms\thegamesdb.cpp

@@ -141,6 +141,7 @@ class Iofrontend : public Ioutil{
         int accionCombo(tEvento *evento);
         void loadComboUnidades(string objName, int pantalla, int types);
         void refreshArtWork(UIListCommon *objList);
+        void refreshArtWorkOptim(UIListCommon *objList);
 
 
     public :
