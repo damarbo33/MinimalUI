@@ -710,7 +710,7 @@ DWORD Gestorroms::scrapsystemMulti(string idEmu, int inicio, int fin){
         SDL_UnlockMutex(mutex);
 
         if (db != NULL) {
-            Traza::print("Gestorroms::scrapsystem. Obteniendo datos de emu " + idEmu
+            Traza::print("Gestorroms::scrapsystemMulti. Obteniendo datos de emu " + idEmu
                          + "; Inicio: " + Constant::TipoToStr(inicio)
                          + "; fin: " + Constant::TipoToStr(fin), W_DEBUG);
 
@@ -803,9 +803,10 @@ void Gestorroms::updateRom(vector<vector<string> > *listaRoms){
         RomWebInfo *objRom = new RomWebInfo(i, listaRoms, platform);
         objRom->updateGameInfo();
         SDL_LockMutex(mutex);
-        thScrapCount++;
-        this->progress = Constant::TipoToStr((int)(thScrapCount/(float)thScrapTotal * 100)) + "%";
-        addRomInfo(listaRoms, i, objRom);
+            thScrapCount++;
+            this->progress = Constant::TipoToStr(thScrapCount) + ":" + Constant::TipoToStr(thScrapTotal) + " "
+             + Constant::TipoToStr((int)(thScrapCount/(float)thScrapTotal * 100)) + "%";
+            addRomInfo(listaRoms, i, objRom);
         SDL_UnlockMutex(mutex);
     }
 }
@@ -1137,14 +1138,20 @@ void Gestorroms::restaurarRomInfo(int idEmu){
 *
 */
 void Gestorroms::refreshArtWorkOptim(string codEmu, string dirInicial){
-    Traza::print("refreshArtWorkOptim Inicio", W_DEBUG);
+    Traza::print("refreshArtWorkOptim Inicio codEmu: " + codEmu, W_DEBUG);
     const int nThreads = 5;
     const int totalRoms = this->getRomsNotScrapped(codEmu);
     const int interval = totalRoms / nThreads;
 
+    thScrapCount = 0;
+    thScrapTotal = totalRoms;
+    progress = "";
+    scrappingNow = true;
 
-    Gestorroms *ArrGestRom[nThreads];
-    Thread<Gestorroms> *ArrTh[nThreads];
+    Gestorroms * ArrGestRom[nThreads];
+    Thread<Gestorroms> * ArrTh[nThreads];
+
+    Traza::print("Total Roms", totalRoms, W_DEBUG);
 
     if (totalRoms > 10){
         for (int i=0; i < nThreads; i++){
@@ -1152,7 +1159,6 @@ void Gestorroms::refreshArtWorkOptim(string codEmu, string dirInicial){
             ArrGestRom[i]->setThEmuID(codEmu);
             ArrGestRom[i]->setThScrapIni(interval * i);
             ArrGestRom[i]->setThScrapFin( (i == nThreads-1) ? totalRoms - 1 : interval * i + interval - 1);
-            ArrGestRom[i]->setThScrapTotal(totalRoms);
 
             Traza::print("refreshArtWorkOptim. rango para emu " + codEmu
                              + "; Inicio: " + Constant::TipoToStr(ArrGestRom[i]->getThScrapIni())
@@ -1165,8 +1171,11 @@ void Gestorroms::refreshArtWorkOptim(string codEmu, string dirInicial){
             ArrTh[i]->start();
         }
 
+        //Dando tiempo para iniciar los hilos
+        SDL_Delay(2000);
+
         bool running = true;
-        int numRunning = 0;
+        int numRunning = nThreads;
         while (numRunning > 0){
             numRunning = 0;
             for (int i=0; i < nThreads; i++){
@@ -1174,12 +1183,18 @@ void Gestorroms::refreshArtWorkOptim(string codEmu, string dirInicial){
             }
         }
 
+        Traza::print("Deleting Roms", totalRoms, W_DEBUG);
+        for (int i=0; i < nThreads; i++){
+            delete ArrTh[i];
+            delete ArrGestRom[i];
+        }
+
     } else if (totalRoms > 0){
         ArrGestRom[0] = new Gestorroms(dirInicial);
         ArrGestRom[0]->setThEmuID(codEmu);
         ArrGestRom[0]->setThScrapIni(0);
         ArrGestRom[0]->setThScrapFin(totalRoms);
-        ArrGestRom[0]->setThScrapTotal(totalRoms);
+
         Traza::print("refreshArtWorkOptim. rango para emu " + codEmu
                          + "; Inicio: " + Constant::TipoToStr(ArrGestRom[0]->getThScrapIni())
                          + "; fin: " + Constant::TipoToStr(ArrGestRom[0]->getThScrapFin()), W_DEBUG);
@@ -1189,7 +1204,7 @@ void Gestorroms::refreshArtWorkOptim(string codEmu, string dirInicial){
         ArrTh[0]->join();
     }
 
-
+    scrappingNow = false;
     Traza::print("refreshArtWorkOptim Fin", W_DEBUG);
 }
 
@@ -1198,11 +1213,8 @@ void Gestorroms::refreshArtWorkOptim(string codEmu, string dirInicial){
 */
 DWORD Gestorroms::thRefreshArtWorkOptim(){
     if (!scrappingNow){
-        scrappingNow = true;
         refreshArtWorkOptim(thEmuID, thDirInicial);
-        scrappingNow = false;
     }
-
 }
 
 /**
@@ -1210,11 +1222,12 @@ DWORD Gestorroms::thRefreshArtWorkOptim(){
 */
 DWORD Gestorroms::thRefreshAllArtWorkOptim(){
     if (!scrappingNow){
-        scrappingNow = true;
         vector<vector<string> > result = getAllEmus();
         for (int i=0; i < result.size(); i++){
-            refreshArtWorkOptim(result.at(i).at(0), thDirInicial);
+            if (result.at(i).at(3).compare("S") != 0){
+                platform = result.at(i).at(2);
+                refreshArtWorkOptim(result.at(i).at(0), thDirInicial);
+            }
         }
-        scrappingNow = false;
     }
 }

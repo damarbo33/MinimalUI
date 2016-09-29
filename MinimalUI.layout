@@ -1,30 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
-	<ActiveTarget name="Debug" />
-	<File name="src\roms\gestorroms.cpp" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<ActiveTarget name="Release" />
+	<File name="src\vlcplayer\glvlcplayer.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="229" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\roms\gestorroms.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3851" topLine="75" />
-		</Cursor>
-	</File>
-	<File name="src\roms\mamehistoryparser.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="399" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\roms\romwebinfo.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="414" topLine="156" />
-		</Cursor>
-	</File>
-	<File name="src\roms\romwebinfo.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1497" topLine="3" />
+			<Cursor1 position="1887" topLine="75" />
 		</Cursor>
 	</File>
 	<File name="src\roms\thegamesdb.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -37,19 +17,34 @@
 			<Cursor1 position="402" topLine="9" />
 		</Cursor>
 	</File>
-	<File name="src\sdl\SDL_draw.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="..\..\ExternalLibs\UIObjects\src\common\Ioutil.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="398" topLine="60" />
+			<Cursor1 position="80249" topLine="2027" />
 		</Cursor>
 	</File>
-	<File name="src\vlcplayer\glvlcplayer.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\roms\romwebinfo.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1887" topLine="75" />
+			<Cursor1 position="414" topLine="156" />
 		</Cursor>
 	</File>
-	<File name="src\vlcplayer\vlcplayer.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\roms\estructuras.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2758" topLine="98" />
+			<Cursor1 position="216" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\roms\gestorroms.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="44477" topLine="1149" />
+		</Cursor>
+	</File>
+	<File name="src\roms\mamehistoryparser.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="399" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\Iofrontend.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="111504" topLine="2495" />
 		</Cursor>
 	</File>
 	<File name="src\vlcplayer\vlcplayer.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -57,9 +52,9 @@
 			<Cursor1 position="291" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="..\..\ExternalLibs\UIObjects\src\common\Ioutil.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\roms\estructuras.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="80249" topLine="2027" />
+			<Cursor1 position="1759" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="..\..\ExternalLibs\UIObjects\src\common\Ioutil.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -67,12 +62,7 @@
 			<Cursor1 position="9048" topLine="190" />
 		</Cursor>
 	</File>
-	<File name="src\Iofrontend.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="91312" topLine="2067" />
-		</Cursor>
-	</File>
-	<File name="src\Iofrontend.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\Iofrontend.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="4705" topLine="127" />
 		</Cursor>
@@ -92,19 +82,29 @@
 			<Cursor1 position="794" topLine="8" />
 		</Cursor>
 	</File>
+	<File name="src\vlcplayer\vlcplayer.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2758" topLine="98" />
+		</Cursor>
+	</File>
+	<File name="src\roms\romwebinfo.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1497" topLine="3" />
+		</Cursor>
+	</File>
 	<File name="src\roms\bdrominfoout.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="2916" topLine="81" />
 		</Cursor>
 	</File>
-	<File name="src\roms\estructuras.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\roms\gestorroms.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1759" topLine="0" />
+			<Cursor1 position="3803" topLine="75" />
 		</Cursor>
 	</File>
-	<File name="src\roms\estructuras.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\sdl\SDL_draw.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="216" topLine="0" />
+			<Cursor1 position="398" topLine="60" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
