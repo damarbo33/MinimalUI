@@ -2348,119 +2348,14 @@ int Iofrontend::accionConfigEmusPopup(tEvento *evento){
                 objsMenu->getObjByName("btnCancelarEmu")->setTag(origen);
             } else if (selElemPopup == 1){
                 if (objPopup->getCallerPopup()->getObjectType() == GUILISTBOX){
-                    refreshArtWorkOptim(codEmu);
+                    scrapEmuRoms(codEmu);
                 } else if (objPopup->getCallerPopup()->getObjectType() == GUILISTGROUPBOX){
-                    refreshArtWorkOptim(codEmu);
+                    scrapEmuRoms(codEmu);
                 }
             }
         }
     }
     return 0;
-}
-
-/**
-*
-*/
-void Iofrontend::refreshArtWorkOptim(string codEmu){
-    Traza::print("refreshArtWorkOptim", W_DEBUG);
-
-    const int nThreads = 5;
-    const int totalRoms = gestorRoms->getRomsNotScrapped(codEmu);
-    const int interval = totalRoms / nThreads;
-    Gestorroms::mutex = SDL_CreateMutex();
-
-    Gestorroms *ArrGestRom[nThreads];
-    Thread<Gestorroms> *ArrTh[nThreads];
-
-    if (totalRoms > 10){
-        for (int i=0; i < nThreads; i++){
-            ArrGestRom[i] = new Gestorroms(dirInicial);
-            ArrGestRom[i]->setThEmuID(codEmu);
-            ArrGestRom[i]->setThScrapIni(interval * i);
-            ArrGestRom[i]->setThScrapFin( (i == nThreads-1) ? totalRoms - 1 : interval * i + interval - 1);
-            ArrGestRom[i]->setThScrapTotal(totalRoms);
-            Traza::print("refreshArtWorkOptim. rango para emu " + codEmu
-                             + "; Inicio: " + Constant::TipoToStr(ArrGestRom[i]->getThScrapIni())
-                             + "; fin: " + Constant::TipoToStr(ArrGestRom[i]->getThScrapFin()), W_DEBUG);
-
-            ArrTh[i] = new Thread<Gestorroms>(ArrGestRom[i], &Gestorroms::thScrapSystemMulti);
-        }
-
-        for (int i=0; i < nThreads; i++){
-            ArrTh[i]->start();
-        }
-    } else if (totalRoms > 0){
-        ArrGestRom[0] = new Gestorroms(dirInicial);
-        ArrGestRom[0]->setThEmuID(codEmu);
-        ArrGestRom[0]->setThScrapIni(0);
-        ArrGestRom[0]->setThScrapFin(totalRoms);
-        ArrGestRom[0]->setThScrapTotal(totalRoms);
-        Traza::print("refreshArtWorkOptim. rango para emu " + codEmu
-                         + "; Inicio: " + Constant::TipoToStr(ArrGestRom[0]->getThScrapIni())
-                         + "; fin: " + Constant::TipoToStr(ArrGestRom[0]->getThScrapFin()), W_DEBUG);
-
-        ArrTh[0] = new Thread<Gestorroms>(ArrGestRom[0], &Gestorroms::thScrapSystemMulti);
-        ArrTh[0]->start();
-    }
-
-
-
-}
-
-/**
-*
-*/
-void Iofrontend::refreshArtWork(UIListCommon *objList){
-    string idprog, idrom, namerom, scrapped, platform;
-
-    if (objList->getObjectType() == GUILISTGROUPBOX){
-        string elemSel = objList->getValue(objList->getPosActualLista());
-        int posIni = elemSel.find("IDPROG=") + strlen("IDPROG=");
-        int posFin = elemSel.find(",",posIni);
-        idprog = elemSel.substr(posIni, posFin - posIni);
-
-        posIni = elemSel.find("IDROM=") + strlen("IDROM=");
-        posFin = elemSel.find(",",posIni);
-        idrom = elemSel.substr(posIni, posFin - posIni);
-
-        posIni = elemSel.find("SCRAPPED=") + strlen("SCRAPPED=");
-        posFin = elemSel.find(",",posIni);
-        scrapped = elemSel.substr(posIni, 1);
-
-        UIListGroup *objListGroup = (UIListGroup *)objList;
-        namerom = objListGroup->getCol(objList->getPosActualLista(), 0)->getTexto();
-
-    }
-
-    Traza::print("refreshArtWork. idprog=" + idprog + "; idrom=" + idrom
-                 + "; namerom=" + namerom + "; scrapped=" + scrapped, W_DEBUG);
-
-    vector<vector<string> > result = gestorRoms->getDatosEmulador(Constant::strToTipo<int>(idprog));
-    if (result.size() > 0){
-        platform = result.at(0).at(10);
-    }
-
-    vector<string> rom;
-    rom.push_back(idprog);//IDPROG
-    rom.push_back(idrom);//IDROM
-    rom.push_back(namerom);//title
-    rom.push_back("");//nplayers
-    rom.push_back(!scrapped.empty() ? "P" : "");//scrapped
-    //vector<vector<string> > listaRoms;
-    gestorRoms->getThListaRoms()->clear();
-    gestorRoms->getThListaRoms()->push_back(rom);
-    gestorRoms->setPlatform(platform);
-
-    Thread<Gestorroms> *thread = new Thread<Gestorroms>(gestorRoms, &Gestorroms::updateRom);
-    if (thread->start())
-        std::cout << "Thread started with id: " << thread->getThreadID() << std::endl;
-
-    pintarIconoProcesando(true);
-    while(thread->isRunning()){
-        pintarIconoProcesando(false);
-    }
-    clearScr();
-    delete thread;
 }
 
 /**
@@ -2582,15 +2477,6 @@ int Iofrontend::buscarInfoRoms(tEvento *evento){
 /**
 *
 */
-bool Iofrontend::scrapAllRoms(){
-    Thread<Gestorroms> *thread = new Thread<Gestorroms>(gestorRoms, &Gestorroms::thScrapAllSystem);
-    thread->start();
-    return true;
-}
-
-/**
-*
-*/
 int Iofrontend::volverInfoRoms(tEvento *evento){
 
     tmenu_gestor_objects *objMenu = ObjectsMenu[PANTALLAOPCIONESROM];
@@ -2606,4 +2492,37 @@ int Iofrontend::volverInfoRoms(tEvento *evento){
             }
         }
     }
+}
+
+/**
+*
+*/
+void Iofrontend::scrapAllRoms(){
+    Traza::print("scrapAllRoms", W_DEBUG);
+
+    if (Gestorroms::mutex != NULL){
+        SDL_DestroyMutex(Gestorroms::mutex);
+    }
+    Gestorroms::mutex = SDL_CreateMutex();
+    gestorRoms->setThDirInicial(dirInicial);
+
+    Thread<Gestorroms> *thread = new Thread<Gestorroms>(gestorRoms, &Gestorroms::thRefreshAllArtWorkOptim);
+    thread->start();
+}
+
+/**
+*
+*/
+void Iofrontend::scrapEmuRoms(string codEmu){
+    Traza::print("scrapEmuRoms", W_DEBUG);
+
+    if (Gestorroms::mutex != NULL){
+        SDL_DestroyMutex(Gestorroms::mutex);
+    }
+    Gestorroms::mutex = SDL_CreateMutex();
+    gestorRoms->setThEmuID(codEmu);
+    gestorRoms->setThDirInicial(dirInicial);
+
+    Thread<Gestorroms> *thread = new Thread<Gestorroms>(gestorRoms, &Gestorroms::thRefreshArtWorkOptim);
+    thread->start();
 }

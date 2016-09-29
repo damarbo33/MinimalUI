@@ -13,6 +13,7 @@
 #include "roms/thegamesdb.h"
 #include "roms/bdrominfoout.h"
 #include "roms/mamehistoryparser.h"
+#include "thread.h"
 
 class Gestorroms
 {
@@ -67,6 +68,11 @@ class Gestorroms
         int getRomsNotScrapped(string idEmu);
         void setThScrapTotal(int var){thScrapTotal = var;}
         static SDL_mutex *mutex;
+        vector<vector<string> > getAllEmus();
+        void refreshArtWorkOptim(string codEmu, string dirInicial);
+        DWORD thRefreshArtWorkOptim();
+        DWORD thRefreshAllArtWorkOptim();
+        void setThDirInicial(string var){thDirInicial = var;}
 
     protected:
     private:
@@ -78,9 +84,9 @@ class Gestorroms
         DWORD scrapsystem(string idEmu);
         string rutaInicial;
         string thEmuID;
-        string platform;
-        string progress;
-        bool scrappingNow;
+
+
+
         void restaurarRomInfo(int idEmu);
 
 
@@ -91,8 +97,13 @@ class Gestorroms
         vector<vector<string> > thListaRoms;
         int thScrapIni;
         int thScrapFin;
-        int thScrapTotal;
+        string thDirInicial;
+
+        static string platform;
+        static string progress;
+        static int thScrapTotal;
         static int thScrapCount;
+        static bool scrappingNow;
 
 
 };

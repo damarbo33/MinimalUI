@@ -1,7 +1,11 @@
 #include "gestorroms.h"
 
-SDL_mutex *Gestorroms::mutex;
+SDL_mutex *Gestorroms::mutex = NULL;
 int Gestorroms::thScrapCount = 0;
+bool Gestorroms::scrappingNow = false;
+int Gestorroms::thScrapTotal = 0;
+string Gestorroms::progress = "";
+string Gestorroms::platform = "";
 
 Gestorroms::Gestorroms(string ruta){
     //ctor
@@ -286,6 +290,9 @@ bool Gestorroms::deleteEmulador(int idEmulador){
     return db->execute();
 }
 
+/**
+*
+*/
 vector<vector<string> > Gestorroms::getDatosEmulador(int idEmulador){
     db->prepareStatement("selectEmulador");
     if (idEmulador < 0)
@@ -296,6 +303,9 @@ vector<vector<string> > Gestorroms::getDatosEmulador(int idEmulador){
     return db->executeQuery();
 }
 
+/**
+*
+*/
 string Gestorroms::getParameter(string parameter){
     db->prepareStatement("selectParameter");
     db->setString(0,parameter);
@@ -650,6 +660,11 @@ int Gestorroms::getRomsNotScrapped(string idEmu){
     return Constant::strToTipo<int>(db->getColQuery(&result, 0));
 }
 
+vector<vector<string> > Gestorroms::getAllEmus(){
+    db->prepareStatement("selectListaEmuladores");
+    return db->executeQuery();
+}
+
 /**
 * Actualiza la informacion de todos los emuladores
 */
@@ -738,12 +753,8 @@ DWORD Gestorroms::scrapsystemMulti(string idEmu, int inicio, int fin){
 */
 DWORD Gestorroms::scrapsystem(string idEmu){
     int errorCode = 0;
-
-
     try{
         scrappingNow = true;
-
-
         if (db != NULL) {
             Traza::print("Gestorroms::scrapsystem. Obteniendo datos de emu " + idEmu, W_DEBUG);
             vector<vector<string> > result = getDatosEmulador(Constant::strToTipo<int>(idEmu));
@@ -1118,4 +1129,92 @@ void Gestorroms::restaurarRomInfo(int idEmu){
     //Finalmente hacemos el commit
     sqlite3_exec(database, "COMMIT TRANSACTION", NULL, NULL, NULL);
     Traza::print("Informacion actualizada en: " + Constant::TipoToStr((SDL_GetTicks() - now)), W_DEBUG);
+}
+
+
+
+/**
+*
+*/
+void Gestorroms::refreshArtWorkOptim(string codEmu, string dirInicial){
+    Traza::print("refreshArtWorkOptim Inicio", W_DEBUG);
+    const int nThreads = 5;
+    const int totalRoms = this->getRomsNotScrapped(codEmu);
+    const int interval = totalRoms / nThreads;
+
+
+    Gestorroms *ArrGestRom[nThreads];
+    Thread<Gestorroms> *ArrTh[nThreads];
+
+    if (totalRoms > 10){
+        for (int i=0; i < nThreads; i++){
+            ArrGestRom[i] = new Gestorroms(dirInicial);
+            ArrGestRom[i]->setThEmuID(codEmu);
+            ArrGestRom[i]->setThScrapIni(interval * i);
+            ArrGestRom[i]->setThScrapFin( (i == nThreads-1) ? totalRoms - 1 : interval * i + interval - 1);
+            ArrGestRom[i]->setThScrapTotal(totalRoms);
+
+            Traza::print("refreshArtWorkOptim. rango para emu " + codEmu
+                             + "; Inicio: " + Constant::TipoToStr(ArrGestRom[i]->getThScrapIni())
+                             + "; fin: " + Constant::TipoToStr(ArrGestRom[i]->getThScrapFin()), W_DEBUG);
+
+            ArrTh[i] = new Thread<Gestorroms>(ArrGestRom[i], &Gestorroms::thScrapSystemMulti);
+        }
+
+        for (int i=0; i < nThreads; i++){
+            ArrTh[i]->start();
+        }
+
+        bool running = true;
+        int numRunning = 0;
+        while (numRunning > 0){
+            numRunning = 0;
+            for (int i=0; i < nThreads; i++){
+                if (ArrTh[i]->isRunning()) numRunning++;
+            }
+        }
+
+    } else if (totalRoms > 0){
+        ArrGestRom[0] = new Gestorroms(dirInicial);
+        ArrGestRom[0]->setThEmuID(codEmu);
+        ArrGestRom[0]->setThScrapIni(0);
+        ArrGestRom[0]->setThScrapFin(totalRoms);
+        ArrGestRom[0]->setThScrapTotal(totalRoms);
+        Traza::print("refreshArtWorkOptim. rango para emu " + codEmu
+                         + "; Inicio: " + Constant::TipoToStr(ArrGestRom[0]->getThScrapIni())
+                         + "; fin: " + Constant::TipoToStr(ArrGestRom[0]->getThScrapFin()), W_DEBUG);
+
+        ArrTh[0] = new Thread<Gestorroms>(ArrGestRom[0], &Gestorroms::thScrapSystemMulti);
+        ArrTh[0]->start();
+        ArrTh[0]->join();
+    }
+
+
+    Traza::print("refreshArtWorkOptim Fin", W_DEBUG);
+}
+
+/**
+*
+*/
+DWORD Gestorroms::thRefreshArtWorkOptim(){
+    if (!scrappingNow){
+        scrappingNow = true;
+        refreshArtWorkOptim(thEmuID, thDirInicial);
+        scrappingNow = false;
+    }
+
+}
+
+/**
+*
+*/
+DWORD Gestorroms::thRefreshAllArtWorkOptim(){
+    if (!scrappingNow){
+        scrappingNow = true;
+        vector<vector<string> > result = getAllEmus();
+        for (int i=0; i < result.size(); i++){
+            refreshArtWorkOptim(result.at(i).at(0), thDirInicial);
+        }
+        scrappingNow = false;
+    }
 }

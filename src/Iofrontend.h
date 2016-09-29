@@ -137,11 +137,12 @@ class Iofrontend : public Ioutil{
         int volverInfoRoms(tEvento *evento);
         int accionesBtnAceptarOpcionesGenerales(tEvento *evento);
         bool cargarOpcionesGenerales();
-        bool scrapAllRoms();
+
         int accionCombo(tEvento *evento);
         void loadComboUnidades(string objName, int pantalla, int types);
-        void refreshArtWork(UIListCommon *objList);
-        void refreshArtWorkOptim(string codEmu);
+
+        void scrapAllRoms();
+        void scrapEmuRoms(string codEmu);
 
 
     public :

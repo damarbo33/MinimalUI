@@ -680,13 +680,13 @@
 	"SDL/SDL_image.h"
 	"SDL/SDL_rotozoom.h"
 
-1475132021 source:c:\github\proyectos\minimalui\src\iofrontend.cpp
+1475161383 source:c:\github\proyectos\minimalui\src\iofrontend.cpp
 	"Iofrontend.h"
 	"uilistgroup.h"
 	"beans/listgroupcol.h"
 	"uilistcommon.h"
 
-1475130671 c:\github\proyectos\minimalui\src\iofrontend.h
+1475161070 c:\github\proyectos\minimalui\src\iofrontend.h
 	<string>
 	<vector>
 	"Ioutil.h"
@@ -863,7 +863,7 @@
 	<pthread.h>
 	<pthread.h>
 
-1475129762 c:\github\proyectos\minimalui\src\roms\gestorroms.h
+1475164570 c:\github\proyectos\minimalui\src\roms\gestorroms.h
 	"bbdd/Database.h"
 	"ListaSimple.h"
 	"Dirutil.h"
@@ -876,6 +876,7 @@
 	"roms/thegamesdb.h"
 	"roms/bdrominfoout.h"
 	"roms/mamehistoryparser.h"
+	"thread.h"
 
 1459963209 c:\github\externallibs\uiobjects\src\colorutil.h
 	<stdio.h>
@@ -1009,7 +1010,7 @@
 1433765603 source:c:\github\proyectos\minimalui\src\roms\estructuras.cpp
 	"estructuras.h"
 
-1475129762 source:c:\github\proyectos\minimalui\src\roms\gestorroms.cpp
+1475164164 source:c:\github\proyectos\minimalui\src\roms\gestorroms.cpp
 	"gestorroms.h"
 
 1474455667 source:c:\github\proyectos\minimalui\src\sdl\sdl_draw.c

@@ -2,44 +2,14 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="src\main.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\roms\gestorroms.cpp" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3797" topLine="114" />
-		</Cursor>
-	</File>
-	<File name="src\main.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="42" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\roms\EmuProperties.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="794" topLine="8" />
-		</Cursor>
-	</File>
-	<File name="src\roms\bdrominfoout.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2916" topLine="81" />
-		</Cursor>
-	</File>
-	<File name="src\roms\estructuras.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1759" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\roms\estructuras.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="216" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\roms\gestorroms.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="27272" topLine="696" />
+			<Cursor1 position="229" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="src\roms\gestorroms.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2196" topLine="41" />
+			<Cursor1 position="3851" topLine="75" />
 		</Cursor>
 	</File>
 	<File name="src\roms\mamehistoryparser.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -47,9 +17,9 @@
 			<Cursor1 position="399" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\roms\romwebinfo.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\roms\romwebinfo.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1145" topLine="0" />
+			<Cursor1 position="414" topLine="156" />
 		</Cursor>
 	</File>
 	<File name="src\roms\romwebinfo.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -97,14 +67,44 @@
 			<Cursor1 position="9048" topLine="190" />
 		</Cursor>
 	</File>
-	<File name="src\Iofrontend.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\Iofrontend.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="77910" topLine="1697" />
+			<Cursor1 position="91312" topLine="2067" />
 		</Cursor>
 	</File>
 	<File name="src\Iofrontend.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5340" topLine="129" />
+			<Cursor1 position="4705" topLine="127" />
+		</Cursor>
+	</File>
+	<File name="src\main.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3797" topLine="114" />
+		</Cursor>
+	</File>
+	<File name="src\main.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="42" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\roms\EmuProperties.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="794" topLine="8" />
+		</Cursor>
+	</File>
+	<File name="src\roms\bdrominfoout.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2916" topLine="81" />
+		</Cursor>
+	</File>
+	<File name="src\roms\estructuras.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1759" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\roms\estructuras.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="216" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
