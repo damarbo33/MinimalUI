@@ -99,6 +99,41 @@
 		</WHERECLAUSE>
 	</QUERY>
 	
+	<QUERY id="countRomsNotScrapped">
+		<SENTENCE>
+			select count(*) from roms r 
+			left join rominfo ri on ri.idrom = r.idrom and ri.idprog = r.idprog
+		</SENTENCE>
+		<WHERECLAUSE>
+			where ifnull(ri.scrapped, 'N') = 'N' 
+			and r.idprog = ?
+		</WHERECLAUSE>
+	</QUERY>
+	
+	<QUERY id="selectRomsNotScrapped">
+		<SENTENCE>
+			SELECT 
+			r.IDPROG,
+			r.IDROM,
+			CASE WHEN ri.TITLE IS NULL OR TRIM(ri.TITLE) = '' THEN r.NOMBRE ELSE  ri.TITLE END  AS NOMBRES, 
+			ri.NPLAYERS,
+			ri.SCRAPPED,
+			(select count(*)-1
+					from    ROMINFO as ri2
+					where  ifnull(ri2.scrapped,'N') = 'N'
+					and ri.idrom >= ri2.idrom
+					and ri.idprog = ri2.idprog
+			) as Rank
+			FROM ROMS r LEFT JOIN ROMINFO ri ON r.IDPROG = ri.IDPROG and 
+			r.IDROM = ri.IDROM 
+		</SENTENCE>
+		<WHERECLAUSE>
+			WHERE r.IDPROG = ?
+			and Rank between ? and ?
+			and ifnull(ri.scrapped,'N') = 'N' ORDER BY NOMBRES ASC
+		</WHERECLAUSE>
+	</QUERY>
+	
 	<QUERY id="isRomScrapped">
 		<SENTENCE>
 			SELECT SCRAPPED FROM ROMINFO 

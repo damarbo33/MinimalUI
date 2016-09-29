@@ -165,6 +165,12 @@ void Gestorroms::comprobarVersion(){
         db->query("REINDEX index_tmproms_name;");
         db->query("UPDATE CONFIG set VALOR = '6' where PARAMETRO = 'VERSION'");
      }
+
+     if (version <= 6){
+        db->query("CREATE INDEX index_rominfo_scrap on ROMINFO (IDPROG, IDROM,SCRAPPED);");
+        db->query("REINDEX index_rominfo_scrap;");
+        db->query("UPDATE CONFIG set VALOR = '7' where PARAMETRO = 'VERSION'");
+     }
 }
 
 /**
@@ -697,19 +703,12 @@ DWORD Gestorroms::scrapsystemMulti(string idEmu, int inicio, int fin){
             if (result.size() > 0){
                 platform = result.at(0).at(10);
                 if (!platform.empty()){
-                    db->prepareStatement("selectRomsForInfo");
+                    db->prepareStatement("selectRomsNotScrapped");
                     //Si hay parametros, generamos la query con parametros
                     db->setClauseWhere(true);
                     db->setString(0, idEmu);
-
-                    string strLimite = " and r.idrom between " + Constant::TipoToStr(inicio)
-                    + " and " + Constant::TipoToStr(fin);
-
-                    if (Constant::isUPDATE_MISSING()){
-                        db->setRaw(1, strLimite + " and ifnull(ri.SCRAPPED,'N') = 'N' ");
-                    } else {
-                        db->setRaw(1, strLimite);
-                    }
+                    db->setInt(1, inicio);
+                    db->setInt(2, fin);
 
                     //Lanzamos la query
                     vector<vector<string> > listaRoms = db->executeQuery();
