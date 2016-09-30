@@ -236,11 +236,13 @@ void Iofrontend::initUIObjs(){
     ObjectsMenu[PANTALLAGROUPLIST]->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Roms", false)->setEnabled(false);
     ObjectsMenu[PANTALLAGROUPLIST]->add("ImgEmulador", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgEmulador", true)->setEnabled(false);
     ObjectsMenu[PANTALLAGROUPLIST]->add("listaGrupoRoms", GUILISTGROUPBOX, 0, 0, 0, 0, "", false)->setVerContenedor(false);
-    ObjectsMenu[PANTALLAGROUPLIST]->add("textosBox", GUITEXTELEMENTSAREA, 0, 0, 0, 0, "", true)->setVerContenedor(false)->setEnabled(true);
+    ObjectsMenu[PANTALLAGROUPLIST]->add("textosInfoBox", GUITEXTELEMENTSAREA, 0, 0, 0, 0, "", true)->setVerContenedor(false)->setEnabled(false);
+    ObjectsMenu[PANTALLAGROUPLIST]->add("textosDescBox", GUITEXTELEMENTSAREA, 0, 0, 0, 0, "", true)->setVerContenedor(false)->setEnabled(true);
     ObjectsMenu[PANTALLAGROUPLIST]->add("ImgBoxArt", GUIPICTURE, 0, 0, Constant::getIMGBOXARTWIDTH(), Constant::getIMGBOXARTHEIGHT(), "", true)->setEnabled(true);
     ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->setAlpha(200);
     ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->getImgGestor()->setEnabledMoveImg(false);
-
+    ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->getImgGestor()->setBestfit(true);
+    ObjectsMenu[PANTALLAGROUPLIST]->add("ImgBoxArtFull", GUIPICTURE, 0, 0, this->getWidth(), this->getHeight(), "ImgEmuladorFull", true)->setVisible(false);
 
     objMenu = ObjectsMenu[PANTALLAGROUPLIST];
     UIListGroup * listaGrupo = (UIListGroup *) objMenu->getObjByName("listaGrupoRoms");
@@ -260,8 +262,8 @@ void Iofrontend::initUIObjs(){
 
     int margenX = Constant::getIMGBOXARTWIDTH() + IMGBOXARTMARGIN * 2;
     //Anyadimos los textos en el area que digamos
-    UITextElementsArea *infoTextRom = (UITextElementsArea *)objMenu->getObjByName("textosBox");
-    t_posicion pos = {margenX + 20, Constant::getMENUSPACE() + IMGBOXARTMARGIN,0,0};
+    UITextElementsArea *infoTextRom = (UITextElementsArea *)objMenu->getObjByName("textosInfoBox");
+    t_posicion pos = {0, Constant::getMENUSPACE() + IMGBOXARTMARGIN,0,0};
     infoTextRom->addField("txtReleased","RELEASED:","",pos, true);
     pos.y += 20;
     infoTextRom->addField("txtPlayers","PLAYERS:","",pos, true);
@@ -278,7 +280,8 @@ void Iofrontend::initUIObjs(){
     pos.y += 20;
     infoTextRom->addField("txtTimesPlayed","TIMES PLAYED:","",pos, true);
 
-    t_posicion posDesc = {0, 30 + Constant::getIMGBOXARTHEIGHT() + IMGBOXARTMARGIN * 2,0,0};
+    infoTextRom = (UITextElementsArea *)objMenu->getObjByName("textosDescBox");
+    t_posicion posDesc = {0,0,0,0};
     infoTextRom->addField("txtDescripcion","","",posDesc, false);
 
     UIPopupMenu * popupJuegosG = addPopup(PANTALLAGROUPLIST, "popupEmusConfig", "listaGrupoRoms");
@@ -335,6 +338,7 @@ void Iofrontend::initUIObjs(){
     addEvent("btnCancelarOptRoms", &Iofrontend::volverInfoRoms);
     addEvent("listaGrupoRoms", &Iofrontend::accionesMenu);
     addEvent("ImgBoxArt", &Iofrontend::ImgEmuladorClicked);
+    addEvent("ImgBoxArtFull", &Iofrontend::ImgBoxArtFullClicked);
 }
 
 /**
@@ -931,11 +935,16 @@ void Iofrontend::setDinamicSizeObjects(){
                                                                           Constant::getINPUTH() + Constant::getMENUSPACE() + INPUTCONTENT,
                                                                           Constant::getIMGBOXARTWIDTH(), Constant::getIMGBOXARTHEIGHT());
 
-        UITextElementsArea *infoTextRom = (UITextElementsArea *)ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("textosBox");
-        infoTextRom->setTam(0, Constant::getINPUTH(), this->getWidth() / 2, this->getHeight()- Constant::getINPUTH());
+        ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgBoxArtFull")->setTam(0,0,this->getWidth(),this->getHeight());
 
-        int margenX = Constant::getIMGBOXARTWIDTH() + IMGBOXARTMARGIN + 3;
-        t_posicion pos = {margenX, Constant::getMENUSPACE() + IMGBOXARTMARGIN,0,0};
+        UITextElementsArea *infoTextRom = (UITextElementsArea *)ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("textosInfoBox");
+        int margenX = Constant::getIMGBOXARTWIDTH() + IMGBOXARTMARGIN * 2;
+        infoTextRom->setTam(margenX, Constant::getINPUTH(),
+                            this->getWidth() / 2 - margenX,
+                            this->getHeight() - Constant::getINPUTH());
+
+        //int margenX = Constant::getIMGBOXARTWIDTH() + IMGBOXARTMARGIN + 3;
+        t_posicion pos = {0, Constant::getMENUSPACE() + IMGBOXARTMARGIN,0,0};
         infoTextRom->setPosition("txtReleased",pos);
         pos.y += Constant::getINPUTH();
         infoTextRom->setPosition("txtPlayers",pos);
@@ -951,7 +960,12 @@ void Iofrontend::setDinamicSizeObjects(){
         infoTextRom->setPosition("txtLastPlayed",pos);
         pos.y += Constant::getINPUTH();
         infoTextRom->setPosition("txtTimesPlayed",pos);
-        t_posicion posDesc = {0, Constant::getINPUTH() + Constant::getIMGBOXARTHEIGHT() + IMGBOXARTMARGIN * 2,0,0};
+
+        infoTextRom = (UITextElementsArea *)ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("textosDescBox");
+        infoTextRom->setTam(0, 30 + Constant::getIMGBOXARTHEIGHT() + IMGBOXARTMARGIN * 2,
+                            this->getWidth() / 2, this->getHeight()- Constant::getINPUTH());
+
+        t_posicion posDesc = {0,0,0,0};
         infoTextRom->setPosition("txtDescripcion",posDesc);
 
 
@@ -2172,9 +2186,15 @@ void Iofrontend::showMenuEmergente(int menu, string objImagenFondo){
 DWORD Iofrontend::setInfoRomValues(){
     tmenu_gestor_objects *objMenu = ObjectsMenu[PANTALLAGROUPLIST];
     UIListGroup * listaGrupo = (UIListGroup *) objMenu->getObjByName("listaGrupoRoms");
-    UITextElementsArea *textElems = (UITextElementsArea *)objMenu->getObjByName("textosBox");
-    textElems->setOffsetDesplazamiento(0);
-    textElems->setImgDrawed(false);
+    UITextElementsArea *textElemsInfo = (UITextElementsArea *)objMenu->getObjByName("textosInfoBox");
+    UITextElementsArea *textElemsDesc = (UITextElementsArea *)objMenu->getObjByName("textosDescBox");
+
+    textElemsInfo->setOffsetDesplazamiento(0);
+    textElemsInfo->setImgDrawed(false);
+
+    textElemsDesc->setOffsetDesplazamiento(0);
+    textElemsDesc->setImgDrawed(false);
+
     int pos = listaGrupo->getPosActualLista();
     if (pos >= 0 && pos < listaGrupo->getSize()-1 && listaGrupo->isShowLetraPopup() == false ){
         string value = listaGrupo->getValue(pos);
@@ -2194,15 +2214,15 @@ DWORD Iofrontend::setInfoRomValues(){
 
         if (result.size() > 0){
             vector<string> row = result.at(0);
-            textElems->setFieldText("txtPlayers", row.at(0));
-            textElems->setFieldText("txtGenre", row.at(2));
-            textElems->setFieldText("txtReleased", row.at(3));
-            textElems->setFieldText("txtLastPlayed", "0");
-            textElems->setFieldText("txtTimesPlayed", "0");
-            textElems->setFieldText("txtDescripcion", row.at(5));
-            textElems->setFieldText("txtPublisher", row.at(6));
-            textElems->setFieldText("txtDeveloper", row.at(7));
-            textElems->setFieldText("txtRating", row.at(8));
+            textElemsInfo->setFieldText("txtPlayers", row.at(0));
+            textElemsInfo->setFieldText("txtGenre", row.at(2));
+            textElemsInfo->setFieldText("txtReleased", row.at(3));
+            textElemsInfo->setFieldText("txtLastPlayed", "0");
+            textElemsInfo->setFieldText("txtTimesPlayed", "0");
+            textElemsDesc->setFieldText("txtDescripcion", row.at(5));
+            textElemsInfo->setFieldText("txtPublisher", row.at(6));
+            textElemsInfo->setFieldText("txtDeveloper", row.at(7));
+            textElemsInfo->setFieldText("txtRating", row.at(8));
 
             string directory = Constant::getAppDir()
             + FILE_SEPARATOR + DIR_IMG_ROMS_IMGS;
@@ -2218,18 +2238,18 @@ DWORD Iofrontend::setInfoRomValues(){
             pict->clearImg();
             pict->loadImgFromFile(directory);
             pict->setCentrado(true);
-            pict->setBestfit(true);
+            pict->setBestfit(false);
 
         } else {
-            textElems->setFieldText("txtPlayers", "");
-            textElems->setFieldText("txtGenre", "");
-            textElems->setFieldText("txtReleased", "");
-            textElems->setFieldText("txtLastPlayed", "0");
-            textElems->setFieldText("txtTimesPlayed", "0");
-            textElems->setFieldText("txtDescripcion", "");
-            textElems->setFieldText("txtPublisher", "");
-            textElems->setFieldText("txtDeveloper", "");
-            textElems->setFieldText("txtRating", "");
+            textElemsInfo->setFieldText("txtPlayers", "");
+            textElemsInfo->setFieldText("txtGenre", "");
+            textElemsInfo->setFieldText("txtReleased", "");
+            textElemsInfo->setFieldText("txtLastPlayed", "0");
+            textElemsInfo->setFieldText("txtTimesPlayed", "0");
+            textElemsDesc->setFieldText("txtDescripcion", "");
+            textElemsInfo->setFieldText("txtPublisher", "");
+            textElemsInfo->setFieldText("txtDeveloper", "");
+            textElemsInfo->setFieldText("txtRating", "");
             ((UIPicture*) objMenu->getObjByName("ImgBoxArt"))->clearImg();
         }
     }
@@ -2544,8 +2564,36 @@ int Iofrontend::ImgEmuladorClicked(tEvento *evento){
 
     if (obj->getObjectType() == GUIPICTURE){
         Traza::print("evento picture clicked", W_DEBUG);
+
+        UIPicture * objImg = (UIPicture *)obj;
+        UIPicture * objFondo = (UIPicture *)objsMenu->getObjByName("ImgBoxArtFull");
+
+        string imgruta = objImg->getImgGestor()->getRuta();
+
+        if (!imgruta.empty()){
+            Dirutil dir;
+            string origFileName = dir.getFolder(imgruta) + Constant::getFileSep() +
+                dir.getFileNameNoExt(imgruta) + "_full" + dir.getExtension(imgruta);
+
+            if (dir.existe(origFileName)){
+                objFondo->setVisible(true);
+                objFondo->clearImg();
+                objFondo->loadImgFromFile(origFileName);
+                objFondo->setCentrado(true);
+                objFondo->setBestfit(false);
+                objFondo->setImgDrawed(false);
+            }
+        }
     }
+    return false;
+}
 
-
+int Iofrontend::ImgBoxArtFullClicked(tEvento *evento){
+    int menu = this->getSelMenu();
+    tmenu_gestor_objects *objsMenu = ObjectsMenu[menu];
+    Object *obj = objsMenu->getObjByPos(objsMenu->getFocus());
+    if (obj->getObjectType() == GUIPICTURE){
+        obj->setVisible(false);
+    }
     return false;
 }

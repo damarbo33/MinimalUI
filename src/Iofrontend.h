@@ -145,6 +145,7 @@ class Iofrontend : public Ioutil{
         void scrapEmuRoms(string codEmu);
 
         int ImgEmuladorClicked(tEvento *evento);
+        int ImgBoxArtFullClicked(tEvento *evento);
 
 
     public :

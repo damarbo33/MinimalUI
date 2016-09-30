@@ -680,13 +680,13 @@
 	"SDL/SDL_image.h"
 	"SDL/SDL_rotozoom.h"
 
-1475230933 source:c:\github\proyectos\minimalui\src\iofrontend.cpp
+1475238190 source:c:\github\proyectos\minimalui\src\iofrontend.cpp
 	"Iofrontend.h"
 	"uilistgroup.h"
 	"beans/listgroupcol.h"
 	"uilistcommon.h"
 
-1475230763 c:\github\proyectos\minimalui\src\iofrontend.h
+1475235729 c:\github\proyectos\minimalui\src\iofrontend.h
 	<string>
 	<vector>
 	"Ioutil.h"
@@ -820,7 +820,7 @@
 1398769372 c:\github\externallibs\uiobjects\src\uipanelborder.h
 	<uipanel.h>
 
-1433100128 c:\github\externallibs\uiobjects\src\uipicture.h
+1475234740 c:\github\externallibs\uiobjects\src\uipicture.h
 	<object.h>
 
 1460132505 c:\github\externallibs\uiobjects\src\uiinput.h
