@@ -237,7 +237,7 @@ void Iofrontend::initUIObjs(){
     ObjectsMenu[PANTALLAGROUPLIST]->add("ImgEmulador", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgEmulador", true)->setEnabled(false);
     ObjectsMenu[PANTALLAGROUPLIST]->add("listaGrupoRoms", GUILISTGROUPBOX, 0, 0, 0, 0, "", false)->setVerContenedor(false);
     ObjectsMenu[PANTALLAGROUPLIST]->add("textosBox", GUITEXTELEMENTSAREA, 0, 0, 0, 0, "", true)->setVerContenedor(false)->setEnabled(true);
-    ObjectsMenu[PANTALLAGROUPLIST]->add("ImgBoxArt", GUIPICTURE, 0, 0, Constant::getIMGBOXARTWIDTH(), Constant::getIMGBOXARTHEIGHT(), "", true)->setEnabled(false);
+    ObjectsMenu[PANTALLAGROUPLIST]->add("ImgBoxArt", GUIPICTURE, 0, 0, Constant::getIMGBOXARTWIDTH(), Constant::getIMGBOXARTHEIGHT(), "", true)->setEnabled(true);
     ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->setAlpha(200);
     ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->getImgGestor()->setEnabledMoveImg(false);
 
@@ -334,6 +334,7 @@ void Iofrontend::initUIObjs(){
     addEvent("btnScrapGame", &Iofrontend::buscarInfoRoms);
     addEvent("btnCancelarOptRoms", &Iofrontend::volverInfoRoms);
     addEvent("listaGrupoRoms", &Iofrontend::accionesMenu);
+    addEvent("ImgBoxArt", &Iofrontend::ImgEmuladorClicked);
 }
 
 /**
@@ -462,6 +463,7 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
                         case GUILISTGROUPBOX:
                         case GUICOMBOBOX:
                         case GUITEXTELEMENTSAREA:
+                        case GUIPICTURE:
                             if (procesarBoton(object, objMenu)){ //Comprobamos si se ha pulsado el elemento
                                 posBoton = findEventPos(object->getName());  //Buscamos la posicion del elemento en el array de punteros a funcion
                                 if (posBoton >= 0){ //Si hemos encontrado una funcion
@@ -509,6 +511,9 @@ bool Iofrontend::procesarControles(tmenu_gestor_objects *objMenu, tEvento *event
     }
     return salir;
 }
+
+
+
 
 /**
 *
@@ -2078,6 +2083,7 @@ bool Iofrontend::procesarMenuActual(tmenu_gestor_objects *objMenu, tEvento *even
     try{
         if (SDL_GetTicks() - lastTitleUpdate > 1000){
             UIArt *titulo = (UIArt *) ObjectsMenu[this->getSelMenu()]->getObjByName(TITLESCREEN);
+
             size_t posTextScrapping = titulo->getLabel().find(" | ");
             string label = titulo->getLabel();
             if (posTextScrapping != string::npos){
@@ -2525,4 +2531,21 @@ void Iofrontend::scrapEmuRoms(string codEmu){
 
     Thread<Gestorroms> *thread = new Thread<Gestorroms>(gestorRoms, &Gestorroms::thRefreshArtWorkOptim);
     thread->start();
+}
+
+/**
+*
+*/
+int Iofrontend::ImgEmuladorClicked(tEvento *evento){
+
+    int menu = this->getSelMenu();
+    tmenu_gestor_objects *objsMenu = ObjectsMenu[menu];
+    Object *obj = objsMenu->getObjByPos(objsMenu->getFocus());
+
+    if (obj->getObjectType() == GUIPICTURE){
+        Traza::print("evento picture clicked", W_DEBUG);
+    }
+
+
+    return false;
 }

@@ -680,13 +680,13 @@
 	"SDL/SDL_image.h"
 	"SDL/SDL_rotozoom.h"
 
-1475161383 source:c:\github\proyectos\minimalui\src\iofrontend.cpp
+1475230933 source:c:\github\proyectos\minimalui\src\iofrontend.cpp
 	"Iofrontend.h"
 	"uilistgroup.h"
 	"beans/listgroupcol.h"
 	"uilistcommon.h"
 
-1475161070 c:\github\proyectos\minimalui\src\iofrontend.h
+1475230763 c:\github\proyectos\minimalui\src\iofrontend.h
 	<string>
 	<vector>
 	"Ioutil.h"
@@ -1010,7 +1010,7 @@
 1433765603 source:c:\github\proyectos\minimalui\src\roms\estructuras.cpp
 	"estructuras.h"
 
-1475164164 source:c:\github\proyectos\minimalui\src\roms\gestorroms.cpp
+1475222518 source:c:\github\proyectos\minimalui\src\roms\gestorroms.cpp
 	"gestorroms.h"
 
 1474455667 source:c:\github\proyectos\minimalui\src\sdl\sdl_draw.c
@@ -1255,7 +1255,7 @@
 1450867654 source:c:\github\proyectos\minimalui\src\roms\mamehistoryparser.cpp
 	"mamehistoryparser.h"
 
-1475129762 source:c:\github\proyectos\minimalui\src\roms\romwebinfo.cpp
+1475230468 source:c:\github\proyectos\minimalui\src\roms\romwebinfo.cpp
 	"romwebinfo.h"
 
 1474539878 source:c:\github\proyectos\minimalui\src\roms\thegamesdb.cpp
@@ -2009,7 +2009,7 @@
 	<unix.h>
 	<stdio.h>
 
-1474556756 c:\github\proyectos\httpcurl\httpcurl\src\image\uiimgdownloader.h
+1475229300 c:\github\proyectos\httpcurl\httpcurl\src\image\uiimgdownloader.h
 	"httputil.h"
 	"Dirutil.h"
 	"SDL/SDL.h"

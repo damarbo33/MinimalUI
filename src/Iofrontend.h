@@ -144,6 +144,8 @@ class Iofrontend : public Ioutil{
         void scrapAllRoms();
         void scrapEmuRoms(string codEmu);
 
+        int ImgEmuladorClicked(tEvento *evento);
+
 
     public :
         Iofrontend();

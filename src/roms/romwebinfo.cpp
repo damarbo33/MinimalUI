@@ -46,11 +46,9 @@ void RomWebInfo::updateGameInfo(){
         int matched = 0;
         int petOK = 0;
 
-        Traza::print("Descargando " + romname + "...", W_DEBUG);
+//        Traza::print("Descargando " + romname + "...", W_DEBUG);
 //        if (scrapped.empty()){
         petOK = gamesDB.download2(&queryGame, &response);
-        Traza::print("Encontrados: " + Constant::TipoToStr(response.gameList.size()) + " roms para idprog: " + idprog
-                     + " y idrom: " + idrom, W_DEBUG);
 //        }
 
         //Si no hemos obtenido ningun juego, lo intentamos con otra llamada al servicio
@@ -59,9 +57,17 @@ void RomWebInfo::updateGameInfo(){
             queryGame.exactName = "";
             petOK = gamesDB.download2(&queryGame, &response);
             matched = findSimilarTitle(&response.gameList , queryGame.name);
-            Traza::print("Encontrados: " + Constant::TipoToStr(response.gameList.size()) + " roms para idprog: " + idprog
-                     + " y idrom: " + idrom + " matchedPos: " + Constant::TipoToStr(matched) + " name: " + ((matched >= 0) ? response.gameList.at(matched)->gameTitle : "") ,  W_DEBUG);
         }
+
+        string msg;
+
+        if (matched >= 0){
+            msg = "Encontrado: '" + response.gameList.at(matched)->gameTitle + "' para rom: "
+            + "'" + romname + "'" + " en pos: " + Constant::TipoToStr(matched);
+        }
+
+        Traza::print(msg,W_DEBUG);
+
 
         if (response.gameList.size() > 0 && matched >= 0){
 //            cout << "El id es: " << response.gameList.at(matched)->id << endl;
@@ -102,7 +108,7 @@ int RomWebInfo::findSimilarTitle(vector<ResponseGame *> *listaJuegos, string tit
     for (int i=0; i < listaJuegos->size(); i++){
         gameTitle = listaJuegos->at(i)->gameTitle;
         Constant::lowerCase(&gameTitle);
-        Traza::print("gameTitle: " + gameTitle, W_DEBUG);
+        //Traza::print("gameTitle: " + gameTitle, W_DEBUG);
         countWords = 0;
 
         for (int j=0; j < tituloSplit.size(); j++){
@@ -110,14 +116,14 @@ int RomWebInfo::findSimilarTitle(vector<ResponseGame *> *listaJuegos, string tit
                 && !Constant::isEspecialCharAll(tituloSplit.at(j))
             ){
                 countWords++;
-                Traza::print("tituloSplit.at(j): " + tituloSplit.at(j), W_DEBUG);
+                //Traza::print("tituloSplit.at(j): " + tituloSplit.at(j), W_DEBUG);
             }
 
         }
 
         if (tituloSplit.size() > 0){
-            Traza::print("Words found: " + Constant::TipoToStr(countWords) + ", percent: "
-                         + Constant::TipoToStr(countWords / (double)tituloSplit.size()), W_DEBUG);
+//            Traza::print("gameTitle: " + gameTitle + "; Words found: " + Constant::TipoToStr(countWords) + ", percent: "
+//                         + Constant::TipoToStr(countWords / (double)tituloSplit.size()), W_DEBUG);
 
             if (countWords > maxWords && ((countWords / (double)tituloSplit.size() >= 0.3 && countWords >= 3)
                                           || (tituloSplit.size() == countWords && countWords < 3)) ){
@@ -178,7 +184,7 @@ string RomWebInfo::findBoxartFront(ResponseQuery *response, string idprog){
             UIImgDownloader imgDownloader;
             if (!dirUtil.existe(response->baseImgUrl + result)){
                 Traza::print("Descargando imagen: " + response->baseImgUrl + result, W_DEBUG);
-                imgDownloader.download(response->baseImgUrl + result, directory, 250, 250);
+                imgDownloader.downloadToJpgAndThumbnail(response->baseImgUrl + result, directory, 250, 250);
             }
         }
     }
