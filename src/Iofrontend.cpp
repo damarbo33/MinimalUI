@@ -242,6 +242,7 @@ void Iofrontend::initUIObjs(){
     ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->setAlpha(200);
     ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->getImgGestor()->setEnabledMoveImg(false);
     ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->getImgGestor()->setBestfit(true);
+    ObjectsMenu[PANTALLAGROUPLIST]->getObjByName("ImgEmulador")->setVerContenedor(false);
     ObjectsMenu[PANTALLAGROUPLIST]->add("ImgBoxArtFull", GUIPICTURE, 0, 0, this->getWidth(), this->getHeight(), "ImgEmuladorFull", true)->setVisible(false);
 
     objMenu = ObjectsMenu[PANTALLAGROUPLIST];
@@ -2579,8 +2580,10 @@ int Iofrontend::ImgEmuladorClicked(tEvento *evento){
                 objFondo->setVisible(true);
                 objFondo->clearImg();
                 objFondo->loadImgFromFile(origFileName);
-                objFondo->setCentrado(true);
-                objFondo->setBestfit(false);
+                objFondo->getImgGestor()->setBestfit(false);
+                objFondo->getImgGestor()->setColorBackground(cNegro);
+                objFondo->getImgGestor()->setFillBackgroundColour(true);
+                objFondo->getImgGestor()->setCentrado(true);
                 objFondo->setImgDrawed(false);
             }
         }
