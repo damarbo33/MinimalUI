@@ -249,11 +249,15 @@ void Iofrontend::initUIObjs(){
     UIListGroup * listaGrupo = (UIListGroup *) objMenu->getObjByName("listaGrupoRoms");
     vector <ListGroupCol *> miCabecera;
     miCabecera.push_back(new ListGroupCol("Nombre Rom", ""));
-    miCabecera.push_back(new ListGroupCol("Nº Jugadores", ""));
+    miCabecera.push_back(new ListGroupCol("Jugadores", ""));
+    miCabecera.push_back(new ListGroupCol("Categoría", ""));
+    miCabecera.push_back(new ListGroupCol("Calificación", ""));
     listaGrupo->setHeaderLista(miCabecera);
     listaGrupo->adjustToHeader(false);
     listaGrupo->addHeaderWith(500);
+    listaGrupo->addHeaderWith(90);
     listaGrupo->addHeaderWith(120);
+    listaGrupo->addHeaderWith(100);
 
     UIPicture* pict = ((UIPicture*) objMenu->getObjByName("ImgBoxArt"));
     //Para mejorar el rendimiento, las imagenes que se descargan de las caratulas ya estan redimensionadas
@@ -282,8 +286,17 @@ void Iofrontend::initUIObjs(){
     infoTextRom->addField("txtTimesPlayed","TIMES PLAYED:","",pos, true);
 
     infoTextRom = (UITextElementsArea *)objMenu->getObjByName("textosDescBox");
-    t_posicion posDesc = {0,0,0,0};
-    infoTextRom->addField("txtDescripcion","","",posDesc, false);
+
+    t_element_style stilo;
+
+    stilo.pos = {0,10,0,0};
+    stilo.bold = true;
+    stilo.fontSize = 16;
+
+    infoTextRom->addField("txtFilePath","","",stilo, false);
+    stilo.pos.y += 40;
+    stilo.bold = false;
+    infoTextRom->addField("txtDescripcion","","",stilo, false);
 
     UIPopupMenu * popupJuegosG = addPopup(PANTALLAGROUPLIST, "popupEmusConfig", "listaGrupoRoms");
     if (popupJuegosG != NULL){
@@ -966,7 +979,9 @@ void Iofrontend::setDinamicSizeObjects(){
         infoTextRom->setTam(0, 30 + Constant::getIMGBOXARTHEIGHT() + IMGBOXARTMARGIN * 2,
                             this->getWidth() / 2, this->getHeight()- Constant::getINPUTH());
 
-        t_posicion posDesc = {0,0,0,0};
+        t_posicion posDesc = {0,10,0,0};
+        infoTextRom->setPosition("txtFilePath",posDesc);
+        posDesc.y+=40;
         infoTextRom->setPosition("txtDescripcion",posDesc);
 
 
@@ -1707,6 +1722,8 @@ bool Iofrontend::cargarListaRoms(int menu, string idprog, string lista){
             vector <ListGroupCol *> miFila;
             miFila.push_back(new ListGroupCol("Volver", "idprog=" + idprog, bullet_go, MENUJUEGOS));
             miFila.push_back(new ListGroupCol("", "", bullet_go, MENUJUEGOS));
+            miFila.push_back(new ListGroupCol("", "", bullet_go, MENUJUEGOS));
+            miFila.push_back(new ListGroupCol("", "", bullet_go, MENUJUEGOS));
             ((UIListGroup *)objLista)->addElemLista(miFila);
         }
         setInfoRomValues();
@@ -2232,6 +2249,7 @@ DWORD Iofrontend::setInfoRomValues(){
             textElemsInfo->setFieldText("txtPublisher", row.at(6));
             textElemsInfo->setFieldText("txtDeveloper", row.at(7));
             textElemsInfo->setFieldText("txtRating", row.at(8));
+            textElemsDesc->setFieldText("txtFilePath", row.at(13));
 
             string directory = Constant::getAppDir()
             + FILE_SEPARATOR + DIR_IMG_ROMS_IMGS;
@@ -2259,6 +2277,7 @@ DWORD Iofrontend::setInfoRomValues(){
             textElemsInfo->setFieldText("txtPublisher", "");
             textElemsInfo->setFieldText("txtDeveloper", "");
             textElemsInfo->setFieldText("txtRating", "");
+            textElemsDesc->setFieldText("txtFilePath", "");
             ((UIPicture*) objMenu->getObjByName("ImgBoxArt"))->clearImg();
         }
     }

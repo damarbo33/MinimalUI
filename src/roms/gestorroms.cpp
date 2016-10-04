@@ -571,6 +571,14 @@ int Gestorroms::fillMenuByQuery(Object *refMenu, string query, vector<string> *s
 
                         if (row.size() > 2)
                             miFila.push_back(new ListGroupCol(row.at(2), "", controller, destino));
+
+                        if (row.size() > 3)
+                            miFila.push_back(new ListGroupCol(row.at(3), "", controller, destino));
+
+                        if (row.size() > 4)
+                            miFila.push_back(new ListGroupCol(row.at(4), "", controller, destino));
+
+
                         refMenuList->addElemLista(miFila);
                 }
             }

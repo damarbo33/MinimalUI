@@ -90,7 +90,9 @@
 		<SENTENCE>
 			SELECT ('IDPROG=' || r.IDPROG||',IDROM='||r.IDROM ||',IDRUTA='|| r.IDRUTA||',SCRAPPED='||ri.SCRAPPED) As ID,  
 			CASE WHEN ri.TITLE IS NULL OR TRIM(ri.TITLE) = '' THEN r.NOMBRE ELSE  ri.TITLE END  AS NOMBRES, 
-			ri.NPLAYERS
+			ri.NPLAYERS,
+			ri.CATEG,
+			ri.RATING
 			FROM ROMS r LEFT JOIN ROMINFO ri ON r.IDPROG = ri.IDPROG and 
 			r.IDROM = ri.IDROM 
 		</SENTENCE>
@@ -215,10 +217,13 @@
 	
 	<QUERY id="selectInfoRom">
 		<SENTENCE>
-			select nplayers,title,categ,year,boxart,description,publisher,developer,rating,platform,scrapped,ifnull(lastplayed,'Never') as lastplayed,ifnull(timesplayed,0) as timesplayed from rominfo 
+			select ri.nplayers,ri.title,ri.categ,ri.year,ri.boxart,ri.description,ri.publisher,ri.developer,ri.rating,ri.platform,ri.scrapped,ifnull(ri.lastplayed,'Never') as lastplayed,ifnull(ri.timesplayed,0) as timesplayed, r.nombre
+			from rominfo ri
+			left join roms r
+			on r.idprog = ri.idprog and r.idrom=ri.idrom 
 		</SENTENCE>	
 		<WHERECLAUSE>
-			WHERE IDPROG=? and IDROM=?
+			WHERE ri.IDPROG=? and ri.IDROM=?
 		</WHERECLAUSE>
 	</QUERY>
 	
