@@ -2149,6 +2149,14 @@ bool Iofrontend::procesarMenuActual(tmenu_gestor_objects *objMenu, tEvento *even
                 showMenuEmergente(PANTALLAOPCIONESROM, "ImgFondoRoms");
                 objMenu = ObjectsMenu[PANTALLAOPCIONESROM];
                 objMenu->getObjByName("btnScrapGame")->setTag(rom);
+            } else if (evento->key == SDLK_ESCAPE && evento->keyjoydown || evento->joy == JoyMapper::getJoyMapper(JOY_BUTTON_SELECT)){
+                tmenu_gestor_objects *objMenu = ObjectsMenu[getSelMenu()];
+                UIPicture * objFondo = (UIPicture *)objMenu->getObjByName("ImgBoxArtFull");
+                if (objFondo->isVisible()){
+                    objFondo->setVisible(false);
+                    objMenu->setFocus("listaGrupoRoms");
+                }
+
             }
         }
     }
