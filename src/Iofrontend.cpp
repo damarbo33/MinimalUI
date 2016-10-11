@@ -2180,14 +2180,14 @@ bool Iofrontend::procesarMenuActual(tmenu_gestor_objects *objMenu, tEvento *even
                 //Guardamos el momento en el que hemos hecho click para procesar la accion posteriormente. VER LLAMADA a setInfoRomValues();
                 //de mas arriba
                 lastClick = SDL_GetTicks();
-            } else if (evento->key == SDLK_F3 && evento->keyjoydown || evento->joy == JoyMapper::getJoyMapper(JOY_BUTTON_SELECT)){
-                tmenu_gestor_objects *objMenu = ObjectsMenu[getSelMenu()];
-                UIListGroup * listaGrupo = (UIListGroup *) objMenu->getObjByName("listaGrupoRoms");
-                string rom = listaGrupo->getValue(listaGrupo->getSize() - 1);
-
-                showMenuEmergente(PANTALLAOPCIONESROM, "ImgFondoRoms");
-                objMenu = ObjectsMenu[PANTALLAOPCIONESROM];
-                objMenu->getObjByName("btnScrapGame")->setTag(rom);
+//            } else if (evento->key == SDLK_F3 && evento->keyjoydown){
+//                tmenu_gestor_objects *objMenu = ObjectsMenu[getSelMenu()];
+//                UIListGroup * listaGrupo = (UIListGroup *) objMenu->getObjByName("listaGrupoRoms");
+//                string rom = listaGrupo->getValue(listaGrupo->getSize() - 1);
+//
+//                showMenuEmergente(PANTALLAOPCIONESROM, "ImgFondoRoms");
+//                objMenu = ObjectsMenu[PANTALLAOPCIONESROM];
+//                objMenu->getObjByName("btnScrapGame")->setTag(rom);
             } else if (evento->key == SDLK_ESCAPE && evento->keyjoydown || evento->joy == JoyMapper::getJoyMapper(JOY_BUTTON_SELECT)){
                 tmenu_gestor_objects *objMenu = ObjectsMenu[getSelMenu()];
                 UIPicture * objFondo = (UIPicture *)objMenu->getObjByName("ImgBoxArtFull");
