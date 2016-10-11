@@ -95,6 +95,7 @@ void Iofrontend::initUIObjs(){
     ObjectsMenu[MENUJUEGOS]->getObjByName("ImgFondo")->setAlpha(100);
 
     ((UIList *)ObjectsMenu[MENUJUEGOS]->getObjByName("ListaMenuJuegos"))->setListScheme(SCHEMEICONS);
+    ((UIList *)ObjectsMenu[MENUJUEGOS]->getObjByName("ListaMenuJuegos"))->setSmoothDraw(true);
 
     UIPopupMenu * popupJuegos = addPopup(MENUJUEGOS, "popupEmusConfig", "ListaMenuJuegos");
     if (popupJuegos != NULL){
@@ -294,7 +295,7 @@ void Iofrontend::initUIObjs(){
     stilo.fontSize = 16;
 
     infoTextRom->addField("txtFilePath","","",stilo, false);
-    stilo.pos.y += 40;
+    stilo.pos.y += 60;
     stilo.bold = false;
     infoTextRom->addField("txtDescripcion","","",stilo, false);
 
@@ -981,7 +982,7 @@ void Iofrontend::setDinamicSizeObjects(){
 
         t_posicion posDesc = {0,10,0,0};
         infoTextRom->setPosition("txtFilePath",posDesc);
-        posDesc.y+=40;
+        posDesc.y+=60;
         infoTextRom->setPosition("txtDescripcion",posDesc);
 
 
@@ -1156,7 +1157,7 @@ void Iofrontend::comprobarUnicode(int menu){
         i++;
     }
 
-    Traza::print("comprobarUnicode: " + Constant::TipoToStr(menu) + ((found == true) ? " UNICODE=S":" UNICODE=N"), W_DEBUG);
+    Traza::print("comprobarUnicode: " + Constant::TipoToStr(menu) + ((found == true) ? " UNICODE=S":" UNICODE=N"), W_PARANOIC);
     SDL_EnableUNICODE(found);
 }
 
@@ -1540,8 +1541,25 @@ int Iofrontend::accionesBtnEliminarEmu(tEvento *evento){
         tmenu_gestor_objects *objMenu = ObjectsMenu[this->getSelMenu()];
         Object *obj = objMenu->getObjByName("btnEliminarEmu");
         gestorRoms->deleteEmulador(Constant::strToTipo<int>(obj->getTag()));
-        this->setSelMenu(PANTALLAEDITAREMU);
-        cargarListaEmuladores(PANTALLAEDITAREMU, PANTALLAOPCIONRUTAS, "listaEditarEmus");
+        obj->setTag("");
+
+        string tag = objMenu->getObjByName("btnCancelarEmu")->getTag();
+        //Si venimos de la pantalla de listado de emuladores o de la pantalla de listado de roms
+        if (tag.compare("FROMEMULIST") == 0 || tag.compare("FROMEMUGROUPLIST") == 0){
+            this->setSelMenu(MENUJUEGOS);
+            ObjectsMenu[getSelMenu()]->setFirstFocus();
+            //ObjectsMenu[getSelMenu()]->getObjByName("ListaMenuJuegos")->setImgDrawed(false);
+            cargarListaEmuladores(getSelMenu(), PANTALLAGROUPLIST, "ListaMenuJuegos");
+        } else {
+            //Si venimos de la pantalla de configuracion
+            this->setSelMenu(PANTALLAEDITAREMU);
+            cargarListaEmuladores(PANTALLAEDITAREMU, PANTALLAOPCIONRUTAS, "listaEditarEmus");
+        }
+
+        //Reseteamos el origen
+        objMenu->getObjByName("btnCancelarEmu")->setTag("");
+
+
     }
     return 0;
 }
@@ -1599,6 +1617,10 @@ int Iofrontend::accionesBtnAceptarOpciones(tEvento *evento){
         if (emuProps.emuProperties.nombreEmu.empty() || emuProps.emuProperties.rutaEmu.empty() || emuProps.emuProperties.rutaRoms.empty()){
             showMessage("Falta rellenar alguno de los campos", 2000);
         } else {
+
+
+            showMessage("Actualizando datos...", 1);
+
             if (emuProps.emuProperties.idEmu.compare("") == 0){
                 if (gestorRoms->insertEmulador(&emuProps.emuProperties)){
                     showMessage("Emulador insertado correctamente", 2000);
@@ -1742,7 +1764,7 @@ bool Iofrontend::actualizarRoms(){
     try{
         ignoreButtonRepeats = true;
         //tmenu_gestor_objects *objMenu = ObjectsMenu[menu];
-        showMessage("Actualizando roms. Espere un momento...", 1);
+        showMessage("Actualizando roms. Espere un momento...", 1, false, {0,50,0,0});
 
         Thread<Gestorroms> *thread = new Thread<Gestorroms>(gestorRoms, &Gestorroms::actualizarRoms);
         if (thread->start())
@@ -2263,9 +2285,13 @@ DWORD Iofrontend::setInfoRomValues(){
 
             UIPicture* pict = ((UIPicture*) objMenu->getObjByName("ImgBoxArt"));
             pict->clearImg();
-            pict->loadImgFromFile(directory);
-            pict->setCentrado(true);
-            pict->setBestfit(false);
+            Dirutil dir;
+            if (dir.existe(directory)){
+                pict->loadImgFromFile(directory);
+                pict->setCentrado(true);
+                pict->setBestfit(false);
+            }
+
 
         } else {
             textElemsInfo->setFieldText("txtPlayers", "");

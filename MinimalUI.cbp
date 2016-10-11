@@ -32,7 +32,6 @@
 				</Compiler>
 				<Linker>
 					<Add option="-lsqllite" />
-					<Add option="-lUIObjects" />
 					<Add option="-lhttpcurl" />
 					<Add option="-lsdlgfx" />
 					<Add option="-lmingw32" />
@@ -135,10 +134,50 @@
 			<Add option="-w" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../../ExternalLibs/UIObjects/src/Colorutil.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/Constant.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/Dirutil.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/Excepcion.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/Fileio.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/ImagenGestor.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/Launcher.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/ListaSimple.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/Menuobject.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/SHA1.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/Traza.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/bbdd/Database.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/beans/listgroupcol.cpp" />
 		<Unit filename="../../ExternalLibs/UIObjects/src/common/Icogestor.cpp" />
 		<Unit filename="../../ExternalLibs/UIObjects/src/common/Icogestor.h" />
 		<Unit filename="../../ExternalLibs/UIObjects/src/common/Ioutil.cpp" />
 		<Unit filename="../../ExternalLibs/UIObjects/src/common/Ioutil.h" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/cursor.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/filelaunch.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/joymapper.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/object.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/registry.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/tinyxml/tinystr.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/tinyxml/tinyxml.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/tinyxml/tinyxmlerror.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/tinyxml/tinyxmlparser.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uiart.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uibutton.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uicheck.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uicombobox.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uiinput.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uilabel.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uilist.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uilistcommon.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uilistgroup.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uipanel.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uipanelborder.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uipicture.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uipopupmenu.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uiprogressbar.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uislider.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uispectrum.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/uitextelementsarea.cpp" />
+		<Unit filename="../../ExternalLibs/UIObjects/src/unzip/unziptool.cpp" />
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
