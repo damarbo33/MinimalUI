@@ -36,3 +36,5 @@ Icon
 .Trashes
 bin/*
 obj/*
+build
+dist

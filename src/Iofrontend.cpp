@@ -70,7 +70,7 @@ void Iofrontend::comprobarUnidad(string diractual){
     if (errorRutas){
         Traza::print("ERROR DE UNIDADES: Unidad actual= " + unidadActual + ", Unidad de las roms: " + unidadRoms, W_DEBUG);
         string pregunta = "La unidad del disco duro " + unidadActual + " es distinta a las rutas de los emuladores "
-        + unidadRoms + ". øDeseas actualizar?";
+        + unidadRoms + ". ¬øDeseas actualizar?";
         bool confirmed = casoPANTALLACONFIRMAR("Confirmacion", pregunta);
         if (confirmed){
             gestorRoms->updateRutas(unidadRoms, unidadActual);
@@ -100,7 +100,7 @@ void Iofrontend::initUIObjs(){
     UIPopupMenu * popupJuegos = addPopup(MENUJUEGOS, "popupEmusConfig", "ListaMenuJuegos");
     if (popupJuegos != NULL){
         popupJuegos->addElemLista("Config. Emu ", "ConfigEmu", controller);
-        popupJuegos->addElemLista("Actualizar InformaciÛn ", "ConfigEmu", arrow_refresh);
+        popupJuegos->addElemLista("Actualizar Informaci√≥n ", "ConfigEmu", arrow_refresh);
     }
 
     ObjectsMenu[MENUOPCIONES]->add("ListaMenuOpciones", GUILISTBOX, 0, 0, 0, 0, "ListaMenuOpciones", true);
@@ -122,7 +122,7 @@ void Iofrontend::initUIObjs(){
     listaObj2->addElemLista("Alta emulador", "", add, PANTALLAOPCIONRUTAS);
     listaObj2->addElemLista("Modificar emulador","", application_form_edit, PANTALLAEDITAREMU);
     listaObj2->addElemLista("Escanear roms","scan", arrow_refresh, MENUOPCIONES);
-    listaObj2->addElemLista("Actualizar car·tulas e info restante","scrapAll", folder_explore, MENUOPCIONES);
+    listaObj2->addElemLista("Actualizar car√°tulas e info restante","scrapAll", folder_explore, MENUOPCIONES);
     listaObj2->addElemLista("Importar ajustes de Retroarch","importRetroarch", database_add, MENUOPCIONES);
     listaObj2->addElemLista("Asignar botones", "configJoy", controller, MENUOPCIONES);
     listaObj2->addElemLista("Opciones generales", "", page_white_gear, MENUOPCIONESGENERALES);
@@ -167,15 +167,15 @@ void Iofrontend::initUIObjs(){
     centroY += (55 + ((zoomText > 1) ? Constant::getMENUSPACE() : 0));
     ObjectsMenu[PANTALLAOPCIONRUTAS]->add("CheckComboFixes", GUICHECK, -195, centroY - 60, 150, CHECKH, "Corregir problemas en ddraw", true);
     ObjectsMenu[PANTALLAOPCIONRUTAS]->add("CheckDescomprimir", GUICHECK, -195, centroY, 150, CHECKH, "Descomprimir roms", true);
-    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("CheckFindTitleRom", GUICHECK, -20, centroY, 150, CHECKH, "Buscar descripciÛn de rom", true);
+    ObjectsMenu[PANTALLAOPCIONRUTAS]->add("CheckFindTitleRom", GUICHECK, -20, centroY, 150, CHECKH, "Buscar descripci√≥n de rom", true);
     centroY += (40 + ((zoomText > 1) ? Constant::getMENUSPACE() : 0));
 
     UIPopupMenu * popup1 = addPopup(PANTALLAOPCIONRUTAS, "popupParmsRom", "EmuParms");
     if (popup1 != NULL){
         popup1->addElemLista("Ruta de la rom", "%ROMPATH%", controller);
         popup1->addElemLista("Nombre de la Rom", "%ROMNAME%", controller);
-        popup1->addElemLista("Nombre de la Rom con extensiÛn", "%ROMNAMEXT%", controller);
-        popup1->addElemLista("Ruta y nombre de Rom con extensiÛn", "%ROMFULLPATH%", controller);
+        popup1->addElemLista("Nombre de la Rom con extensi√≥n", "%ROMNAMEXT%", controller);
+        popup1->addElemLista("Ruta y nombre de Rom con extensi√≥n", "%ROMFULLPATH%", controller);
     }
 
     ObjectsMenu[PANTALLAOPCIONRUTAS]->add("btnAceptarEmu", GUIBUTTON, -(BUTTONW + 5), centroY, BUTTONW -15,BUTTONH, "Aceptar", true)->setIcon(tick);
@@ -197,7 +197,7 @@ void Iofrontend::initUIObjs(){
     ObjectsMenu[PANTALLABROWSER2]->add(OBJLISTABROWSER2, GUILISTBOX, 0, 0, 0, 0, "LISTADODIR", false)->setVerContenedor(false)->setShadow(false);
     ObjectsMenu[PANTALLABROWSER2]->add(BTNACEPTARBROWSER, GUIBUTTON, -(BUTTONW/2 + 5), 0, BUTTONW,BUTTONH, "Aceptar", true)->setIcon(tick);
     ObjectsMenu[PANTALLABROWSER2]->add(BTNCANCELARBROWSER, GUIBUTTON, (BUTTONW/2 + 5), 0, BUTTONW,BUTTONH, "Cancelar", true)->setIcon(cross);
-    ObjectsMenu[PANTALLABROWSER2]->add(ARTDIRBROWSER, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), Constant::toAnsiString("DirecciÛn Browser"), false)->setEnabled(false);
+    ObjectsMenu[PANTALLABROWSER2]->add(ARTDIRBROWSER, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), Constant::toAnsiString("Direcci√≥n Browser"), false)->setEnabled(false);
     ObjectsMenu[PANTALLABROWSER2]->add("comboBrowser", GUICOMBOBOX, 0, 0, 0, 0, "", false);
 
     ObjectsMenu[MENUINICIAL]->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Lanzador", false)->setEnabled(false);
@@ -251,8 +251,8 @@ void Iofrontend::initUIObjs(){
     vector <ListGroupCol *> miCabecera;
     miCabecera.push_back(new ListGroupCol("Nombre Rom", ""));
     miCabecera.push_back(new ListGroupCol("Jugadores", ""));
-    miCabecera.push_back(new ListGroupCol("CategorÌa", ""));
-    miCabecera.push_back(new ListGroupCol("CalificaciÛn", ""));
+    miCabecera.push_back(new ListGroupCol("Categor√≠a", ""));
+    miCabecera.push_back(new ListGroupCol("Calificaci√≥n", ""));
     listaGrupo->setHeaderLista(miCabecera);
     listaGrupo->adjustToHeader(false);
     listaGrupo->addHeaderWith(500);
@@ -269,7 +269,7 @@ void Iofrontend::initUIObjs(){
     int margenX = Constant::getIMGBOXARTWIDTH() + IMGBOXARTMARGIN * 2;
     //Anyadimos los textos en el area que digamos
     UITextElementsArea *infoTextRom = (UITextElementsArea *)objMenu->getObjByName("textosInfoBox");
-    t_posicion pos = {0, Constant::getMENUSPACE() + IMGBOXARTMARGIN,0,0};
+    t_posicion pos(0, Constant::getMENUSPACE() + IMGBOXARTMARGIN,0,0);
     infoTextRom->addField("txtReleased","RELEASED:","",pos, true);
     pos.y += 20;
     infoTextRom->addField("txtPlayers","PLAYERS:","",pos, true);
@@ -290,7 +290,7 @@ void Iofrontend::initUIObjs(){
 
     t_element_style stilo;
 
-    stilo.pos = {0,10,0,0};
+    stilo.pos = t_posicion(0,10,0,0);
     stilo.bold = true;
     stilo.fontSize = 16;
 
@@ -302,7 +302,7 @@ void Iofrontend::initUIObjs(){
     UIPopupMenu * popupJuegosG = addPopup(PANTALLAGROUPLIST, "popupEmusConfig", "listaGrupoRoms");
     if (popupJuegosG != NULL){
         popupJuegosG->addElemLista("Config. Emu ", "ConfigEmu", controller);
-        popupJuegosG->addElemLista("Actualizar InformaciÛn ", "ConfigEmu", arrow_refresh);
+        popupJuegosG->addElemLista("Actualizar Informaci√≥n ", "ConfigEmu", arrow_refresh);
     }
 
     //objMenu->findNextFocus();
@@ -318,7 +318,7 @@ void Iofrontend::initUIObjs(){
 
 	 addEvent("comboBrowser", &Iofrontend::accionCombo);
 
-    //Botones para la pantalla de confirmaciÛn
+    //Botones para la pantalla de confirmacion
     addEvent("btnSiConfirma", &Iofrontend::marcarBotonSeleccionado);
     addEvent("btnNoConfirma", &Iofrontend::marcarBotonSeleccionado);
 
@@ -587,9 +587,9 @@ int Iofrontend::accionesMenu(tEvento *evento){
 
                     string pregunta = "";
                     if (valorSelec.compare("reboot") == 0){
-                        pregunta = "øEsta seguro de que desea reiniciar la maquina?";
+                        pregunta = "¬øEsta seguro de que desea reiniciar la maquina?";
                     } else if(valorSelec.compare("shutdown") == 0){
-                        pregunta = "øEsta seguro de que desea apagar la maquina?";
+                        pregunta = "¬øEsta seguro de que desea apagar la maquina?";
                     }
 
                     bool confirmed = casoPANTALLACONFIRMAR("Confirmacion", pregunta);
@@ -959,7 +959,7 @@ void Iofrontend::setDinamicSizeObjects(){
                             this->getHeight() - Constant::getINPUTH());
 
         //int margenX = Constant::getIMGBOXARTWIDTH() + IMGBOXARTMARGIN + 3;
-        t_posicion pos = {0, Constant::getMENUSPACE() + IMGBOXARTMARGIN,0,0};
+        t_posicion pos(0, Constant::getMENUSPACE() + IMGBOXARTMARGIN,0,0);
         infoTextRom->setPosition("txtReleased",pos);
         pos.y += Constant::getINPUTH();
         infoTextRom->setPosition("txtPlayers",pos);
@@ -980,7 +980,7 @@ void Iofrontend::setDinamicSizeObjects(){
         infoTextRom->setTam(0, 30 + Constant::getIMGBOXARTHEIGHT() + IMGBOXARTMARGIN * 2,
                             this->getWidth() / 2, this->getHeight()- Constant::getINPUTH());
 
-        t_posicion posDesc = {0,10,0,0};
+        t_posicion posDesc(0,10,0,0);
         infoTextRom->setPosition("txtFilePath",posDesc);
         posDesc.y+=60;
         infoTextRom->setPosition("txtDescripcion",posDesc);
@@ -1028,7 +1028,7 @@ bool Iofrontend::casoPANTALLACONFIRMAR(string titulo, string txtDetalle){
     SDL_Surface *mySurface = NULL;
     takeScreenShot(&mySurface, iconRectFondo);
 
-    //Seguidamente cambiamos la Òpantalla a la de la confirmacion
+    //Seguidamente cambiamos la pantalla a la de la confirmacion
     setSelMenu(PANTALLACONFIRMAR);
     tmenu_gestor_objects *objMenu = ObjectsMenu[PANTALLACONFIRMAR];
     objMenu->getObjByName("borde")->setLabel(titulo);
@@ -1163,7 +1163,7 @@ void Iofrontend::comprobarUnicode(int menu){
 
 /**
 * Establece el nombre del fichero o directorio seleccionado por el explorador de
-* ficheros, en el contenido un campo especificado por par·metro
+* ficheros, en el contenido un campo especificado por parametro
 */
 void Iofrontend::setTextFromExplorador(tEvento *evento, UIInput *objCampoEdit){
     try{
@@ -1535,7 +1535,7 @@ int Iofrontend::launchEmuForConfig(tEvento *evento){
 */
 int Iofrontend::accionesBtnEliminarEmu(tEvento *evento){
 
-    string pregunta = "øEst· seguro de que desea eliminar el programa?";
+    string pregunta = "¬øEst√° seguro de que desea eliminar el programa?";
     bool confirmed = casoPANTALLACONFIRMAR("Confirmacion", pregunta);
     if (confirmed){
         tmenu_gestor_objects *objMenu = ObjectsMenu[this->getSelMenu()];
@@ -1699,9 +1699,9 @@ bool Iofrontend::cargarListaEmuladores(int menu, int destino, string lista){
         gestorRoms->fillMenuByQuery(obj, "selectListaEmuladores",NULL, destino);
 
         if (lista.compare("listaEditarEmus") == 0){
-            obj->addElemLista("ConfiguraciÛn", "", bullet_go, MENUOPCIONES);
+            obj->addElemLista("Configuraci√≥n", "", bullet_go, MENUOPCIONES);
         } else {
-            obj->addElemLista("ConfiguraciÛn", "", bullet_go, MENUINICIAL);
+            obj->addElemLista("Configuraci√≥n", "", bullet_go, MENUINICIAL);
         }
 
     } catch (Excepcion &e) {
