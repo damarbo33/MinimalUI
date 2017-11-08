@@ -26,8 +26,8 @@ class Gestorroms
         string getColQuery(const char*);
         vector<vector<string> > getRowQuery(string);
         bool executeQuery(string);
-        DWORD actualizarRoms();
-        DWORD actualizarRoms(int);
+        uint32_t actualizarRoms();
+        uint32_t actualizarRoms(int);
         bool insertEmulador(Emuinfo::struct_emu *);
         bool updateEmulador(Emuinfo::struct_emu *);
         bool deleteEmulador(int);
@@ -37,7 +37,7 @@ class Gestorroms
         void listarDirRecursivo(string dir,  Rominfo *);
         unsigned int listarDirSinOrden(const char *strdir, vector <FileProps> * tempFilelist, Rominfo *);
         string parserSQLWhere(string, string);
-        DWORD importRetroarchConfig();
+        uint32_t importRetroarchConfig();
         void setRutaInicial(string var){rutaInicial = var;}
         string getRutaInicial(){return rutaInicial;}
         bool comprobarUnidad(string diractual, string *unidadRoms);
@@ -47,8 +47,8 @@ class Gestorroms
         string getParameter(string parameter);
         bool updateParameter(string parameter, string value);
         //para threads
-        DWORD thScrapSystem();
-        DWORD thScrapAllSystem();
+        uint32_t thScrapSystem();
+        uint32_t thScrapAllSystem();
         void setThEmuID(string var){thEmuID = var;}
         string getThEmuID(){return thEmuID;}
         bool isScrappingNow(){return scrappingNow;}
@@ -57,10 +57,10 @@ class Gestorroms
         string getProgress(){return progress;}
 
         void updateRom(vector<vector<string> > *listaRoms);
-        DWORD updateRom();
+        uint32_t updateRom();
         vector<vector<string> > * getThListaRoms(){return &thListaRoms;}
-        DWORD scrapsystemMulti(string idEmu, int inicio, int fin);
-        DWORD thScrapSystemMulti();
+        uint32_t scrapsystemMulti(string idEmu, int inicio, int fin);
+        uint32_t thScrapSystemMulti();
         void setThScrapIni(int var){thScrapIni = var;}
         void setThScrapFin(int var){thScrapFin = var;}
         int getThScrapIni(){return thScrapIni;}
@@ -70,8 +70,8 @@ class Gestorroms
         static SDL_mutex *mutex;
         vector<vector<string> > getAllEmus();
         void refreshArtWorkOptim(string codEmu, string dirInicial);
-        DWORD thRefreshArtWorkOptim();
-        DWORD thRefreshAllArtWorkOptim();
+        uint32_t thRefreshArtWorkOptim();
+        uint32_t thRefreshAllArtWorkOptim();
         void setThDirInicial(string var){thDirInicial = var;}
 
     protected:
@@ -79,9 +79,9 @@ class Gestorroms
         Database *db;
         unsigned int addRom(unsigned  int , unsigned int, string);
         void cargarInfoRoms(Rominfo *);
-//        DWORD addRomInfo(vector<vector<string> > *listaRoms, HANDLE *myhandle, RomWebInfo **objRom);
-        DWORD addRomInfo(vector<vector<string> > *listaRoms, int posRomProcess, RomWebInfo *objRom);
-        DWORD scrapsystem(string idEmu);
+//        uint32_t addRomInfo(vector<vector<string> > *listaRoms, HANDLE *myhandle, RomWebInfo **objRom);
+        uint32_t addRomInfo(vector<vector<string> > *listaRoms, int posRomProcess, RomWebInfo *objRom);
+        uint32_t scrapsystem(string idEmu);
         string rutaInicial;
         string thEmuID;
 

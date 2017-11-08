@@ -19,7 +19,7 @@ Gestorroms::~Gestorroms(){
     closeDB();
 }
 
-DWORD Gestorroms::importRetroarchConfig(){
+uint32_t Gestorroms::importRetroarchConfig(){
 
     try{
         listaSimple<string> *fileRetroarch = new listaSimple<string>();
@@ -100,7 +100,7 @@ void Gestorroms::loadDBFromFile(string ruta){
             db->query("INSERT INTO CONFIG (PARAMETRO, VALOR) VALUES ('FIXDDRAW', '0')");
     //        db->query("CREATE TRIGGER \"insert_imgcateg_to_categoria\" BEFORE INSERT ON IMGCATEG BEGIN SELECT RAISE (ROLLBACK, 'SQLException: insert_imgcateg_to_categoria. Constraint: No existe la categoria especificada') WHERE (SELECT categid FROM CATEGORIA WHERE categid = NEW.categid) IS NULL; END;");
     //        db->query("CREATE TRIGGER \"duplicate_imgid\" BEFORE INSERT ON IMGCATEG BEGIN  SELECT RAISE (ROLLBACK, 'SQLException: duplicate_imgid. Constraint: El id de la imagen esta duplicado para esta categoria') WHERE (SELECT imgid FROM IMGCATEG WHERE imgid = NEW.imgid AND categid = NEW.categid) IS NOT NULL; END");
-    //        db->query("CREATE TRIGGER \"duplicate_imgpos\" BEFORE INSERT ON IMGCATEG BEGIN SELECT RAISE (ROLLBACK, 'SQLException: duplicate_imgid. Constraint: La posición de la imagen esta duplicada para esta categoria') WHERE (SELECT imgpos FROM IMGCATEG WHERE imgpos = NEW.imgpos AND categid = NEW.categid) IS NOT NULL; END");
+    //        db->query("CREATE TRIGGER \"duplicate_imgpos\" BEFORE INSERT ON IMGCATEG BEGIN SELECT RAISE (ROLLBACK, 'SQLException: duplicate_imgid. Constraint: La posiciï¿½n de la imagen esta duplicada para esta categoria') WHERE (SELECT imgpos FROM IMGCATEG WHERE imgpos = NEW.imgpos AND categid = NEW.categid) IS NOT NULL; END");
         } catch(Excepcion &e){
             Traza::print("Excepcion loadDBFromFile. Message" + string(e.getMessage()), W_ERROR);
         } catch (...){
@@ -314,7 +314,7 @@ string Gestorroms::getParameter(string parameter){
 /**
 *
 */
-DWORD Gestorroms::actualizarRoms(int idEmulador){
+uint32_t Gestorroms::actualizarRoms(int idEmulador){
     Traza::print("Creando querys y borrando de BBDD", W_DEBUG);
     vector<vector<string> > result = getDatosEmulador(idEmulador);
 
@@ -432,7 +432,7 @@ DWORD Gestorroms::actualizarRoms(int idEmulador){
 * Metodo que se llama desde el menu de opciones para actualizar todos los
 * emuladores
 */
-DWORD Gestorroms::actualizarRoms(){
+uint32_t Gestorroms::actualizarRoms(){
     return actualizarRoms(-1);
 }
 
@@ -498,7 +498,7 @@ void Gestorroms::cargarInfoRoms(Rominfo *infoDatos){
 
 /**
 * Genera el resto de la query a anyadir para generar la clausula where
-* El formato de las claves será "clave1:valor1,clave2:valor2,clave3:valor3,...,claven:valorn"
+* El formato de las claves serï¿½ "clave1:valor1,clave2:valor2,clave3:valor3,...,claven:valorn"
 * el string de resultado sera: and clave1=valor1 and clave2=valor2...
 */
 string Gestorroms::parserSQLWhere(string claves, string esquema){
@@ -688,14 +688,14 @@ void Gestorroms::updateRom(vector<vector<string> > *listaRoms){
     }
 }
 
-DWORD Gestorroms::updateRom(){
+uint32_t Gestorroms::updateRom(){
     updateRom(&thListaRoms);
 }
 
 /**
 *
 */
-DWORD Gestorroms::addRomInfo(vector<vector<string> > *listaRoms, int posRomProcess, RomWebInfo *objRom){
+uint32_t Gestorroms::addRomInfo(vector<vector<string> > *listaRoms, int posRomProcess, RomWebInfo *objRom){
     string scrapped = "";
     string idprog = "";
     string idrom = "";
@@ -1088,7 +1088,7 @@ void Gestorroms::refreshArtWorkOptim(string codEmu, string dirInicial){
 /**
 *
 */
-DWORD Gestorroms::thRefreshArtWorkOptim(){
+uint32_t Gestorroms::thRefreshArtWorkOptim(){
     if (!scrappingNow){
         refreshArtWorkOptim(thEmuID, thDirInicial);
     }
@@ -1097,7 +1097,7 @@ DWORD Gestorroms::thRefreshArtWorkOptim(){
 /**
 *
 */
-DWORD Gestorroms::thRefreshAllArtWorkOptim(){
+uint32_t Gestorroms::thRefreshAllArtWorkOptim(){
     if (!scrappingNow){
         vector<vector<string> > result = getAllEmus();
         for (int i=0; i < result.size(); i++){
@@ -1112,7 +1112,7 @@ DWORD Gestorroms::thRefreshAllArtWorkOptim(){
 /**
 * Actualiza la informacion de todos los emuladores
 */
-DWORD Gestorroms::thScrapAllSystem(){
+uint32_t Gestorroms::thScrapAllSystem(){
     try{
         db->prepareStatement("selectListaEmuladores");
         Traza::print("Gestorroms::thScrapAllSystem. Obteniendo lista de sistemas", W_DEBUG);
@@ -1130,21 +1130,21 @@ DWORD Gestorroms::thScrapAllSystem(){
 /**
 * Funcion para llamar desde el thread principal
 */
-DWORD Gestorroms::thScrapSystem() {
+uint32_t Gestorroms::thScrapSystem() {
     return scrapsystem(getThEmuID());
 }
 
 /**
 * Funcion para llamar desde el thread principal
 */
-DWORD Gestorroms::thScrapSystemMulti() {
+uint32_t Gestorroms::thScrapSystemMulti() {
     return scrapsystemMulti(getThEmuID(), getThScrapIni(), getThScrapFin());
 }
 
 /**
 * Obtiene la informacion de todas las roms del emulador que se le pasa por parametro
 */
-DWORD Gestorroms::scrapsystemMulti(string idEmu, int inicio, int fin){
+uint32_t Gestorroms::scrapsystemMulti(string idEmu, int inicio, int fin){
     int errorCode = 0;
 
     try{
@@ -1193,7 +1193,7 @@ DWORD Gestorroms::scrapsystemMulti(string idEmu, int inicio, int fin){
 /**
 * Obtiene la informacion de todas las roms del emulador que se le pasa por parametro
 */
-DWORD Gestorroms::scrapsystem(string idEmu){
+uint32_t Gestorroms::scrapsystem(string idEmu){
     int errorCode = 0;
     try{
         if (db != NULL) {

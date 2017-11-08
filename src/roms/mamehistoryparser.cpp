@@ -61,7 +61,8 @@ void MameHistoryParser::loadHistory(string ruta){
                 year = "";
                 developer = "";
                 for (int i=0; i < 5 && continueReading; i++){
-                    continueReading = getline (myfile, line);
+                    getline (myfile, line);
+                    continueReading = !myfile.eof();
                     //Cargamos el titulo, el anyo y el desarrollador del juego
                     if (!line.empty()){
                         posTitle = line.find("(c)");
@@ -79,7 +80,8 @@ void MameHistoryParser::loadHistory(string ruta){
                     if (!line.empty()){
                         descRom.append(line + VBCRLF);
                     }
-                    continueReading = getline (myfile, line);
+                    getline (myfile, line);
+                    continueReading = !myfile.eof();
                     posSection = line.find("- ");
                 }
 
@@ -136,7 +138,8 @@ string MameHistoryParser::extractSection(ifstream *myfile, string *line, string 
 
     while (!endReached && continueReading){
         if (posSection == 0){
-            continueReading = getline (*myfile, *line);
+            getline (*myfile, *line);
+            continueReading = !myfile->eof();
             posSection = line->find("- ");
             posEnd = line->find("$end");
             while ( (posEnd == string::npos || posEnd > 0) && (posSection == string::npos || posSection > 0) && continueReading){
@@ -153,7 +156,8 @@ string MameHistoryParser::extractSection(ifstream *myfile, string *line, string 
 //                    }
 //                }
 
-                continueReading = getline (*myfile, *line);
+                getline (*myfile, *line);
+                continueReading = !myfile->eof();
                 posSection = line->find("- ");
                 posEnd = line->find("$end");
             }
@@ -162,7 +166,8 @@ string MameHistoryParser::extractSection(ifstream *myfile, string *line, string 
         } else {
             posEnd = line->find("$end");
             if (posEnd == string::npos || posEnd > 0){
-                continueReading = getline (*myfile, *line);
+                getline (*myfile, *line);
+                continueReading = !myfile->eof();
                 posSection = line->find("- " + section + " -");
             } else {
                 endReached = true;

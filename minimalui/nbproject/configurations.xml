@@ -67,23 +67,20 @@
       <compileType>
         <cTool>
           <incDir>
-            <pElem>../../../ExternalLibs/SDL/libs/include</pElem>
-            <pElem>../../../ExternalLibs/SDL/libs/include/SDL</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/ziputils/zlib</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/uiobjects/common</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/sqllite</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/libjpeg</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/ziputils/unzip</pElem>
-            <pElem>../../../ExternalLibs/curl-7.40.0-devel-mingw32/include</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/tidy/include</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/tidy/src</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/gumbo-parser-master/src</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/httpcurl/jsoncpp-0.10.5/include</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
             <pElem>../../BmpRLE</pElem>
             <pElem>../src</pElem>
+            <pElem>../../../ExternalLibs/vlc-2.2.7/sdk/include</pElem>
           </incDir>
           <preprocessorList>
             <Elem>WIN</Elem>
@@ -92,24 +89,20 @@
         </cTool>
         <ccTool>
           <incDir>
-            <pElem>../../../ExternalLibs/SDL/libs/include</pElem>
-            <pElem>../../../ExternalLibs/SDL/libs/include/SDL</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/ziputils/zlib</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/uiobjects/common</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/sqllite</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/libjpeg</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/ziputils/unzip</pElem>
-            <pElem>../../../ExternalLibs/curl-7.40.0-devel-mingw32/include</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/tidy/include</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/tidy/src</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/gumbo-parser-master/src</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/httpcurl/jsoncpp-0.10.5/include</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
-            <pElem>../../../ExternalLibs/libvlc/sdk/include</pElem>
             <pElem>../../BmpRLE</pElem>
             <pElem>../src</pElem>
+            <pElem>../../../ExternalLibs/vlc-2.2.7/sdk/include</pElem>
           </incDir>
           <commandLine>-fpermissive</commandLine>
           <preprocessorList>
@@ -119,18 +112,15 @@
         </ccTool>
         <linkerTool>
           <linkerAddLib>
-            <pElem>../../../ExternalLibs/crosslib/crosslib/dist/Debug/MinGW-Windows</pElem>
-            <pElem>../../../ExternalLibs/crosslib/crosslib/dist/Debug/MinGW32-Windows</pElem>
-            <pElem>../../../ExternalLibs/curl-7.40.0-devel-mingw32/lib</pElem>
-            <pElem>../../../ExternalLibs/SDL/libs/lib</pElem>
-            <pElem>../../../ExternalLibs/SDL/libs/lib/x86</pElem>
-            <pElem>../../../ExternalLibs/libvlc/sdk/lib</pElem>
+            <pElem>../../../ExternalLibs/crosslib/crosslib/dist/Debug2/MinGW2_64-Windows</pElem>
+            <pElem>../../../ExternalLibs/vlc-2.2.7/sdk/lib</pElem>
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibLibItem>crosslib</linkerLibLibItem>
-            <linkerOptionItem>-lsdlgfx -lmingw32 -lSDLmain -lSDL -lSDL_mixer -lSDL_ttf -lSDL_image -lcrypto -lcurl -lcurldll -lidn -lrtmp -lssh2 -lssh2dll -lssl -lz -lzdll -lws2_32</linkerOptionItem>
-            <linkerLibFileItem>../../../ExternalLibs/libvlc/sdk/lib/libvlc.lib</linkerLibFileItem>
-            <linkerLibFileItem>../../../ExternalLibs/libvlc/sdk/lib/libvlccore.lib</linkerLibFileItem>
+            <linkerOptionItem>-lsdl_gfx -lmingw32 -lSDLmain -lSDL -lSDL_mixer -lSDL_ttf -lSDL_image -lcurl -lws2_32 </linkerOptionItem>
+            <linkerOptionItem>-ljsoncpp</linkerOptionItem>
+            <linkerLibLibItem>vlc</linkerLibLibItem>
+            <linkerLibLibItem>vlccore</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -203,75 +193,63 @@
       </toolsSet>
       <compileType>
         <cTool>
-          <developmentMode>5</developmentMode>
+          <developmentMode>6</developmentMode>
           <incDir>
-            <pElem>../../../ExternalLibs/SDL/libs/include</pElem>
-            <pElem>../../../ExternalLibs/SDL/libs/include/SDL</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/ziputils/zlib</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/uiobjects/common</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/sqllite</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/libjpeg</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/ziputils/unzip</pElem>
-            <pElem>../../../ExternalLibs/curl-7.40.0-devel-mingw32/include</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/tidy/include</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/tidy/src</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/gumbo-parser-master/src</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/httpcurl/jsoncpp-0.10.5/include</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
-            <pElem>../../../ExternalLibs/libvlc/sdk/include</pElem>
             <pElem>../../BmpRLE</pElem>
             <pElem>../src</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <developmentMode>5</developmentMode>
-          <incDir>
-            <pElem>../../../ExternalLibs/SDL/libs/include</pElem>
-            <pElem>../../../ExternalLibs/SDL/libs/include/SDL</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/ziputils/zlib</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/uiobjects/common</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/sqllite</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/libjpeg</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/ziputils/unzip</pElem>
-            <pElem>../../../ExternalLibs/curl-7.40.0-devel-mingw32/include</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/tidy/include</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/tidy/src</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/gumbo-parser-master/src</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/httpcurl/jsoncpp-0.10.5/include</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
-            <pElem>../../../ExternalLibs/libvlc/sdk/include</pElem>
-            <pElem>../../BmpRLE</pElem>
-            <pElem>../src</pElem>
+            <pElem>../../../ExternalLibs/vlc-2.2.7/sdk/include</pElem>
           </incDir>
           <preprocessorList>
             <Elem>WIN</Elem>
             <Elem>WIN32</Elem>
           </preprocessorList>
+        </cTool>
+        <ccTool>
+          <developmentMode>6</developmentMode>
+          <incDir>
+            <pElem>../../../ExternalLibs/crosslib/src/ziputils/zlib</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/uiobjects/common</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/sqllite</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/libjpeg</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/ziputils/unzip</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/tidy/include</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/tidy/src</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/gumbo-parser-master/src</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
+            <pElem>../../BmpRLE</pElem>
+            <pElem>../src</pElem>
+            <pElem>../../../ExternalLibs/vlc-2.2.7/sdk/include</pElem>
+          </incDir>
+          <commandLine>-fpermissive</commandLine>
+          <preprocessorList>
+            <Elem>WIN</Elem>
+            <Elem>WIN32</Elem>
+          </preprocessorList>
         </ccTool>
-        <fortranCompilerTool>
-          <developmentMode>5</developmentMode>
-        </fortranCompilerTool>
-        <asmTool>
-          <developmentMode>5</developmentMode>
-        </asmTool>
         <linkerTool>
           <linkerAddLib>
-            <pElem>../../../ExternalLibs/crosslib/crosslib/dist/Debug/MinGW-Windows</pElem>
-            <pElem>../../../ExternalLibs/crosslib/crosslib/dist/Debug/MinGW32-Windows</pElem>
-            <pElem>../../../ExternalLibs/curl-7.40.0-devel-mingw32/lib</pElem>
-            <pElem>../../../ExternalLibs/SDL/libs/lib</pElem>
-            <pElem>../../../ExternalLibs/SDL/libs/lib/x86</pElem>
-            <pElem>../../../ExternalLibs/libvlc/sdk/lib</pElem>
+            <pElem>../../../ExternalLibs/vlc-2.2.7/sdk/lib</pElem>
+            <pElem>../../../ExternalLibs/crosslib/crosslib/dist/Release/MinGW2_64-Windows</pElem>
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibLibItem>crosslib</linkerLibLibItem>
-            <linkerOptionItem>-lsdlgfx -lmingw32 -lSDLmain -lSDL -lSDL_mixer -lSDL_ttf -lSDL_image -lcrypto -lcurl -lcurldll -lidn -lrtmp -lssh2 -lssh2dll -lssl -lz -lzdll -lws2_32</linkerOptionItem>
-            <linkerLibFileItem>../../../ExternalLibs/libvlc/sdk/lib/libvlc.lib</linkerLibFileItem>
-            <linkerLibFileItem>../../../ExternalLibs/libvlc/sdk/lib/libvlccore.lib</linkerLibFileItem>
+            <linkerOptionItem>-lsdl_gfx -lmingw32 -lSDLmain -lSDL -lSDL_mixer -lSDL_ttf -lSDL_image -lcurl -lws2_32 </linkerOptionItem>
+            <linkerOptionItem>-ljsoncpp</linkerOptionItem>
+            <linkerLibLibItem>vlc</linkerLibLibItem>
+            <linkerLibLibItem>vlccore</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
