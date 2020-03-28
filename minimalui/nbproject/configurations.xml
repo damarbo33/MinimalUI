@@ -58,31 +58,18 @@
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
-    <conf name="Debug" type="1">
+    <conf name="Debug64" type="1">
       <toolsSet>
-        <compilerSet>default</compilerSet>
+        <compilerSet>MinGW64|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>
           <incDir>
-            <pElem>../../../ExternalLibs/SDL/libs/include</pElem>
-            <pElem>../../../ExternalLibs/SDL/libs/include/SDL</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/ziputils/zlib</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/uiobjects/common</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/sqllite</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/libjpeg</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/ziputils/unzip</pElem>
-            <pElem>../../../ExternalLibs/curl-7.40.0-devel-mingw32/include</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/tidy/include</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/tidy/src</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/gumbo-parser-master/src</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/httpcurl/jsoncpp-0.10.5/include</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
-            <pElem>../../BmpRLE</pElem>
             <pElem>../src</pElem>
           </incDir>
           <preprocessorList>
@@ -92,23 +79,9 @@
         </cTool>
         <ccTool>
           <incDir>
-            <pElem>../../../ExternalLibs/SDL/libs/include</pElem>
-            <pElem>../../../ExternalLibs/SDL/libs/include/SDL</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/ziputils/zlib</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/uiobjects/common</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/sqllite</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/libjpeg</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/ziputils/unzip</pElem>
-            <pElem>../../../ExternalLibs/curl-7.40.0-devel-mingw32/include</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/tidy/include</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/tidy/src</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/gumbo-parser-master/src</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/httpcurl/jsoncpp-0.10.5/include</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
-            <pElem>../../../ExternalLibs/libvlc/sdk/include</pElem>
-            <pElem>../../BmpRLE</pElem>
             <pElem>../src</pElem>
           </incDir>
           <commandLine>-fpermissive</commandLine>
@@ -118,19 +91,14 @@
           </preprocessorList>
         </ccTool>
         <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/minimalui</output>
           <linkerAddLib>
-            <pElem>../../../ExternalLibs/crosslib/crosslib/dist/Debug/MinGW-Windows</pElem>
-            <pElem>../../../ExternalLibs/crosslib/crosslib/dist/Debug/MinGW32-Windows</pElem>
-            <pElem>../../../ExternalLibs/curl-7.40.0-devel-mingw32/lib</pElem>
-            <pElem>../../../ExternalLibs/SDL/libs/lib</pElem>
-            <pElem>../../../ExternalLibs/SDL/libs/lib/x86</pElem>
-            <pElem>../../../ExternalLibs/libvlc/sdk/lib</pElem>
+            <pElem>../../../ExternalLibs/crosslib/crosslib/dist/Debug64/MinGW64-Windows</pElem>
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibLibItem>crosslib</linkerLibLibItem>
-            <linkerOptionItem>-lsdlgfx -lmingw32 -lSDLmain -lSDL -lSDL_mixer -lSDL_ttf -lSDL_image -lcrypto -lcurl -lcurldll -lidn -lrtmp -lssh2 -lssh2dll -lssl -lz -lzdll -lws2_32</linkerOptionItem>
-            <linkerLibFileItem>../../../ExternalLibs/libvlc/sdk/lib/libvlc.lib</linkerLibFileItem>
-            <linkerLibFileItem>../../../ExternalLibs/libvlc/sdk/lib/libvlccore.lib</linkerLibFileItem>
+            <linkerOptionItem>-mwindows -lsdl_gfx -lmingw32 -lSDLmain -lSDL -lSDL_mixer -lSDL_ttf -lSDL_image -lcrypto -lcurl -lrtmp -lssh2 -lssl -lz -lws2_32</linkerOptionItem>
+            <linkerOptionItem>-lsqlite3 -lgumbo -ltinyxml -ltidy -lz -lminizip -ljpeg -lvlc -lvlccore</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -195,83 +163,47 @@
       <item path="../src/vlcplayer/vlcplayer.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
-    <conf name="Release" type="1">
+    <conf name="Debug32" type="1">
       <toolsSet>
-        <compilerSet>default</compilerSet>
+        <compilerSet>MinGW32|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>
-          <developmentMode>5</developmentMode>
           <incDir>
-            <pElem>../../../ExternalLibs/SDL/libs/include</pElem>
-            <pElem>../../../ExternalLibs/SDL/libs/include/SDL</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/ziputils/zlib</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/uiobjects/common</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/sqllite</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/libjpeg</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/ziputils/unzip</pElem>
-            <pElem>../../../ExternalLibs/curl-7.40.0-devel-mingw32/include</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/tidy/include</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/tidy/src</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/gumbo-parser-master/src</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/httpcurl/jsoncpp-0.10.5/include</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
-            <pElem>../../../ExternalLibs/libvlc/sdk/include</pElem>
-            <pElem>../../BmpRLE</pElem>
-            <pElem>../src</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <developmentMode>5</developmentMode>
-          <incDir>
-            <pElem>../../../ExternalLibs/SDL/libs/include</pElem>
-            <pElem>../../../ExternalLibs/SDL/libs/include/SDL</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/ziputils/zlib</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/uiobjects/common</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/sqllite</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/libjpeg</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/ziputils/unzip</pElem>
-            <pElem>../../../ExternalLibs/curl-7.40.0-devel-mingw32/include</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/tidy/include</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/tidy/src</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/gumbo-parser-master/src</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/httpcurl/jsoncpp-0.10.5/include</pElem>
-            <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
-            <pElem>../../../ExternalLibs/libvlc/sdk/include</pElem>
-            <pElem>../../BmpRLE</pElem>
             <pElem>../src</pElem>
           </incDir>
           <preprocessorList>
             <Elem>WIN</Elem>
             <Elem>WIN32</Elem>
           </preprocessorList>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
+            <pElem>../src</pElem>
+          </incDir>
+          <commandLine>-fpermissive</commandLine>
+          <preprocessorList>
+            <Elem>WIN</Elem>
+            <Elem>WIN32</Elem>
+          </preprocessorList>
         </ccTool>
-        <fortranCompilerTool>
-          <developmentMode>5</developmentMode>
-        </fortranCompilerTool>
-        <asmTool>
-          <developmentMode>5</developmentMode>
-        </asmTool>
         <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/minimalui</output>
           <linkerAddLib>
-            <pElem>../../../ExternalLibs/crosslib/crosslib/dist/Debug/MinGW-Windows</pElem>
-            <pElem>../../../ExternalLibs/crosslib/crosslib/dist/Debug/MinGW32-Windows</pElem>
-            <pElem>../../../ExternalLibs/curl-7.40.0-devel-mingw32/lib</pElem>
-            <pElem>../../../ExternalLibs/SDL/libs/lib</pElem>
-            <pElem>../../../ExternalLibs/SDL/libs/lib/x86</pElem>
-            <pElem>../../../ExternalLibs/libvlc/sdk/lib</pElem>
+            <pElem>../../../ExternalLibs/crosslib/crosslib/dist/Debug32/MinGW32-Windows</pElem>
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibLibItem>crosslib</linkerLibLibItem>
-            <linkerOptionItem>-lsdlgfx -lmingw32 -lSDLmain -lSDL -lSDL_mixer -lSDL_ttf -lSDL_image -lcrypto -lcurl -lcurldll -lidn -lrtmp -lssh2 -lssh2dll -lssl -lz -lzdll -lws2_32</linkerOptionItem>
-            <linkerLibFileItem>../../../ExternalLibs/libvlc/sdk/lib/libvlc.lib</linkerLibFileItem>
-            <linkerLibFileItem>../../../ExternalLibs/libvlc/sdk/lib/libvlccore.lib</linkerLibFileItem>
+            <linkerOptionItem>-mwindows -lsdl_gfx -lmingw32 -lSDLmain -lSDL -lSDL_mixer -lSDL_ttf -lSDL_image -lcrypto -lcurl -lrtmp -lssh2 -lssl -lz -lws2_32</linkerOptionItem>
+            <linkerOptionItem>-lsqlite3 -lgumbo -ltinyxml -ltidy -lz -lminizip -ljpeg -lvlc -lvlccore</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -332,6 +264,220 @@
       <item path="../src/sdl/SDL_draw.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="../src/vlcplayer/vlcplayer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../src/vlcplayer/vlcplayer.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release64" type="1">
+      <toolsSet>
+        <compilerSet>MinGW64|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <incDir>
+            <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
+            <pElem>../src</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>WIN</Elem>
+            <Elem>WIN32</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
+            <pElem>../src</pElem>
+          </incDir>
+          <commandLine>-fpermissive</commandLine>
+          <preprocessorList>
+            <Elem>WIN</Elem>
+            <Elem>WIN32</Elem>
+          </preprocessorList>
+        </ccTool>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/minimalui</output>
+          <linkerAddLib>
+            <pElem>../../../ExternalLibs/crosslib/crosslib/dist/Release64/MinGW64-Windows</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>crosslib</linkerLibLibItem>
+            <linkerOptionItem>-mwindows -lsdl_gfx -lmingw32 -lSDLmain -lSDL -lSDL_mixer -lSDL_ttf -lSDL_image -lcrypto -lcurl -lrtmp -lssh2 -lssl -lz -lws2_32</linkerOptionItem>
+            <linkerOptionItem>-lsqlite3 -lgumbo -ltinyxml -ltidy -lz -lminizip -ljpeg -lvlc -lvlccore</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/Icogestor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="9">
+      </item>
+      <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/Icogestor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/Ioutil.cpp"
+            ex="false"
+            tool="1"
+            flavor2="9">
+      </item>
+      <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/Ioutil.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../src/9001.png.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/Iofrontend.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="../src/Iofrontend.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/main.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="../src/main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/roms/EmuProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/roms/bdrominfoout.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/roms/estructuras.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="../src/roms/estructuras.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/roms/gestorroms.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="../src/roms/gestorroms.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/roms/mamehistoryparser.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="../src/roms/mamehistoryparser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/roms/romwebinfo.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="../src/roms/romwebinfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/roms/thegamesdb.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="../src/roms/thegamesdb.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/sdl/SDL_draw.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="../src/vlcplayer/vlcplayer.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="../src/vlcplayer/vlcplayer.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release32" type="1">
+      <toolsSet>
+        <compilerSet>MinGW32|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>6</developmentMode>
+          <stripSymbols>true</stripSymbols>
+          <incDir>
+            <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
+            <pElem>../src</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>WIN</Elem>
+            <Elem>WIN32</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <developmentMode>6</developmentMode>
+          <stripSymbols>true</stripSymbols>
+          <incDir>
+            <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
+            <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
+            <pElem>../src</pElem>
+          </incDir>
+          <commandLine>-fpermissive</commandLine>
+          <preprocessorList>
+            <Elem>WIN</Elem>
+            <Elem>WIN32</Elem>
+          </preprocessorList>
+        </ccTool>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/minimalui</output>
+          <linkerAddLib>
+            <pElem>../../../ExternalLibs/crosslib/crosslib/dist/Release32/MinGW32-Windows</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>crosslib</linkerLibLibItem>
+            <linkerOptionItem>-mwindows -lsdl_gfx -lmingw32 -lSDLmain -lSDL -lSDL_mixer -lSDL_ttf -lSDL_image -lcrypto -lcurl -lrtmp -lssh2 -lssl -lz -lws2_32</linkerOptionItem>
+            <linkerOptionItem>-lsqlite3 -lgumbo -ltinyxml -ltidy -lz -lminizip -ljpeg -lvlc -lvlccore</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/Icogestor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="9">
+      </item>
+      <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/Icogestor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/Ioutil.cpp"
+            ex="false"
+            tool="1"
+            flavor2="9">
+      </item>
+      <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/Ioutil.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../src/9001.png.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/Iofrontend.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="../src/Iofrontend.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/main.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="../src/main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/roms/EmuProperties.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/roms/bdrominfoout.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/roms/estructuras.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="../src/roms/estructuras.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/roms/gestorroms.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="../src/roms/gestorroms.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/roms/mamehistoryparser.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="../src/roms/mamehistoryparser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/roms/romwebinfo.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="../src/roms/romwebinfo.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/roms/thegamesdb.cpp" ex="false" tool="1" flavor2="9">
+      </item>
+      <item path="../src/roms/thegamesdb.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../src/sdl/SDL_draw.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="../src/vlcplayer/vlcplayer.cpp" ex="false" tool="1" flavor2="9">
       </item>
       <item path="../src/vlcplayer/vlcplayer.h" ex="false" tool="3" flavor2="0">
       </item>

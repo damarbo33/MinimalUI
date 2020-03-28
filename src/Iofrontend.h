@@ -8,11 +8,11 @@
 
 #include <string>
 #include <vector>
-#include "Ioutil.h"
+#include "common/Ioutil.h"
 #include "Colorutil.h"
 #include "Menuobject.h"
 #include "ImagenGestor.h"
-#include "Icogestor.h"
+#include "common/Icogestor.h"
 #include "Launcher.h"
 #include "roms/gestorroms.h"
 #include "thread.h"

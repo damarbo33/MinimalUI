@@ -6,22 +6,38 @@
 CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
-# Debug configuration
-CND_PLATFORM_Debug=MinGW-Windows
-CND_ARTIFACT_DIR_Debug=dist/Debug/MinGW-Windows
-CND_ARTIFACT_NAME_Debug=minimalui
-CND_ARTIFACT_PATH_Debug=dist/Debug/MinGW-Windows/minimalui
-CND_PACKAGE_DIR_Debug=dist/Debug/MinGW-Windows/package
-CND_PACKAGE_NAME_Debug=minimalui.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/MinGW-Windows/package/minimalui.tar
-# Release configuration
-CND_PLATFORM_Release=MinGW-Windows
-CND_ARTIFACT_DIR_Release=dist/Release/MinGW-Windows
-CND_ARTIFACT_NAME_Release=minimalui
-CND_ARTIFACT_PATH_Release=dist/Release/MinGW-Windows/minimalui
-CND_PACKAGE_DIR_Release=dist/Release/MinGW-Windows/package
-CND_PACKAGE_NAME_Release=minimalui.tar
-CND_PACKAGE_PATH_Release=dist/Release/MinGW-Windows/package/minimalui.tar
+# Debug64 configuration
+CND_PLATFORM_Debug64=MinGW64-Windows
+CND_ARTIFACT_DIR_Debug64=dist/Debug64/MinGW64-Windows
+CND_ARTIFACT_NAME_Debug64=minimalui
+CND_ARTIFACT_PATH_Debug64=dist/Debug64/MinGW64-Windows/minimalui
+CND_PACKAGE_DIR_Debug64=dist/Debug64/MinGW64-Windows/package
+CND_PACKAGE_NAME_Debug64=minimalui.tar
+CND_PACKAGE_PATH_Debug64=dist/Debug64/MinGW64-Windows/package/minimalui.tar
+# Debug32 configuration
+CND_PLATFORM_Debug32=MinGW32-Windows
+CND_ARTIFACT_DIR_Debug32=dist/Debug32/MinGW32-Windows
+CND_ARTIFACT_NAME_Debug32=minimalui
+CND_ARTIFACT_PATH_Debug32=dist/Debug32/MinGW32-Windows/minimalui
+CND_PACKAGE_DIR_Debug32=dist/Debug32/MinGW32-Windows/package
+CND_PACKAGE_NAME_Debug32=minimalui.tar
+CND_PACKAGE_PATH_Debug32=dist/Debug32/MinGW32-Windows/package/minimalui.tar
+# Release64 configuration
+CND_PLATFORM_Release64=MinGW64-Windows
+CND_ARTIFACT_DIR_Release64=dist/Release64/MinGW64-Windows
+CND_ARTIFACT_NAME_Release64=minimalui
+CND_ARTIFACT_PATH_Release64=dist/Release64/MinGW64-Windows/minimalui
+CND_PACKAGE_DIR_Release64=dist/Release64/MinGW64-Windows/package
+CND_PACKAGE_NAME_Release64=minimalui.tar
+CND_PACKAGE_PATH_Release64=dist/Release64/MinGW64-Windows/package/minimalui.tar
+# Release32 configuration
+CND_PLATFORM_Release32=MinGW32-Windows
+CND_ARTIFACT_DIR_Release32=dist/Release32/MinGW32-Windows
+CND_ARTIFACT_NAME_Release32=minimalui
+CND_ARTIFACT_PATH_Release32=dist/Release32/MinGW32-Windows/minimalui
+CND_PACKAGE_DIR_Release32=dist/Release32/MinGW32-Windows/package
+CND_PACKAGE_NAME_Release32=minimalui.tar
+CND_PACKAGE_PATH_Release32=dist/Release32/MinGW32-Windows/package/minimalui.tar
 #
 # include compiler specific variables
 #

@@ -14,11 +14,19 @@
             </sourceRootList>
             <confList>
                 <confElem>
-                    <name>Debug</name>
+                    <name>Debug64</name>
                     <type>1</type>
                 </confElem>
                 <confElem>
-                    <name>Release</name>
+                    <name>Debug32</name>
+                    <type>1</type>
+                </confElem>
+                <confElem>
+                    <name>Release64</name>
+                    <type>1</type>
+                </confElem>
+                <confElem>
+                    <name>Release32</name>
                     <type>1</type>
                 </confElem>
             </confList>

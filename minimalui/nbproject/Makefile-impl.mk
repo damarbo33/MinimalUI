@@ -27,11 +27,11 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 PROJECTNAME=minimalui
 
 # Active Configuration
-DEFAULTCONF=Debug
+DEFAULTCONF=Debug64
 CONF=${DEFAULTCONF}
 
 # All Configurations
-ALLCONFS=Debug Release 
+ALLCONFS=Debug64 Debug32 Release64 Release32 
 
 
 # build

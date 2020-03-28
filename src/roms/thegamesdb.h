@@ -5,6 +5,7 @@
 #include "Constant.h"
 #include <gumbo.h>
 #include "traza.h"
+#define TIXML_USE_STL
 #include "tinyxml/tinyxml.h"
 
 typedef enum{

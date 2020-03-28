@@ -270,21 +270,25 @@ void Iofrontend::initUIObjs(){
     //Anyadimos los textos en el area que digamos
     UITextElementsArea *infoTextRom = (UITextElementsArea *)objMenu->getObjByName("textosInfoBox");
     t_posicion pos(0, Constant::getMENUSPACE() + IMGBOXARTMARGIN,0,0);
-    infoTextRom->addField("txtReleased","RELEASED:","",pos, true);
-    pos.y += 20;
-    infoTextRom->addField("txtPlayers","PLAYERS:","",pos, true);
-    pos.y += 20;
-    infoTextRom->addField("txtPublisher","PUBLISHER:","",pos, true);
-    pos.y += 20;
-    infoTextRom->addField("txtDeveloper","DEVELOPER:","",pos, true);
-    pos.y += 20;
-    infoTextRom->addField("txtGenre","GENRE:","",pos, true);
-    pos.y += 20;
-    infoTextRom->addField("txtRating","RATING:","",pos, true);
-    pos.y += 20;
-    infoTextRom->addField("txtLastPlayed","LAST PLAYED:","",pos, true);
-    pos.y += 20;
-    infoTextRom->addField("txtTimesPlayed","TIMES PLAYED:","",pos, true);
+    
+    const char *elems[] = {"txtReleased", "RELEASED:",
+    "txtPlayers","PLAYERS:",
+    "txtPublisher","PUBLISHER:",
+    "txtDeveloper","DEVELOPER:",
+    "txtGenre","GENRE:",
+    "txtRating","RATING:",
+    "txtLastPlayed","LAST PLAYED:",
+    "txtTimesPlayed","TIMES PLAYED:"};
+    int len = (sizeof(elems) / sizeof(elems[0]));
+    
+    for (int i=0; i<len/2; i++){
+        TextElement *textElem = new TextElement();
+        textElem->setName(elems[i*2]);
+        textElem->setLabel(elems[i*2+1]);
+        textElem->setPos(pos);
+        textElem->setUseMaxLabelMargin(true);
+        pos.y += 20;
+    }
 
     infoTextRom = (UITextElementsArea *)objMenu->getObjByName("textosDescBox");
 
@@ -293,11 +297,19 @@ void Iofrontend::initUIObjs(){
     stilo.pos = t_posicion(0,10,0,0);
     stilo.bold = true;
     stilo.fontSize = 16;
-
-    infoTextRom->addField("txtFilePath","","",stilo, false);
+    TextElement *textElem = new TextElement();
+    textElem->setName("txtFilePath");
+    textElem->setStyle(stilo);
+    textElem->setUseMaxLabelMargin(false);
+    infoTextRom->addField(textElem);
+    
     stilo.pos.y += 60;
     stilo.bold = false;
-    infoTextRom->addField("txtDescripcion","","",stilo, false);
+    TextElement *textElem2 = new TextElement();
+    textElem2->setName("txtDescripcion");
+    textElem2->setStyle(stilo);
+    textElem2->setUseMaxLabelMargin(false);
+    infoTextRom->addField(textElem2);
 
     UIPopupMenu * popupJuegosG = addPopup(PANTALLAGROUPLIST, "popupEmusConfig", "listaGrupoRoms");
     if (popupJuegosG != NULL){
