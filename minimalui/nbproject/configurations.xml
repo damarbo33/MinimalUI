@@ -71,6 +71,7 @@
             <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
             <pElem>../src</pElem>
+            <pElem>../../../ExternalLibs/vlc-2.2.7/sdk/include</pElem>
           </incDir>
           <preprocessorList>
             <Elem>WIN</Elem>
@@ -83,6 +84,7 @@
             <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
             <pElem>../src</pElem>
+            <pElem>../../../ExternalLibs/vlc-2.2.7/sdk/include</pElem>
           </incDir>
           <commandLine>-fpermissive</commandLine>
           <preprocessorList>
@@ -176,6 +178,7 @@
             <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
             <pElem>../src</pElem>
+            <pElem>../../../ExternalLibs/vlc-2.2.7/sdk/include</pElem>
           </incDir>
           <preprocessorList>
             <Elem>WIN</Elem>
@@ -188,6 +191,7 @@
             <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
             <pElem>../src</pElem>
+            <pElem>../../../ExternalLibs/vlc-2.2.7/sdk/include</pElem>
           </incDir>
           <commandLine>-fpermissive</commandLine>
           <preprocessorList>

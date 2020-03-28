@@ -79,7 +79,7 @@ class Gestorroms
         Database *db;
         unsigned int addRom(unsigned  int , unsigned int, string);
         void cargarInfoRoms(Rominfo *);
-//        DWORD addRomInfo(vector<vector<string> > *listaRoms, HANDLE *myhandle, RomWebInfo **objRom);
+//        uint32_t addRomInfo(vector<vector<string> > *listaRoms, HANDLE *myhandle, RomWebInfo **objRom);
         uint32_t addRomInfo(vector<vector<string> > *listaRoms, int posRomProcess, RomWebInfo *objRom);
         uint32_t scrapsystem(string idEmu);
         string rutaInicial;
