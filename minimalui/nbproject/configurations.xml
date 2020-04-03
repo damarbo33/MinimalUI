@@ -32,6 +32,8 @@
         <itemPath>../src/vlcplayer/vlcplayer.h</itemPath>
       </logicalFolder>
       <itemPath>../src/9001.png.h</itemPath>
+      <itemPath>../../../ExternalLibs/crosslib/src/uiobjects/common/BaseFrontend.cpp</itemPath>
+      <itemPath>../../../ExternalLibs/crosslib/src/uiobjects/common/BaseFrontend.h</itemPath>
       <itemPath>../../../ExternalLibs/crosslib/src/uiobjects/common/Icogestor.cpp</itemPath>
       <itemPath>../../../ExternalLibs/crosslib/src/uiobjects/common/Icogestor.h</itemPath>
       <itemPath>../src/Iofrontend.cpp</itemPath>
@@ -104,6 +106,16 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/BaseFrontend.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/BaseFrontend.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/Icogestor.cpp"
             ex="false"
             tool="1"
@@ -173,6 +185,7 @@
       </toolsSet>
       <compileType>
         <cTool>
+          <standard>10</standard>
           <incDir>
             <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
@@ -186,6 +199,7 @@
           </preprocessorList>
         </cTool>
         <ccTool>
+          <standard>11</standard>
           <incDir>
             <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
@@ -211,6 +225,16 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/BaseFrontend.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/BaseFrontend.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/Icogestor.cpp"
             ex="false"
             tool="1"
@@ -316,6 +340,16 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/BaseFrontend.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/BaseFrontend.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/Icogestor.cpp"
             ex="false"
             tool="1"
@@ -387,6 +421,7 @@
         <cTool>
           <developmentMode>6</developmentMode>
           <stripSymbols>true</stripSymbols>
+          <standard>10</standard>
           <incDir>
             <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
@@ -401,6 +436,7 @@
         <ccTool>
           <developmentMode>6</developmentMode>
           <stripSymbols>true</stripSymbols>
+          <standard>8</standard>
           <incDir>
             <pElem>../../../ExternalLibs/crosslib/src/uiobjects</pElem>
             <pElem>../../../ExternalLibs/crosslib/src/httpcurl</pElem>
@@ -425,6 +461,16 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/BaseFrontend.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/BaseFrontend.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="../../../ExternalLibs/crosslib/src/uiobjects/common/Icogestor.cpp"
             ex="false"
             tool="1"

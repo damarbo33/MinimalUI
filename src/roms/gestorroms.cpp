@@ -100,7 +100,7 @@ void Gestorroms::loadDBFromFile(string ruta){
             db->query("INSERT INTO CONFIG (PARAMETRO, VALOR) VALUES ('FIXDDRAW', '0')");
     //        db->query("CREATE TRIGGER \"insert_imgcateg_to_categoria\" BEFORE INSERT ON IMGCATEG BEGIN SELECT RAISE (ROLLBACK, 'SQLException: insert_imgcateg_to_categoria. Constraint: No existe la categoria especificada') WHERE (SELECT categid FROM CATEGORIA WHERE categid = NEW.categid) IS NULL; END;");
     //        db->query("CREATE TRIGGER \"duplicate_imgid\" BEFORE INSERT ON IMGCATEG BEGIN  SELECT RAISE (ROLLBACK, 'SQLException: duplicate_imgid. Constraint: El id de la imagen esta duplicado para esta categoria') WHERE (SELECT imgid FROM IMGCATEG WHERE imgid = NEW.imgid AND categid = NEW.categid) IS NOT NULL; END");
-    //        db->query("CREATE TRIGGER \"duplicate_imgpos\" BEFORE INSERT ON IMGCATEG BEGIN SELECT RAISE (ROLLBACK, 'SQLException: duplicate_imgid. Constraint: La posici�n de la imagen esta duplicada para esta categoria') WHERE (SELECT imgpos FROM IMGCATEG WHERE imgpos = NEW.imgpos AND categid = NEW.categid) IS NOT NULL; END");
+    //        db->query("CREATE TRIGGER \"duplicate_imgpos\" BEFORE INSERT ON IMGCATEG BEGIN SELECT RAISE (ROLLBACK, 'SQLException: duplicate_imgid. Constraint: La posiciï¿½n de la imagen esta duplicada para esta categoria') WHERE (SELECT imgpos FROM IMGCATEG WHERE imgpos = NEW.imgpos AND categid = NEW.categid) IS NOT NULL; END");
         } catch(Excepcion &e){
             Traza::print("Excepcion loadDBFromFile. Message" + string(e.getMessage()), W_ERROR);
         } catch (...){
@@ -490,15 +490,9 @@ void Gestorroms::cargarInfoRoms(Rominfo *infoDatos){
     delete info;
 }
 
-
-
-
-
-
-
 /**
 * Genera el resto de la query a anyadir para generar la clausula where
-* El formato de las claves ser� "clave1:valor1,clave2:valor2,clave3:valor3,...,claven:valorn"
+* El formato de las claves sera "clave1:valor1,clave2:valor2,clave3:valor3,...,claven:valorn"
 * el string de resultado sera: and clave1=valor1 and clave2=valor2...
 */
 string Gestorroms::parserSQLWhere(string claves, string esquema){
@@ -530,7 +524,7 @@ string Gestorroms::parserSQLWhere(string claves, string esquema){
 *
 *
 */
-int Gestorroms::fillMenuByQuery(Object *refMenu, string query, vector<string> *statementValues, int destino){
+int Gestorroms::fillMenuByQuery(Object *refMenu, string query, vector<string> *statementValues, string destino){
     int errorCode = 0;
 
     try{

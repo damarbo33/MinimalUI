@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/_ext/5f719cc8/BaseFrontend.o \
 	${OBJECTDIR}/_ext/5f719cc8/Icogestor.o \
 	${OBJECTDIR}/_ext/5f719cc8/Ioutil.o \
 	${OBJECTDIR}/_ext/511e4115/Iofrontend.o \
@@ -71,6 +72,11 @@ LDLIBSOPTIONS=-L../../../ExternalLibs/crosslib/crosslib/dist/Release64/MinGW64-W
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/minimalui.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/minimalui ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/_ext/5f719cc8/BaseFrontend.o: ../../../ExternalLibs/crosslib/src/uiobjects/common/BaseFrontend.cpp
+	${MKDIR} -p ${OBJECTDIR}/_ext/5f719cc8
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5f719cc8/BaseFrontend.o ../../../ExternalLibs/crosslib/src/uiobjects/common/BaseFrontend.cpp
 
 ${OBJECTDIR}/_ext/5f719cc8/Icogestor.o: ../../../ExternalLibs/crosslib/src/uiobjects/common/Icogestor.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/5f719cc8

@@ -8,9 +8,15 @@
 
 bool procesarTeclado(tEvento *evento, Iofrontend *ioFront){
     bool salir = false;
+    static int mode = 0;
+    
     if (evento->key == SDLK_RETURN && evento->keyMod & KMOD_LALT){
         ioFront->toggleFullScreen();
         evento->resize = true;
+    } else if (evento->key == SDLK_f && evento->keyMod & KMOD_CTRL){
+        mode++;
+        if (ioFront->setFullscreenMode(mode) == -1)
+            mode = 0;
     }
     return salir;
 }
@@ -78,7 +84,7 @@ int main(int argc, char *argv[]){
                 if (LIMITFPS){
                 //Calculamos el tiempo que deberia pasar de frame a frame en un lapso de 1 seg (TIMETOLIMITFRAME) y le restamos
                 //el tiempo que realmente ha pasado (before - SDL_GetTicks()), para esperar el tiempo que indique
-                //esta diferencia. No es el mejor método pero es sencillo de implementar
+                //esta diferencia. No es el mejor metodo pero es sencillo de implementar
                     delay = before - SDL_GetTicks() + TIMETOLIMITFRAME;
                     if(delay > 0) SDL_Delay(delay);
                 }
@@ -93,7 +99,7 @@ int main(int argc, char *argv[]){
     delete ioFront;
     Traza::print("Eliminando traza", W_DEBUG);
     delete traza;
-    Traza::print("Saliendo de la aplicación", W_DEBUG);
+    Traza::print("Saliendo de la aplicacion", W_DEBUG);
     exit(0);
 }
 
@@ -191,8 +197,8 @@ void generarQuery(){
     vector <string> parms;
 
     parms.push_back("420");
-//    parms.push_back("'?¿PRUEBA 2?'");
-//    parms.push_back("'?¿WHAT IS REALITY?'");
+//    parms.push_back("'?ï¿½PRUEBA 2?'");
+//    parms.push_back("'?ï¿½WHAT IS REALITY?'");
 
     string query = " SELECT IDPROG, NOMBREEMU, RUTAEMU,PARMSEMU, RUTAROMS, EXTENSIONES, DESCOMPRIMIR, IMGRUTAFONDO, SHOWTITLE, FIXOPTION, PLATFORM FROM EMULADOR WHERE IDPROG=?";
 
@@ -286,7 +292,7 @@ int main(int argc, char *argv[]){
     if (ioFront != NULL) delete ioFront;
     Traza::print("Eliminando traza", W_DEBUG);
     delete traza;
-    Traza::print("Saliendo de la aplicación", W_DEBUG);
+    Traza::print("Saliendo de la aplicaciï¿½n", W_DEBUG);
     exit(0);
 }
 */

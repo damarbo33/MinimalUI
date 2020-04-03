@@ -22,7 +22,7 @@ class Gestorroms
         virtual ~Gestorroms();
         void loadDBFromFile(string);
         void closeDB();
-        int fillMenuByQuery(Object *, string, vector<string> *statementValues, int);
+        int fillMenuByQuery(Object *, string, vector<string> *statementValues, string);
         string getColQuery(const char*);
         vector<vector<string> > getRowQuery(string);
         bool executeQuery(string);

@@ -30,9 +30,7 @@ void * VlcPlayer::lock(void *data, void **p_pixels)
 //    for (int i=0; i < VIDEOWIDTH * (BPP/8) * rect.y; i++){
 //        *p_pixels++;
 //    }
-    *p_pixels += (VIDEOWIDTH * (BPP/8) * rect.y);
-
-
+//    *p_pixels += (VIDEOWIDTH * (BPP/8) * rect.y);
     return NULL; /* picture identifier, not needed here */
 }
 
@@ -41,27 +39,27 @@ void VlcPlayer::unlock(void *data, void *id, void *const *p_pixels)
     struct ctx *cotx = (ctx *) data;
 
     /* VLC just rendered the video, but we can also render stuff */
-//    uint16_t *pixels = (uint16_t *) *p_pixels;
-//    int x, y;
-//
-//    for(y = 10; y < 40; y++)
-//        for(x = 10; x < 40; x++)
-//            if(x < 13 || y < 13 || x > 36 || y > 36)
-//                pixels[y * VIDEOWIDTH + x] = 0xffff;
-//            else
-//                pixels[y * VIDEOWIDTH + x] = 0x0;
+    uint16_t *pixels = (uint16_t *) *p_pixels;
+    int x, y;
 
-//    tmenu_objects *obj;
+    for(y = 10; y < 40; y++)
+        for(x = 10; x < 40; x++)
+            if(x < 13 || y < 13 || x > 36 || y > 36)
+                pixels[y * VIDEOWIDTH + x] = 0xffff;
+            else
+                pixels[y * VIDEOWIDTH + x] = 0x0;
+
+//    tmenu_gestor_objects *obj;
 //    if (cotx->obj != NULL){
 //         for (int i=0;i<cotx->obj->getSize();i++){
-//            obj = cotx->obj->getByPos(i);
+//            obj = cotx->obj->getObjByPos(i);
 //            drawObj(obj);
 //         }
 //    }
 
     SDL_UnlockSurface(cotx->surf);
     SDL_UnlockMutex(cotx->mutex);
-    assert(id == NULL); /* picture identifier, not needed here */
+//    assert(id == NULL); /* picture identifier, not needed here */
 }
 
 /**
@@ -88,8 +86,6 @@ int VlcPlayer::play(string file)
         ,"omxil_vout",
         #endif // UNIX
     };
-
-
 
     int vlc_argc = sizeof(vlc_argv) / sizeof(*vlc_argv);
     //surfaceVideo.surf = SDL_CreateRGBSurface(SDL_SWSURFACE, VIDEOWIDTH, VIDEOHEIGHT, 16, 0x001f, 0x07e0, 0xf800, 0);

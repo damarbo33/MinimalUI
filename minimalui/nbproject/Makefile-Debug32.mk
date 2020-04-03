@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/_ext/5f719cc8/BaseFrontend.o \
 	${OBJECTDIR}/_ext/5f719cc8/Icogestor.o \
 	${OBJECTDIR}/_ext/5f719cc8/Ioutil.o \
 	${OBJECTDIR}/_ext/511e4115/Iofrontend.o \
@@ -72,60 +73,65 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/minimalui.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/minimalui ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/_ext/5f719cc8/BaseFrontend.o: ../../../ExternalLibs/crosslib/src/uiobjects/common/BaseFrontend.cpp
+	${MKDIR} -p ${OBJECTDIR}/_ext/5f719cc8
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -I../../../ExternalLibs/vlc-2.2.7/sdk/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5f719cc8/BaseFrontend.o ../../../ExternalLibs/crosslib/src/uiobjects/common/BaseFrontend.cpp
+
 ${OBJECTDIR}/_ext/5f719cc8/Icogestor.o: ../../../ExternalLibs/crosslib/src/uiobjects/common/Icogestor.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/5f719cc8
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5f719cc8/Icogestor.o ../../../ExternalLibs/crosslib/src/uiobjects/common/Icogestor.cpp
+	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -I../../../ExternalLibs/vlc-2.2.7/sdk/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5f719cc8/Icogestor.o ../../../ExternalLibs/crosslib/src/uiobjects/common/Icogestor.cpp
 
 ${OBJECTDIR}/_ext/5f719cc8/Ioutil.o: ../../../ExternalLibs/crosslib/src/uiobjects/common/Ioutil.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/5f719cc8
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5f719cc8/Ioutil.o ../../../ExternalLibs/crosslib/src/uiobjects/common/Ioutil.cpp
+	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -I../../../ExternalLibs/vlc-2.2.7/sdk/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5f719cc8/Ioutil.o ../../../ExternalLibs/crosslib/src/uiobjects/common/Ioutil.cpp
 
 ${OBJECTDIR}/_ext/511e4115/Iofrontend.o: ../src/Iofrontend.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/511e4115
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/511e4115/Iofrontend.o ../src/Iofrontend.cpp
+	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -I../../../ExternalLibs/vlc-2.2.7/sdk/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/511e4115/Iofrontend.o ../src/Iofrontend.cpp
 
 ${OBJECTDIR}/_ext/511e4115/main.o: ../src/main.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/511e4115
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/511e4115/main.o ../src/main.cpp
+	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -I../../../ExternalLibs/vlc-2.2.7/sdk/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/511e4115/main.o ../src/main.cpp
 
 ${OBJECTDIR}/_ext/c343f55d/estructuras.o: ../src/roms/estructuras.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/c343f55d
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/c343f55d/estructuras.o ../src/roms/estructuras.cpp
+	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -I../../../ExternalLibs/vlc-2.2.7/sdk/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/c343f55d/estructuras.o ../src/roms/estructuras.cpp
 
 ${OBJECTDIR}/_ext/c343f55d/gestorroms.o: ../src/roms/gestorroms.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/c343f55d
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/c343f55d/gestorroms.o ../src/roms/gestorroms.cpp
+	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -I../../../ExternalLibs/vlc-2.2.7/sdk/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/c343f55d/gestorroms.o ../src/roms/gestorroms.cpp
 
 ${OBJECTDIR}/_ext/c343f55d/mamehistoryparser.o: ../src/roms/mamehistoryparser.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/c343f55d
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/c343f55d/mamehistoryparser.o ../src/roms/mamehistoryparser.cpp
+	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -I../../../ExternalLibs/vlc-2.2.7/sdk/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/c343f55d/mamehistoryparser.o ../src/roms/mamehistoryparser.cpp
 
 ${OBJECTDIR}/_ext/c343f55d/romwebinfo.o: ../src/roms/romwebinfo.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/c343f55d
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/c343f55d/romwebinfo.o ../src/roms/romwebinfo.cpp
+	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -I../../../ExternalLibs/vlc-2.2.7/sdk/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/c343f55d/romwebinfo.o ../src/roms/romwebinfo.cpp
 
 ${OBJECTDIR}/_ext/c343f55d/thegamesdb.o: ../src/roms/thegamesdb.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/c343f55d
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/c343f55d/thegamesdb.o ../src/roms/thegamesdb.cpp
+	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -I../../../ExternalLibs/vlc-2.2.7/sdk/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/c343f55d/thegamesdb.o ../src/roms/thegamesdb.cpp
 
 ${OBJECTDIR}/_ext/2754c841/SDL_draw.o: ../src/sdl/SDL_draw.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/2754c841
 	${RM} "$@.d"
-	$(COMPILE.c) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/2754c841/SDL_draw.o ../src/sdl/SDL_draw.c
+	$(COMPILE.c) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -I../../../ExternalLibs/vlc-2.2.7/sdk/include -std=c11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/2754c841/SDL_draw.o ../src/sdl/SDL_draw.c
 
 ${OBJECTDIR}/_ext/8a110d14/vlcplayer.o: ../src/vlcplayer/vlcplayer.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/8a110d14
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/8a110d14/vlcplayer.o ../src/vlcplayer/vlcplayer.cpp
+	$(COMPILE.cc) -g -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -I../../../ExternalLibs/vlc-2.2.7/sdk/include -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/8a110d14/vlcplayer.o ../src/vlcplayer/vlcplayer.cpp
 
 # Subprojects
 .build-subprojects:
