@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/5f719cc8/BaseFrontend.o \
 	${OBJECTDIR}/_ext/5f719cc8/Icogestor.o \
 	${OBJECTDIR}/_ext/5f719cc8/Ioutil.o \
+	${OBJECTDIR}/_ext/20e5e557/uiimglist.o \
 	${OBJECTDIR}/_ext/511e4115/Iofrontend.o \
 	${OBJECTDIR}/_ext/511e4115/main.o \
 	${OBJECTDIR}/_ext/c343f55d/estructuras.o \
@@ -87,6 +88,11 @@ ${OBJECTDIR}/_ext/5f719cc8/Ioutil.o: ../../../ExternalLibs/crosslib/src/uiobject
 	${MKDIR} -p ${OBJECTDIR}/_ext/5f719cc8
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -s -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/5f719cc8/Ioutil.o ../../../ExternalLibs/crosslib/src/uiobjects/common/Ioutil.cpp
+
+${OBJECTDIR}/_ext/20e5e557/uiimglist.o: ../../Galera/src/uiimglist.cpp
+	${MKDIR} -p ${OBJECTDIR}/_ext/20e5e557
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -s -DWIN -DWIN32 -I../../../ExternalLibs/crosslib/src/uiobjects -I../../../ExternalLibs/crosslib/src/httpcurl -I../../../ExternalLibs/crosslib/src/rijndael -I../src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/20e5e557/uiimglist.o ../../Galera/src/uiimglist.cpp
 
 ${OBJECTDIR}/_ext/511e4115/Iofrontend.o: ../src/Iofrontend.cpp
 	${MKDIR} -p ${OBJECTDIR}/_ext/511e4115

@@ -84,7 +84,7 @@ void Iofrontend::initUIObjs(){
     
     objMenu = createMenu(MENUJUEGOS);
     objMenu->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Emuladores disponibles", false)->setEnabled(false);
-    objMenu->add("ImgFondo", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgFondo", true)->setEnabled(false);
+    objMenu->add("ImgFondo", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgFondo", false)->setEnabled(false);
     objMenu->add("ListaMenuJuegos", GUILISTBOX, 0, 0, 0, 0, "ListaMenuJuegos", true)->setVerContenedor(false);
     ((UIPicture*) objMenu->getObjByName("ImgFondo"))->loadImgFromFile(dirInicial +  Constant::getFileSep()
         + "emuImgs" + Constant::getFileSep() + "54573da0d72cc.jpeg");
@@ -202,16 +202,17 @@ void Iofrontend::initUIObjs(){
     
     objMenu = createMenu(PANTALLAGROUPLIST);
     objMenu->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Roms", false)->setEnabled(false);
-    objMenu->add("listaGrupoRoms", GUILISTGROUPBOX, 0, 0, 0, 0, "", false)->setVerContenedor(false);
     objMenu->add("ImgEmulador", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgEmulador", true)->setEnabled(false);
+    objMenu->getObjByName("ImgEmulador")->setAlpha(200);
+    objMenu->getObjByName("ImgEmulador")->getImgGestor()->setEnabledMoveImg(false);
+    objMenu->getObjByName("ImgEmulador")->setVerContenedor(false);
+    
+    objMenu->add("listaGrupoRoms", GUILISTGROUPBOX, 0, 0, 0, 0, "", false)->setVerContenedor(false);
     objMenu->add("textosInfoBox", GUITEXTELEMENTSAREA, 0, 0, 0, 0, "", true)->setVerContenedor(false)->setEnabled(false);
     objMenu->add("textosDescBox", GUITEXTELEMENTSAREA, 0, 0, 0, 0, "", true)->setVerContenedor(false)->setEnabled(true);
     objMenu->add("ImgBoxArt", GUIPICTURE, 0, 0, Constant::getIMGBOXARTWIDTH(), Constant::getIMGBOXARTHEIGHT(), "", true)->setEnabled(true);
-    objMenu->getObjByName("ImgEmulador")->setAlpha(200);
-    objMenu->getObjByName("ImgEmulador")->getImgGestor()->setEnabledMoveImg(false);
-    objMenu->getObjByName("ImgEmulador")->getImgGestor()->setBestfit(true);
-    objMenu->getObjByName("ImgEmulador")->setVerContenedor(false);
     objMenu->add("ImgBoxArtFull", GUIPICTURE, 0, 0, this->getWidth(), this->getHeight(), "ImgEmuladorFull", true)->setVisible(false);
+    
 
     UIListGroup * listaGrupo = (UIListGroup *) objMenu->getObjByName("listaGrupoRoms");
     vector <ListGroupCol *> miCabecera;
@@ -231,6 +232,7 @@ void Iofrontend::initUIObjs(){
     pict->getImgGestor()->setResize(true);
     pict->getImgGestor()->setEnabledMoveImg(false);
     pict->getImgGestor()->setFillBackgroundColour(false);
+    pict->getImgGestor()->setBestfit(true);
 
     int margenX = Constant::getIMGBOXARTWIDTH() + IMGBOXARTMARGIN * 2;
     //Anyadimos los textos en el area que digamos
@@ -444,8 +446,8 @@ void Iofrontend::setDinamicSizeObjects(){
         Constant::setIMGBOXARTHEIGHT(widthForImgBox);
 
         obj->getObjByName("ImgBoxArt")->setTam(IMGBOXARTMARGIN,
-                                                                          Constant::getINPUTH() + Constant::getMENUSPACE() + INPUTCONTENT,
-                                                                          Constant::getIMGBOXARTWIDTH(), Constant::getIMGBOXARTHEIGHT());
+                                            Constant::getINPUTH() + Constant::getMENUSPACE() + INPUTCONTENT,
+                                            Constant::getIMGBOXARTWIDTH(), Constant::getIMGBOXARTHEIGHT());
 
         obj->getObjByName("ImgBoxArtFull")->setTam(0,0,this->getWidth(),this->getHeight());
 

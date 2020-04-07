@@ -42,6 +42,7 @@
       <itemPath>../../../ExternalLibs/crosslib/src/uiobjects/common/Ioutil.h</itemPath>
       <itemPath>../src/main.cpp</itemPath>
       <itemPath>../src/main.h</itemPath>
+      <itemPath>../../Galera/src/uiimglist.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -136,6 +137,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="../../Galera/src/uiimglist.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="../src/9001.png.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../src/Iofrontend.cpp" ex="false" tool="1" flavor2="0">
@@ -206,6 +209,7 @@
             <pElem>../../../ExternalLibs/crosslib/src/rijndael</pElem>
             <pElem>../src</pElem>
             <pElem>../../../ExternalLibs/vlc-2.2.7/sdk/include</pElem>
+            <pElem>../../Galera/src</pElem>
           </incDir>
           <commandLine>-fpermissive</commandLine>
           <preprocessorList>
@@ -254,6 +258,8 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="../../Galera/src/uiimglist.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="../src/9001.png.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -369,6 +375,8 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="../../Galera/src/uiimglist.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="../src/9001.png.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -490,6 +498,8 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="../../Galera/src/uiimglist.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="../src/9001.png.h" ex="false" tool="3" flavor2="0">
       </item>
