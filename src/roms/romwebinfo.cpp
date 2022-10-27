@@ -26,7 +26,7 @@ void RomWebInfo::updateGameInfo(){
 
     bool updateMissingOnly = Constant::isUPDATE_MISSING();
 
-    if (scrapped.compare("S") != 0 && updateMissingOnly || updateMissingOnly == false){
+    if ( (scrapped.compare("S") != 0 && updateMissingOnly) || updateMissingOnly == false){
         Dirutil dirutil;
 
         cutFileName(&romname, "(");
@@ -44,18 +44,18 @@ void RomWebInfo::updateGameInfo(){
         //Guardamos el elemento de la lista seleccionado. Por defecto, si solo se encuentra 1 juego,
         //sera el primero
         int matched = 0;
-        int petOK = 0;
+//        int petOK = 0;
 
 //        Traza::print("Descargando " + romname + "...", W_DEBUG);
 //        if (scrapped.empty()){
-        petOK = gamesDB.download2(&queryGame, &response);
+        gamesDB.download2(&queryGame, &response);
 //        }
 
         //Si no hemos obtenido ningun juego, lo intentamos con otra llamada al servicio
         if (response.gameList.size() == 0){
             queryGame.name = romname;
             queryGame.exactName = "";
-            petOK = gamesDB.download2(&queryGame, &response);
+            gamesDB.download2(&queryGame, &response);
             matched = findSimilarTitle(&response.gameList , queryGame.name);
         }
 
@@ -105,13 +105,13 @@ int RomWebInfo::findSimilarTitle(vector<ResponseGame *> *listaJuegos, string tit
     vector<string> tituloSplit = Constant::split(Constant::removeEspecialCharsAll(tituloBuscado), " ");
     string gameTitle = "";
 
-    for (int i=0; i < listaJuegos->size(); i++){
+    for (unsigned int i=0; i < listaJuegos->size(); i++){
         gameTitle = listaJuegos->at(i)->gameTitle;
         Constant::lowerCase(&gameTitle);
         //Traza::print("gameTitle: " + gameTitle, W_DEBUG);
         countWords = 0;
 
-        for (int j=0; j < tituloSplit.size(); j++){
+        for (unsigned int j=0; j < tituloSplit.size(); j++){
             if (gameTitle.find(Constant::removeEspecialCharsAll(tituloSplit.at(j))) != string::npos
                 && !Constant::isEspecialCharAll(tituloSplit.at(j))
             ){
@@ -126,7 +126,7 @@ int RomWebInfo::findSimilarTitle(vector<ResponseGame *> *listaJuegos, string tit
 //                         + Constant::TipoToStr(countWords / (double)tituloSplit.size()), W_DEBUG);
 
             if (countWords > maxWords && ((countWords / (double)tituloSplit.size() >= 0.3 && countWords >= 3)
-                                          || (tituloSplit.size() == countWords && countWords < 3)) ){
+                                          || ((int)tituloSplit.size() == countWords && countWords < 3)) ){
 //            if (countWords > maxWords && (countWords / (double)tituloSplit.size() >= 0.3)){
                 elementMatched = i;
                 maxWords = countWords;
@@ -138,7 +138,7 @@ int RomWebInfo::findSimilarTitle(vector<ResponseGame *> *listaJuegos, string tit
 }
 
 void RomWebInfo::cutFileName(string *fileromname, string keyString){
-    int pos = fileromname->find(keyString);
+    size_t pos = fileromname->find(keyString);
     if(pos != string::npos){
         *fileromname = fileromname->substr(0, pos);
     }
@@ -148,7 +148,7 @@ void RomWebInfo::cutFileName(string *fileromname, string keyString){
 * Busca la imagen frontal de la caja del juego
 */
 string RomWebInfo::findBoxartFront(ResponseQuery *response, string idprog){
-    int i = 0;
+    unsigned int i = 0;
     bool found = false;
     string result = "";
     ResponseGame *respGame = response->gameList.at(0);

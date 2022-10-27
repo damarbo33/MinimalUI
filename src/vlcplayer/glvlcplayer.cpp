@@ -45,7 +45,7 @@ GLVlcPlayer::~GLVlcPlayer()
 
     static void *lock(void *data, void **p_pixels)
     {
-        struct ctx *ctx = data;
+        struct ctx *ctx = (struct ctx *)data;
 
         SDL_LockMutex(ctx->mutex);
         SDL_LockSurface(ctx->surf);
@@ -55,10 +55,10 @@ GLVlcPlayer::~GLVlcPlayer()
 
     static void unlock(void *data, void *id, void *const *p_pixels)
     {
-        struct ctx *ctx = data;
+        struct ctx *ctx = (struct ctx *)data;
 
         /* VLC just rendered the video, but we can also render stuff */
-        uint16_t *pixels = *p_pixels;
+        uint16_t *pixels = (uint16_t *)p_pixels;
        /* int x, y;
        //annoying box that was being drawn
         for(y = 10; y < 40; y++)

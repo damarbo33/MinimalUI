@@ -1,0 +1,538 @@
+# depslib dependency file v1.0
+1487273728 source:c:\develop\github\proyectos\minimalui\src\roms\estructuras.cpp
+	"estructuras.h"
+
+1666861658 c:\develop\github\proyectos\minimalui\src\roms\estructuras.h
+	"uiobjects/fileprops.h"
+	"uiobjects/Traza.h"
+	"uiobjects/listaIni.h"
+
+1666851955 c:\develop\github\externallibs\crosslib\src\uiobjects\fileprops.h
+	<string>
+	"uiobjects/Constant.h"
+
+1666855439 c:\develop\github\externallibs\crosslib\src\uiobjects\constant.h
+	<winsock2.h>
+	<windows.h>
+	<unistd.h>
+	<fstream>
+	<sstream>
+	<string.h>
+	<vector>
+	<typeinfo>
+	<ctime>
+	<dirent.h>
+	<stdio.h>
+	<limits.h>
+	<algorithm>
+	<cctype>
+	<iomanip>
+	<stdint.h>
+	<math.h>
+
+1666851955 c:\develop\github\externallibs\crosslib\src\uiobjects\traza.h
+	"uiobjects/Constant.h"
+	<stdio.h>
+	<time.h>
+	<string>
+	<limits.h>
+	<iostream>
+	<fstream>
+
+1505166388 c:\develop\github\externallibs\crosslib\src\uiobjects\listaini.h
+	"ListaSimple.h"
+
+1666851955 c:\develop\github\externallibs\crosslib\src\uiobjects\listasimple.h
+	<string.h>
+	<stdio.h>
+	"Excepcion.h"
+	"uiobjects/Fileio.h"
+	<typeinfo>
+	"uiobjects/Constant.h"
+	"fileprops.h"
+
+1666851955 c:\develop\github\externallibs\crosslib\src\uiobjects\excepcion.h
+	<iostream>
+	<cmath>
+	"uiobjects/Traza.h"
+	"uiobjects/Constant.h"
+
+1666850935 c:\develop\github\externallibs\crosslib\src\uiobjects\fileio.h
+	<iostream>
+	<fstream>
+	<string>
+	<algorithm>
+	<vector>
+	<iterator>
+	"Excepcion.h"
+	"uiobjects/Traza.h"
+
+1666862193 source:c:\develop\github\proyectos\minimalui\src\roms\mamehistoryparser.cpp
+	"mamehistoryparser.h"
+
+1666861755 c:\develop\github\proyectos\minimalui\src\roms\mamehistoryparser.h
+	<map>
+	<stdexcept>
+	<vector>
+	<fstream>
+	"uiobjects/Constant.h"
+	<zlib.h>
+	<iostream>
+
+1585853006 source:c:\develop\github\proyectos\minimalui\src\vlcplayer\vlcplayer.cpp
+	"vlcplayer.h"
+
+1666861819 c:\develop\github\proyectos\minimalui\src\vlcplayer\vlcplayer.h
+	<stdio.h>
+	<stdint.h>
+	<math.h>
+	<stdlib.h>
+	<assert.h>
+	<SDL/SDL.h>
+	<SDL/SDL_mutex.h>
+	<vlc/vlc.h>
+	<string>
+	<iostream>
+	<limits.h>
+	"uiobjects/common/Ioutil.h"
+	"uiobjects/Menuobject.h"
+
+1666852115 c:\develop\github\externallibs\crosslib\src\uiobjects\common\ioutil.h
+	<iostream>
+	<map>
+	<cmath>
+	<sstream>
+	<SDL/SDL.h>
+	<SDL/SDL_ttf.h>
+	<SDL/SDL_image.h>
+	<SDL/SDL_rotozoom.h>
+	<SDL/SDL_mixer.h>
+	"uiobjects/Fileio.h"
+	"uiobjects/Constant.h"
+	"uiobjects/ImagenGestor.h"
+	"uiobjects/Traza.h"
+	"uiobjects/Menuobject.h"
+	"uiobjects/common/Icogestor.h"
+	"uiobjects/joymapper.h"
+	"uiobjects/thread.h"
+	"uiobjects/uiinput.h"
+	"uiobjects/uiprogressbar.h"
+	"uiobjects/uicombobox.h"
+	"uiobjects/cursor.h"
+	"uiobjects/listaIni.h"
+	"uiobjects/Colorutil.h"
+	"uiobjects/UITreeListBox.h"
+	"uiobjects/uiimglist.h"
+	"../image/ThreadImgLoader.h"
+
+1666851934 c:\develop\github\externallibs\crosslib\src\uiobjects\imagengestor.h
+	"uiobjects/Fileio.h"
+	"SHA1.h"
+	"ListaSimple.h"
+	"Excepcion.h"
+	"uiobjects/Dirutil.h"
+	<SDL/SDL.h>
+	<SDL/SDL_image.h>
+	<SDL/SDL_rotozoom.h>
+	"common.h"
+	"../httpcurl/image/uiimgencoder.h"
+
+1487269924 c:\develop\github\externallibs\crosslib\src\uiobjects\sha1.h
+	<memory.h>
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+
+1666850935 c:\develop\github\externallibs\crosslib\src\uiobjects\dirutil.h
+	"fileprops.h"
+	<dirent.h>
+	<sys/stat.h>
+	<sys/types.h>
+	<unistd.h>
+	"uiobjects/Traza.h"
+	"ListaSimple.h"
+	<stdio.h>
+	<vector>
+
+1586128778 c:\develop\github\externallibs\crosslib\src\uiobjects\common.h
+
+1666794482 c:\develop\github\externallibs\crosslib\src\httpcurl\image\uiimgencoder.h
+	<SDL/SDL.h>
+	<stdlib.h>
+	<stdio.h>
+	<setjmp.h>
+	<jpeglib.h>
+	<jerror.h>
+	"SDL_imagesave/IMG_saveend.h"
+	<iostream>
+
+1666787146 c:\develop\github\externallibs\crosslib\src\httpcurl\image\sdl_imagesave\img_saveend.h
+	<SDL/SDL_byteorder.h>
+
+1666852081 c:\develop\github\externallibs\crosslib\src\uiobjects\menuobject.h
+	<sstream>
+	<string.h>
+	"uiobjects/Constant.h"
+	"Excepcion.h"
+	"ListaSimple.h"
+	"uiobjects/ImagenGestor.h"
+	"joymapper.h"
+	"object.h"
+	"uilabel.h"
+	"uibutton.h"
+	"uilist.h"
+	"uiprogressbar.h"
+	"uiart.h"
+	"uicheck.h"
+	"uipanel.h"
+	"uipanelborder.h"
+	"uiobjects/uipicture.h"
+	"uiinput.h"
+	"uipopupmenu.h"
+	"uicombobox.h"
+	"uilistgroup.h"
+	"uitextelementsarea.h"
+	"uispectrum.h"
+	"uislider.h"
+	"UITreeListBox.h"
+	"uiobjects/uiimglist.h"
+
+1666851955 c:\develop\github\externallibs\crosslib\src\uiobjects\joymapper.h
+	"uiobjects/Constant.h"
+	"ListaSimple.h"
+
+1666851235 c:\develop\github\externallibs\crosslib\src\uiobjects\object.h
+	"common.h"
+	<stdlib.h>
+	<stdio.h>
+	<iostream>
+	<string>
+	"joymapper.h"
+	"uiobjects/ImagenGestor.h"
+
+1585085618 c:\develop\github\externallibs\crosslib\src\uiobjects\uilabel.h
+	"object.h"
+
+1585085617 c:\develop\github\externallibs\crosslib\src\uiobjects\uibutton.h
+	"object.h"
+
+1585680325 c:\develop\github\externallibs\crosslib\src\uiobjects\uilist.h
+	"uilistcommon.h"
+
+1602950105 c:\develop\github\externallibs\crosslib\src\uiobjects\uilistcommon.h
+	"object.h"
+
+1585085619 c:\develop\github\externallibs\crosslib\src\uiobjects\uiprogressbar.h
+	"object.h"
+
+1585085617 c:\develop\github\externallibs\crosslib\src\uiobjects\uiart.h
+	"object.h"
+
+1585085618 c:\develop\github\externallibs\crosslib\src\uiobjects\uicheck.h
+	"object.h"
+
+1585085619 c:\develop\github\externallibs\crosslib\src\uiobjects\uipanel.h
+	"object.h"
+
+1585085685 c:\develop\github\externallibs\crosslib\src\uiobjects\uipanelborder.h
+	"uipanel.h"
+
+1666854173 c:\develop\github\externallibs\crosslib\src\uiobjects\uipicture.h
+	"object.h"
+
+1666851913 c:\develop\github\externallibs\crosslib\src\uiobjects\uiinput.h
+	"object.h"
+	"uiobjects/soutils/SOUtils.h"
+
+1584989235 c:\develop\github\externallibs\crosslib\src\uiobjects\soutils\soutils.h
+	"../Constant.h"
+	"../Dirutil.h"
+	"../listaIni.h"
+
+1585680397 c:\develop\github\externallibs\crosslib\src\uiobjects\uipopupmenu.h
+	"uilist.h"
+	<SDL/SDL_ttf.h>
+
+1585085713 c:\develop\github\externallibs\crosslib\src\uiobjects\uicombobox.h
+	"uilist.h"
+
+1666851347 c:\develop\github\externallibs\crosslib\src\uiobjects\uilistgroup.h
+	"uilistcommon.h"
+	"uiobjects/beans/listgroupcol.h"
+	"uiobjects/beans/listGroupElement.h"
+	<algorithm>
+
+1586518800 c:\develop\github\externallibs\crosslib\src\uiobjects\beans\listgroupcol.h
+	<iostream>
+	<string>
+	<iostream>
+	<vector>
+	"../Constant.h"
+
+1666851381 c:\develop\github\externallibs\crosslib\src\uiobjects\beans\listgroupelement.h
+	"uiobjects/beans/listgroupcol.h"
+	"uiobjects/uipicture.h"
+
+1585085557 c:\develop\github\externallibs\crosslib\src\uiobjects\uitextelementsarea.h
+	"object.h"
+
+1585085619 c:\develop\github\externallibs\crosslib\src\uiobjects\uispectrum.h
+	"object.h"
+
+1487269926 c:\develop\github\externallibs\crosslib\src\uiobjects\uislider.h
+	"uiprogressbar.h"
+
+1643770327 c:\develop\github\externallibs\crosslib\src\uiobjects\uitreelistbox.h
+	"uilistcommon.h"
+
+1603068480 c:\develop\github\externallibs\crosslib\src\uiobjects\uiimglist.h
+	"uilistgroup.h"
+
+1666851955 c:\develop\github\externallibs\crosslib\src\uiobjects\common\icogestor.h
+	"uiobjects/Dirutil.h"
+	"uiobjects/Fileio.h"
+	"uiobjects/Constant.h"
+	"SDL/SDL.h"
+	"SDL/SDL_image.h"
+	"SDL/SDL_rotozoom.h"
+
+1666859879 c:\develop\github\externallibs\crosslib\src\uiobjects\thread.h
+	<pthread.h>
+	"uiobjects/Constant.h"
+	<mutex>
+
+1666855506 c:\develop\github\externallibs\crosslib\src\uiobjects\cursor.h
+	"uiobjects/Constant.h"
+	"SDL/SDL.h"
+
+1666851955 c:\develop\github\externallibs\crosslib\src\uiobjects\colorutil.h
+	<stdio.h>
+	<iostream>
+	"uiobjects/Constant.h"
+
+1666851698 c:\develop\github\externallibs\crosslib\src\uiobjects\image\threadimgloader.h
+	"uiobjects/uiimglist.h"
+	"uiobjects/image/ThreadImgWorker.h"
+	"uiobjects/thread.h"
+
+1666851788 c:\develop\github\externallibs\crosslib\src\uiobjects\image\threadimgworker.h
+	"uiobjects/uiimglist.h"
+	"uiobjects/image/ImageLoader.h"
+	"uiobjects/thread.h"
+	<SDL/SDL.h>
+	<thread>
+	<chrono>
+
+1666852063 c:\develop\github\externallibs\crosslib\src\uiobjects\image\imageloader.h
+	<uiobjects/Dirutil.h>
+	"../uiimglist.h"
+	"uiobjects/common/Icogestor.h"
+	"uiobjects/Constant.h"
+	<uiobjects/gmutex.h>
+
+1643708969 c:\develop\github\externallibs\crosslib\src\uiobjects\gmutex.h
+	<pthread.h>
+
+1666862210 source:c:\develop\github\proyectos\minimalui\src\roms\thegamesdb.cpp
+	"thegamesdb.h"
+
+1666862096 c:\develop\github\proyectos\minimalui\src\roms\thegamesdb.h
+	"httpcurl/httputil.h"
+	"uiobjects/Constant.h"
+	<gumbo.h>
+	"uiobjects/traza.h"
+	<tinyxml.h>
+
+1666850952 c:\develop\github\externallibs\crosslib\src\httpcurl\httputil.h
+	<stdlib.h>
+	<string.h>
+	<stdio.h>
+	<unistd.h>
+	<fcntl.h>
+	<iostream>
+	<string>
+	<fstream>
+	<map>
+	"rijndael/filecipher.h"
+	"uiobjects/Traza.h"
+	"uiobjects/unzip/GZipHelper.h"
+	<curl/curl.h>
+	<mutex>
+	"util/Progress.h"
+
+1666850766 c:\develop\github\externallibs\crosslib\src\rijndael\filecipher.h
+	"uiobjects/Constant.h"
+	<iostream>
+	<fstream>
+	<stdio.h>
+	<string.h>
+	"rijndael/rijndael.h"
+	"rijndael/sha256.h"
+	<sstream>
+	<iostream>
+	<cstdlib>
+
+1487269922 c:\develop\github\externallibs\crosslib\src\rijndael\rijndael.h
+	<iostream>
+
+1487269922 c:\develop\github\externallibs\crosslib\src\rijndael\sha256.h
+	<string>
+
+1666852745 c:\develop\github\externallibs\crosslib\src\uiobjects\unzip\gziphelper.h
+	"GZipHelper.h"
+	<zlib.h>
+	<alloc.h>
+	<malloc.h>
+	<unix.h>
+
+1666803809 c:\develop\github\externallibs\crosslib\src\httpcurl\util\progress.h
+	<curl/curl.h>
+	<fstream>
+	<uiobjects/gmutex.h>
+
+1666862514 source:c:\develop\github\proyectos\minimalui\src\roms\gestorroms.cpp
+	"gestorroms.h"
+
+1666861648 c:\develop\github\proyectos\minimalui\src\roms\gestorroms.h
+	"uiobjects/bbdd/Database.h"
+	"uiobjects/ListaSimple.h"
+	"uiobjects/Dirutil.h"
+	"uiobjects/Menuobject.h"
+	"estructuras.h"
+	"uiobjects/fileprops.h"
+	"EmuProperties.h"
+	"uiobjects/uilist.h"
+	"roms/romwebinfo.h"
+	"roms/thegamesdb.h"
+	"roms/bdrominfoout.h"
+	"roms/mamehistoryparser.h"
+	"uiobjects/thread.h"
+
+1666851429 c:\develop\github\externallibs\crosslib\src\uiobjects\bbdd\database.h
+	<sqlite3.h>
+	"uiobjects/Excepcion.h"
+	"uiobjects/Dirutil.h"
+	"tinyxml.h"
+	<string>
+	<vector>
+	<iostream>
+
+1487273728 c:\develop\github\proyectos\minimalui\src\roms\emuproperties.h
+
+1666861851 c:\develop\github\proyectos\minimalui\src\roms\romwebinfo.h
+	"httpcurl/httputil.h"
+	"uiobjects/Constant.h"
+	"thegamesdb.h"
+	"uiobjects/Dirutil.h"
+	"httpcurl/image/uiimgdownloader.h"
+
+1666851309 c:\develop\github\externallibs\crosslib\src\httpcurl\image\uiimgdownloader.h
+	"httpcurl/httputil.h"
+	"uiobjects/Dirutil.h"
+	"SDL/SDL.h"
+	"uiobjects/ImagenGestor.h"
+	"httpcurl/image/uiimgencoder.h"
+
+1487273728 c:\develop\github\proyectos\minimalui\src\roms\bdrominfoout.h
+
+1666862382 source:c:\develop\github\proyectos\minimalui\src\roms\romwebinfo.cpp
+	"romwebinfo.h"
+
+1666862614 source:c:\develop\github\proyectos\minimalui\src\iofrontend.cpp
+	"Iofrontend.h"
+	"uiobjects/uilistgroup.h"
+	"uiobjects/beans/listgroupcol.h"
+	"uiobjects/uilistcommon.h"
+
+1666861682 c:\develop\github\proyectos\minimalui\src\iofrontend.h
+	<string>
+	<vector>
+	"uiobjects/Colorutil.h"
+	"uiobjects/Menuobject.h"
+	"uiobjects/ImagenGestor.h"
+	"uiobjects/common/Icogestor.h"
+	"uiobjects/Launcher.h"
+	"roms/gestorroms.h"
+	"uiobjects/thread.h"
+	"vlcplayer/vlcplayer.h"
+	"roms/EmuProperties.h"
+	"uiobjects/uipicture.h"
+	"uiobjects/uiinput.h"
+	"uiobjects/uipicture.h"
+	"uiobjects/uiart.h"
+	"uiobjects/uibutton.h"
+	"uiobjects/uiprogressbar.h"
+	"uiobjects/uipopupmenu.h"
+	"uiobjects/common/BaseFrontend.h"
+
+1666854571 c:\develop\github\externallibs\crosslib\src\uiobjects\launcher.h
+	<string.h>
+	<unistd.h>
+	<sys/types.h>
+	<errno.h>
+	<stdio.h>
+	<sys/wait.h>
+	<stdlib.h>
+	<vector>
+	"unzip\unziptool.h"
+	"uiobjects/Dirutil.h"
+	"filelaunch.h"
+	<algorithm>
+	<functional>
+	<cctype>
+	<locale>
+	<fcntl.h>
+
+1626702641 c:\develop\github\externallibs\crosslib\src\uiobjects\unzip\unziptool.h
+	<unistd.h>
+	<zlib.h>
+	<minizip\unzip.h>
+	"..\Fileio.h"
+	"..\Dirutil.h"
+	<stdio.h>
+	<iostream>
+	<fstream>
+	<vector>
+	"../fileprops.h"
+
+1487269924 c:\develop\github\externallibs\crosslib\src\uiobjects\filelaunch.h
+	<string>
+
+1666852008 c:\develop\github\externallibs\crosslib\src\uiobjects\common\basefrontend.h
+	<string>
+	<vector>
+	"uiobjects/common/Ioutil.h"
+	"uiobjects/Menuobject.h"
+	"uiobjects/Colorutil.h"
+	"uiobjects/ImagenGestor.h"
+	"uiobjects/common/Icogestor.h"
+	"uiobjects/Launcher.h"
+	"uiobjects/thread.h"
+	"uiobjects/uipicture.h"
+	"uiobjects/uiinput.h"
+	"uiobjects/uipicture.h"
+	"uiobjects/uiart.h"
+	"uiobjects/uibutton.h"
+	"uiobjects/uiprogressbar.h"
+	"uiobjects/uipopupmenu.h"
+	"uiobjects/uilistgroup.h"
+	"uiobjects/beans/listgroupcol.h"
+	"uiobjects/uilistcommon.h"
+	"uiobjects/UITreeListBox.h"
+	"uiobjects/common/BaseDefines.h"
+
+1585590236 c:\develop\github\externallibs\crosslib\src\uiobjects\common\basedefines.h
+
+1666862562 source:c:\develop\github\proyectos\minimalui\src\main.cpp
+	"main.h"
+	"uiobjects/Dirutil.h"
+	"httpcurl/image/uiimgdownloader.h"
+	"roms/mamehistoryparser.h"
+	<iostream>
+	<fstream>
+
+1666861653 c:\develop\github\proyectos\minimalui\src\main.h
+	<stdio.h>
+	"uiobjects/common/Ioutil.h"
+	"Iofrontend.h"
+

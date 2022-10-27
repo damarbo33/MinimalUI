@@ -1,19 +1,19 @@
 #ifndef GESTORROMS_H
 #define GESTORROMS_H
 
-#include "bbdd/Database.h"
-#include "ListaSimple.h"
-#include "Dirutil.h"
-#include "Menuobject.h"
+#include "uiobjects/bbdd/Database.h"
+#include "uiobjects/ListaSimple.h"
+#include "uiobjects/Dirutil.h"
+#include "uiobjects/Menuobject.h"
 #include "estructuras.h"
-#include "fileprops.h"
+#include "uiobjects/fileprops.h"
 #include "EmuProperties.h"
-#include "uilist.h"
+#include "uiobjects/uilist.h"
 #include "roms/romwebinfo.h"
 #include "roms/thegamesdb.h"
 #include "roms/bdrominfoout.h"
 #include "roms/mamehistoryparser.h"
-#include "thread.h"
+#include "uiobjects/thread.h"
 
 class Gestorroms
 {

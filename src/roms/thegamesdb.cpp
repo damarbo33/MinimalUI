@@ -136,15 +136,16 @@ std::string TheGamesDB::getTagName(const char* data) {
 
     int len = strlen(data);
     int i=0;
-    int ini = 0;
+//    int ini = 0;
     int fin = 0;
     string tagName = "";
     char tmp[2] = {' ','\0'};
 
     while(i < len && fin == 0){
-        if (data[i] == '<')
-            ini = i;
-        else if (data[i] == '>')
+//        if (data[i] == '<')
+//            ini = i;
+//        else
+        if (data[i] == '>')
             fin = i;
         else {
             tmp[0] = data[i];

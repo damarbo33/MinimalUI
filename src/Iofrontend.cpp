@@ -1,7 +1,7 @@
 #include "Iofrontend.h"
-#include "uilistgroup.h"
-#include "beans/listgroupcol.h"
-#include "uilistcommon.h"
+#include "uiobjects/uilistgroup.h"
+#include "uiobjects/beans/listgroupcol.h"
+#include "uiobjects/uilistcommon.h"
 
 
 /**
@@ -64,7 +64,7 @@ void Iofrontend::comprobarUnidad(string diractual){
 **/
 
 void Iofrontend::initUIObjs(){
-    
+
     tmenu_gestor_objects *objMenu = createMenu(MENUINICIAL);
     objMenu->add("ListaMenuInicial", GUILISTBOX, 0, 0, 0, 0, "ListaMenuInicial", true)->setVerContenedor(true);
     UIList * listaObj = (UIList *) objMenu->getObjByName("ListaMenuInicial");
@@ -81,7 +81,7 @@ void Iofrontend::initUIObjs(){
     objMenu = createMenu(PANTALLAOPENMEDIA);
     objMenu = createMenu(LANZARROM);
     objMenu = createMenu("PACO");
-    
+
     objMenu = createMenu(MENUJUEGOS);
     objMenu->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Emuladores disponibles", false)->setEnabled(false);
     objMenu->add("ImgFondo", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgFondo", false)->setEnabled(false);
@@ -112,7 +112,7 @@ void Iofrontend::initUIObjs(){
     listaObj2->addElemLista("Volver", "", bullet_go, MENUINICIAL);
     objMenu->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Opciones", false)->setEnabled(false);
 
-    
+
     objMenu = createMenu(PANTALLAEDITAREMU);
     objMenu->add("listaEditarEmus", GUILISTBOX, 0, 0, 0, 0, "listaEditarEmus", false);
     objMenu->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Modificar emulador", false)->setEnabled(false);
@@ -171,7 +171,7 @@ void Iofrontend::initUIObjs(){
     objMenu->add("btnEliminarEmu", GUIBUTTON, 0, centroY, BUTTONW -15,BUTTONH, "Eliminar", true)->setIcon(deleteIco)->setVisible(false);
     objMenu->add("btnCancelarEmu", GUIBUTTON, (BUTTONW + 5), centroY, BUTTONW -15,BUTTONH, "Cancelar", true)->setIcon(cross);
     objMenu->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Alta/Modificacion emulador", false)->setEnabled(false);
-    
+
     objMenu = createMenu(PANTALLAROMS);
     objMenu->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Roms", false)->setEnabled(false);
     objMenu->add("ImgEmulador", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgEmulador", true)->setEnabled(false);
@@ -189,7 +189,7 @@ void Iofrontend::initUIObjs(){
     objMenu->add("progressBarMedia", GUIPROGRESSBAR, 20, 20, 200, 20, "", true)->setShadow(false);
     objMenu->getObjByName("panelMedia")->setAlpha(150);
 
-    
+
     objMenu = createMenu(PANTALLAOPCIONESROM);
     objMenu->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Opciones Roms", false)->setEnabled(false);
     objMenu->add("ImgFondoRoms", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgFondoRoms", true)->setEnabled(false);
@@ -199,20 +199,20 @@ void Iofrontend::initUIObjs(){
     UIPanel * panel = (UIPanel *) objMenu->getObjByName("panelMedia");
     panel->setColor(cBlanco);
 
-    
+
     objMenu = createMenu(PANTALLAGROUPLIST);
     objMenu->add(TITLESCREEN, GUIARTSURFACE, 0, 0, INPUTW, Constant::getINPUTH(), "Roms", false)->setEnabled(false);
     objMenu->add("ImgEmulador", GUIPICTURE, 0, Constant::getINPUTH(), 0, 0, "ImgEmulador", true)->setEnabled(false);
     objMenu->getObjByName("ImgEmulador")->setAlpha(200);
     objMenu->getObjByName("ImgEmulador")->getImgGestor()->setEnabledMoveImg(false);
     objMenu->getObjByName("ImgEmulador")->setVerContenedor(false);
-    
+
     objMenu->add("listaGrupoRoms", GUILISTGROUPBOX, 0, 0, 0, 0, "", false)->setVerContenedor(false);
     objMenu->add("textosInfoBox", GUITEXTELEMENTSAREA, 0, 0, 0, 0, "", true)->setVerContenedor(false)->setEnabled(false);
     objMenu->add("textosDescBox", GUITEXTELEMENTSAREA, 0, 0, 0, 0, "", true)->setVerContenedor(false)->setEnabled(true);
     objMenu->add("ImgBoxArt", GUIPICTURE, 0, 0, Constant::getIMGBOXARTWIDTH(), Constant::getIMGBOXARTHEIGHT(), "", true)->setEnabled(true);
     objMenu->add("ImgBoxArtFull", GUIPICTURE, 0, 0, this->getWidth(), this->getHeight(), "ImgEmuladorFull", true)->setVisible(false);
-    
+
 
     UIListGroup * listaGrupo = (UIListGroup *) objMenu->getObjByName("listaGrupoRoms");
     vector <ListGroupCol *> miCabecera;
@@ -234,11 +234,10 @@ void Iofrontend::initUIObjs(){
     pict->getImgGestor()->setFillBackgroundColour(false);
     pict->getImgGestor()->setBestfit(true);
 
-    int margenX = Constant::getIMGBOXARTWIDTH() + IMGBOXARTMARGIN * 2;
     //Anyadimos los textos en el area que digamos
     UITextElementsArea *infoTextRom = (UITextElementsArea *)objMenu->getObjByName("textosInfoBox");
     t_posicion pos(0, Constant::getMENUSPACE() + IMGBOXARTMARGIN,0,0);
-    
+
     const char *elems[] = {"txtReleased", "RELEASED:",
     "txtPlayers","PLAYERS:",
     "txtPublisher","PUBLISHER:",
@@ -248,7 +247,7 @@ void Iofrontend::initUIObjs(){
     "txtLastPlayed","LAST PLAYED:",
     "txtTimesPlayed","TIMES PLAYED:"};
     int len = (sizeof(elems) / sizeof(elems[0]));
-    
+
     for (int i=0; i<len/2; i++){
         TextElement *textElem = new TextElement();
         textElem->setName(elems[i*2]);
@@ -270,7 +269,7 @@ void Iofrontend::initUIObjs(){
     textElem->setStyle(stilo);
     textElem->setUseMaxLabelMargin(false);
     infoTextRom->addField(textElem);
-    
+
     stilo.pos.y += 60;
     stilo.bold = false;
     TextElement *textElem2 = new TextElement();
@@ -294,7 +293,7 @@ void Iofrontend::initUIObjs(){
     addEvent("btnForward",  static_cast<typept2Func>(&Iofrontend::accionesMediaAvanzar));
     addEvent("btnBackward",  static_cast<typept2Func>(&Iofrontend::accionesMediaRetroceder));
     addEvent("progressBarMedia", static_cast<typept2Func>(&Iofrontend::mediaClicked));
-    
+
     //Asignamos acciones a los elementos. NO INSERTAR BOTONES CON EL MISMO NOMBRE AUNQUE ESTEN EN MENUS DISTINTOS
     addEvent("ListaMenuInicial",  static_cast<typept2Func>(&Iofrontend::accionesMenu));
     addEvent("ListaMenuOpciones",  static_cast<typept2Func>(&Iofrontend::accionesMenu));
@@ -325,14 +324,14 @@ void Iofrontend::initUIObjs(){
 }
 
 /**
- * 
+ *
  * @param menucarga
  * @param valorSelec
  * @param evento
  */
 void Iofrontend::cargaMenu(string menucarga, string valorSelec, tEvento *evento){
     comprobarUnicode(menucarga);
-    
+
     tmenu_gestor_objects *objsMenu = getMenu(menucarga);
     if (objsMenu == NULL){
         return;
@@ -341,7 +340,7 @@ void Iofrontend::cargaMenu(string menucarga, string valorSelec, tEvento *evento)
     this->setSelMenu(menucarga);
     //Damos el foco al primer elemento que haya en el menu
     objsMenu->setFirstFocus();
-    
+
    if (menucarga.compare(MENUJUEGOS) == 0){
             cargarListaEmuladores(menucarga, PANTALLAGROUPLIST, "ListaMenuJuegos");
    } else if (menucarga.compare(MENUOPCIONES) == 0){
@@ -388,8 +387,8 @@ void Iofrontend::cargaMenu(string menucarga, string valorSelec, tEvento *evento)
 }
 
 /**
- * 
- * @return 
+ *
+ * @return
  */
 long Iofrontend::waitMedia(){
     unsigned long before = 0;
@@ -407,7 +406,7 @@ long Iofrontend::waitMedia(){
 }
 
 /**
- * 
+ *
  * @param evento
  */
 void Iofrontend::playMedia(tEvento *evento){
@@ -431,12 +430,12 @@ void Iofrontend::playMedia(tEvento *evento){
 }
 
 /**
- * 
+ *
  */
 void Iofrontend::setDinamicSizeObjects(){
     try{
         BaseFrontend::setDinamicSizeObjects();
-        
+
         tmenu_gestor_objects *obj = getMenu(PANTALLAGROUPLIST);
         obj->getObjByName("listaGrupoRoms")->setTam(this->getWidth() / 2 , Constant::getINPUTH(), this->getWidth() / 2, this->getHeight()-Constant::getINPUTH());
 
@@ -502,17 +501,15 @@ void Iofrontend::setDinamicSizeObjects(){
 }
 
 /**
- * 
+ *
  * @param evento
- * @return 
+ * @return
  */
 int Iofrontend::launchEmuForConfig(tEvento *evento){
     try{
         Traza::print("Lanzando EMU", W_DEBUG);
         //Obtenemos los objetos del menu actual
         tmenu_gestor_objects *objMenu = getMenu(this->getSelMenu());
-        //Obtenemos el objeto que ha sido seleccionado y que tiene el foco
-        Object *obj = objMenu->getObjByPos(objMenu->getFocus());
         //Obtenemos la ruta del emulador que estamos intentando lanzar para configurarlo
         string rutaEmu = ((UIInput *)objMenu->getObjByName("EmuRuta"))->getText();
         Dirutil *dirio = new Dirutil();
@@ -550,9 +547,9 @@ int Iofrontend::launchEmuForConfig(tEvento *evento){
 }
 
 /**
- * 
+ *
  * @param evento
- * @return 
+ * @return
  */
 int Iofrontend::accionesBtnEliminarEmu(tEvento *evento){
 
@@ -583,9 +580,9 @@ int Iofrontend::accionesBtnEliminarEmu(tEvento *evento){
 }
 
 /**
- * 
+ *
  * @param evento
- * @return 
+ * @return
  */
 int Iofrontend::accionesBtnVolverConfigEmu(tEvento *evento){
     tmenu_gestor_objects *objsMenu = getMenu(this->getSelMenu());
@@ -877,7 +874,7 @@ bool Iofrontend::lanzarPrograma(string claves){
 }
 
 /**
- * 
+ *
  * @param emulInfo
  */
 void Iofrontend::comprobarFixesSO(FileLaunch *emulInfo){
@@ -909,9 +906,9 @@ void Iofrontend::comprobarFixesSO(FileLaunch *emulInfo){
 }
 
 /**
- * 
+ *
  * @param evento
- * @return 
+ * @return
  */
 int Iofrontend::accionesMediaAvanzar(tEvento *evento){
     player.salto10PercentForward();
@@ -919,9 +916,9 @@ int Iofrontend::accionesMediaAvanzar(tEvento *evento){
 }
 
 /**
- * 
+ *
  * @param evento
- * @return 
+ * @return
  */
 int Iofrontend::accionesMediaRetroceder(tEvento *evento){
     player.salto10PercentBackwards();
@@ -929,9 +926,9 @@ int Iofrontend::accionesMediaRetroceder(tEvento *evento){
 }
 
 /**
- * 
+ *
  * @param evento
- * @return 
+ * @return
  */
 int Iofrontend::accionesMediaPause(tEvento *evento){
     player.pause();
@@ -939,9 +936,9 @@ int Iofrontend::accionesMediaPause(tEvento *evento){
 }
 
 /**
- * 
+ *
  * @param evento
- * @return 
+ * @return
  */
 int Iofrontend::accionesMediaStop(tEvento *evento){
     simularEscape(evento);
@@ -949,9 +946,9 @@ int Iofrontend::accionesMediaStop(tEvento *evento){
 }
 
 /**
- * 
+ *
  * @param evento
- * @return 
+ * @return
  */
 int Iofrontend::mediaClicked(tEvento *evento){
     UIProgressBar * objProg = (UIProgressBar *)getMenu(PANTALLAREPRODUCTOR)->getObjByName("progressBarMedia");
@@ -967,7 +964,7 @@ int Iofrontend::mediaClicked(tEvento *evento){
 }
 
 /**
- * 
+ *
  * @param var
  */
 void Iofrontend::setPanelMediaVisible(bool var){
@@ -992,14 +989,13 @@ void Iofrontend::setPanelMediaVisible(bool var){
 }
 
 /**
- * 
+ *
  * @param file
- * @return 
+ * @return
  */
 bool Iofrontend::bucleReproductor(string file){
 
     bool salir = false;
-    long delay = 0;
     unsigned long before = 0;
     unsigned long timer1s = 0;
     unsigned long timerPanelMedia = 0;
@@ -1116,8 +1112,8 @@ bool Iofrontend::bucleReproductor(string file){
 }
 
 /**
- * 
- * @return 
+ *
+ * @return
  */
 int Iofrontend::calculaPosPanelMedia(){
     int bottom = this->getHeight() - FAMFAMICONH - ICOBOTTOMSPACE;
@@ -1126,10 +1122,10 @@ int Iofrontend::calculaPosPanelMedia(){
 
 /**
  * Desde este menu podremos mostrar por pantalla la informacion de las roms de cada emulador
- * 
+ *
  * @param objMenu
  * @param evento
- * @return 
+ * @return
  */
 bool Iofrontend::procesarMenuActual(tmenu_gestor_objects *objMenu, tEvento *evento){
 
@@ -1167,7 +1163,7 @@ bool Iofrontend::procesarMenuActual(tmenu_gestor_objects *objMenu, tEvento *even
 
         if (SDL_GetTicks() - lastClick > 200 && SDL_GetTicks() - lastClick < 2000){
             UIListGroup * listaGrupo = (UIListGroup *) getMenu(PANTALLAGROUPLIST)->getObjByName("listaGrupoRoms");
-            if (pos != listaGrupo->getPosActualLista()){
+            if (pos != (int)listaGrupo->getPosActualLista()){
                 setInfoRomValues();
                 pos = listaGrupo->getPosActualLista();
             }
@@ -1192,7 +1188,7 @@ bool Iofrontend::procesarMenuActual(tmenu_gestor_objects *objMenu, tEvento *even
 //                showMenuEmergente(PANTALLAOPCIONESROM, "ImgFondoRoms");
 //                objMenu = ObjectsMenu[PANTALLAOPCIONESROM];
 //                objMenu->getObjByName("btnScrapGame")->setTag(rom);
-            } else if (evento->key == SDLK_ESCAPE && evento->keyjoydown || evento->joy == JoyMapper::getJoyMapper(JOY_BUTTON_SELECT)){
+            } else if ((evento->key == SDLK_ESCAPE && evento->keyjoydown) || evento->joy == JoyMapper::getJoyMapper(JOY_BUTTON_SELECT)){
                 tmenu_gestor_objects *objMenu = getMenu(getSelMenu());
                 UIPicture * objFondo = (UIPicture *)objMenu->getObjByName("ImgBoxArtFull");
                 if (objFondo->isVisible()){
@@ -1203,11 +1199,12 @@ bool Iofrontend::procesarMenuActual(tmenu_gestor_objects *objMenu, tEvento *even
             }
         }
     }
+    return true;
 }
 
 /**
- * 
- * @return 
+ *
+ * @return
  */
 DWORD Iofrontend::setInfoRomValues(){
     tmenu_gestor_objects *objMenu = getMenu(PANTALLAGROUPLIST);
@@ -1221,8 +1218,8 @@ DWORD Iofrontend::setInfoRomValues(){
     textElemsDesc->setOffsetDesplazamiento(0);
     textElemsDesc->setImgDrawed(false);
 
-    int pos = listaGrupo->getPosActualLista();
-    if (pos >= 0 && pos < listaGrupo->getSize()-1 && listaGrupo->isShowLetraPopup() == false ){
+    unsigned int pos = listaGrupo->getPosActualLista();
+    if (pos >= 0 && pos + 1 < listaGrupo->getSize() && listaGrupo->isShowLetraPopup() == false ){
         string value = listaGrupo->getValue(pos);
         Traza::print(value, W_PARANOIC);
         vector <string> infoRom = Constant::split(value,",");
@@ -1291,7 +1288,7 @@ DWORD Iofrontend::setInfoRomValues(){
 /**
  * Configura el emulador
  * @param evento
- * @return 
+ * @return
  */
 int Iofrontend::accionConfigEmusPopup(tEvento *evento){
     //Se obtiene el objeto menupopup que en principio esta seleccionado
@@ -1335,7 +1332,7 @@ int Iofrontend::accionConfigEmusPopup(tEvento *evento){
 }
 
 /**
- * 
+ *
  */
 void Iofrontend::crearComboSistemas(){
     tmenu_gestor_objects *objMenu  = getMenu(PANTALLAOPCIONRUTAS);
@@ -1405,9 +1402,9 @@ void Iofrontend::crearComboSistemas(){
 }
 
 /**
- * 
+ *
  * @param evento
- * @return 
+ * @return
  */
 int Iofrontend::accionesBtnAceptarOpcionesGenerales(tEvento *evento){
     tmenu_gestor_objects *objMenu = getMenu(MENUOPCIONESGENERALES);
@@ -1423,8 +1420,8 @@ int Iofrontend::accionesBtnAceptarOpcionesGenerales(tEvento *evento){
 }
 
 /**
- * 
- * @return 
+ *
+ * @return
  */
 bool Iofrontend::cargarOpcionesGenerales(){
     tmenu_gestor_objects *objMenu = getMenu(MENUOPCIONESGENERALES);
@@ -1433,9 +1430,9 @@ bool Iofrontend::cargarOpcionesGenerales(){
 }
 
 /**
- * 
+ *
  * @param evento
- * @return 
+ * @return
  */
 int Iofrontend::buscarInfoRoms(tEvento *evento){
     tmenu_gestor_objects *objMenu = getMenu(PANTALLAOPCIONESROM);
@@ -1453,12 +1450,13 @@ int Iofrontend::buscarInfoRoms(tEvento *evento){
             cargarListaRoms(PANTALLAGROUPLIST, idprog, "listaGrupoRoms");
         }
     }
+    return 0;
 }
 
 /**
- * 
+ *
  * @param evento
- * @return 
+ * @return
  */
 int Iofrontend::volverInfoRoms(tEvento *evento){
 
@@ -1475,10 +1473,11 @@ int Iofrontend::volverInfoRoms(tEvento *evento){
             }
         }
     }
+    return 0;
 }
 
 /**
- * 
+ *
  */
 void Iofrontend::scrapAllRoms(){
     Traza::print("scrapAllRoms", W_DEBUG);
@@ -1494,7 +1493,7 @@ void Iofrontend::scrapAllRoms(){
 }
 
 /**
- * 
+ *
  * @param codEmu
  */
 void Iofrontend::scrapEmuRoms(string codEmu){
@@ -1512,9 +1511,9 @@ void Iofrontend::scrapEmuRoms(string codEmu){
 }
 
 /**
- * 
+ *
  * @param evento
- * @return 
+ * @return
  */
 int Iofrontend::ImgEmuladorClicked(tEvento *evento){
     tmenu_gestor_objects *objsMenu = getMenu(this->getSelMenu());
@@ -1549,9 +1548,9 @@ int Iofrontend::ImgEmuladorClicked(tEvento *evento){
 }
 
 /**
- * 
+ *
  * @param evento
- * @return 
+ * @return
  */
 int Iofrontend::ImgBoxArtFullClicked(tEvento *evento){
     tmenu_gestor_objects *objsMenu = getMenu(this->getSelMenu());

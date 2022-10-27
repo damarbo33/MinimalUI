@@ -1,9 +1,9 @@
 #ifndef ESTRUCTURAS_H
 #define ESTRUCTURAS_H
 
-#include "fileprops.h"
-#include "Traza.h"
-#include "listaIni.h"
+#include "uiobjects/fileprops.h"
+#include "uiobjects/Traza.h"
+#include "uiobjects/listaIni.h"
 
 
 class Rominfo{

@@ -86,7 +86,7 @@ void MameHistoryParser::loadHistory(string ruta){
                 if (splittedLine.size() > 1 && !descRom.empty()){
                     nameRom = splittedLine.at(1);
                     splittedNameRom = Constant::split(nameRom, ",");
-                    for (int j=0; j < splittedNameRom.size(); j++){
+                    for (unsigned int j=0; j < splittedNameRom.size(); j++){
                     //for (int j=0; j < 1; j++){
                         if (!splittedNameRom.at(j).empty()){
 //                            cout << "adding: " << splittedNameRom.at(j) << endl;

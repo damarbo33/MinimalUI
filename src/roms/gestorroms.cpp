@@ -533,7 +533,7 @@ int Gestorroms::fillMenuByQuery(Object *refMenu, string query, vector<string> *s
             //Si hay parametros, generamos la query con parametros
             if (statementValues == NULL) db->setClauseWhere(false);
             else {
-                for (int i=0; i<statementValues->size(); i++){
+                for (unsigned int i=0; i<statementValues->size(); i++){
                     db->setString(i, statementValues->at(i));
                 }
             }
@@ -669,8 +669,7 @@ vector<vector<string> > Gestorroms::getAllEmus(){
 *
 */
 void Gestorroms::updateRom(vector<vector<string> > *listaRoms){
-    int i=0;
-    for (i; i < listaRoms->size(); i++){
+    for (unsigned int i=0; i < listaRoms->size(); i++){
         RomWebInfo *objRom = new RomWebInfo(i, listaRoms, platform);
         objRom->updateGameInfo();
         SDL_LockMutex(mutex);
@@ -859,7 +858,7 @@ unsigned int Gestorroms::listarDirSinOrden(const char *strdir, vector <FileProps
                             lenFiles++;
                         }
                     }
-                    delete concatDir;
+                    delete [] concatDir;
                 }
                 Traza::print("Se han encontrado " + Constant::TipoToStr(lenDir) + " directorios y " + Constant::TipoToStr(lenFiles) + " ficheros", W_DEBUG);
                 closedir(dp);
@@ -989,7 +988,7 @@ void Gestorroms::restaurarRomInfo(int idEmu){
     sqlite3_exec(database, "BEGIN TRANSACTION", NULL, NULL, NULL);
 
     Traza::print("TOTAL",listaRoms.size(), W_DEBUG);
-    for (int i=0; i<listaRoms.size(); i++){
+    for (unsigned int i=0; i<listaRoms.size(); i++){
         Traza::print("UPDATING: " + listaRoms.at(i).at(2) + "; " + listaRoms.at(i).at(0) , W_PARANOIC);
         db->prepareStatement("updateNewChanges");
         for (int j=0; j<11; j++){
@@ -1046,7 +1045,6 @@ void Gestorroms::refreshArtWorkOptim(string codEmu, string dirInicial){
         //Dando tiempo para iniciar los hilos
         //SDL_Delay(2000);
 
-        bool running = true;
         int numRunning = nThreads;
         while (numRunning > 0){
             numRunning = 0;
@@ -1096,7 +1094,7 @@ uint32_t Gestorroms::thRefreshArtWorkOptim(){
 uint32_t Gestorroms::thRefreshAllArtWorkOptim(){
     if (!scrappingNow){
         vector<vector<string> > result = getAllEmus();
-        for (int i=0; i < result.size(); i++){
+        for (unsigned int i=0; i < result.size(); i++){
             if (result.at(i).at(3).compare("S") != 0){
                 platform = result.at(i).at(2);
                 refreshArtWorkOptim(result.at(i).at(0), thDirInicial);
@@ -1114,7 +1112,7 @@ uint32_t Gestorroms::thScrapAllSystem(){
         db->prepareStatement("selectListaEmuladores");
         Traza::print("Gestorroms::thScrapAllSystem. Obteniendo lista de sistemas", W_DEBUG);
         vector<vector<string> > result = db->executeQuery();
-        for (int i=0; i < result.size(); i++){
+        for (unsigned int i=0; i < result.size(); i++){
             if (result.at(i).at(3).compare("S") != 0)
                 scrapsystem(result.at(i).at(0));
         }
@@ -1184,7 +1182,7 @@ uint32_t Gestorroms::scrapsystemMulti(string idEmu, int inicio, int fin){
         errorCode = e.getCode();
     }
 
-    return 0;
+    return errorCode;
 }
 
 /**
@@ -1227,5 +1225,5 @@ uint32_t Gestorroms::scrapsystem(string idEmu){
         Traza::print("scrapsystem: " + string(e.getMessage()), W_ERROR);
         errorCode = e.getCode();
     }
-    return 0;
+    return errorCode;
 }

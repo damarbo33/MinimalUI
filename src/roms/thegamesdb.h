@@ -1,12 +1,16 @@
 #ifndef THEGAMESDB_H
 #define THEGAMESDB_H
 
-#include "httputil.h"
-#include "Constant.h"
+#include "httpcurl/httputil.h"
+#include "uiobjects/Constant.h"
 #include <gumbo.h>
-#include "traza.h"
-#define TIXML_USE_STL
-#include "tinyxml/tinyxml.h"
+#include "uiobjects/traza.h"
+
+#ifndef TIXML_USE_STL
+    #define TIXML_USE_STL 1
+#endif // TIXML_USE_STL
+
+#include <tinyxml.h>
 
 typedef enum{
     QUERYOK,

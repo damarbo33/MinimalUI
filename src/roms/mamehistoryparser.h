@@ -5,8 +5,8 @@
 #include <stdexcept>      // std::out_of_range
 #include <vector>
 #include <fstream>
-#include "Constant.h"
-#include "zlib.h"
+#include "uiobjects/Constant.h"
+#include <zlib.h>
 #include <iostream>
 
 using namespace std;

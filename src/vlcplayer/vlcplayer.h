@@ -13,8 +13,8 @@
 #include <string>
 #include <iostream>
 #include <limits.h>
-#include "common/Ioutil.h"
-#include "Menuobject.h"
+#include "uiobjects/common/Ioutil.h"
+#include "uiobjects/Menuobject.h"
 
 using namespace std;
 

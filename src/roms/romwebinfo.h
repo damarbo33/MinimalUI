@@ -1,11 +1,11 @@
 #ifndef ROMWEBINFO_H
 #define ROMWEBINFO_H
 
-#include "httputil.h"
-#include "Constant.h"
+#include "httpcurl/httputil.h"
+#include "uiobjects/Constant.h"
 #include "thegamesdb.h"
-#include "Dirutil.h"
-#include "image/uiimgdownloader.h"
+#include "uiobjects/Dirutil.h"
+#include "httpcurl/image/uiimgdownloader.h"
 
 class RomWebInfo
 {

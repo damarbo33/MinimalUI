@@ -8,24 +8,24 @@
 
 #include <string>
 #include <vector>
-#include "Colorutil.h"
-#include "Menuobject.h"
-#include "ImagenGestor.h"
-#include "common/Icogestor.h"
-#include "Launcher.h"
+#include "uiobjects/Colorutil.h"
+#include "uiobjects/Menuobject.h"
+#include "uiobjects/ImagenGestor.h"
+#include "uiobjects/common/Icogestor.h"
+#include "uiobjects/Launcher.h"
 #include "roms/gestorroms.h"
-#include "thread.h"
+#include "uiobjects/thread.h"
 #include "vlcplayer/vlcplayer.h"
 #include "roms/EmuProperties.h"
 
-#include "uipicture.h"
-#include "uiinput.h"
-#include "uipicture.h"
-#include "uiart.h"
-#include "uibutton.h"
-#include "uiprogressbar.h"
-#include "uipopupmenu.h"
-#include "common/BaseFrontend.h"
+#include "uiobjects/uipicture.h"
+#include "uiobjects/uiinput.h"
+#include "uiobjects/uipicture.h"
+#include "uiobjects/uiart.h"
+#include "uiobjects/uibutton.h"
+#include "uiobjects/uiprogressbar.h"
+#include "uiobjects/uipopupmenu.h"
+#include "uiobjects/common/BaseFrontend.h"
 
 #define MENUINICIAL           "MENUINICIAL"
 #define MENUJUEGOS            "MENUJUEGOS"
@@ -55,13 +55,13 @@ class Iofrontend : public BaseFrontend{
         bool isMenuLeftVisible();
         int accionesBtnAceptarOpciones(tEvento *);
         int launchEmuForConfig(tEvento *evento);
-    
+
      private :
-         
+
         void setDinamicSizeObjects();
         void initUIObjs();
         void cargaMenu(string, string, tEvento *);
-        
+
         Gestorroms *gestorRoms;
         Colorutil *convColor;
         VlcPlayer player;

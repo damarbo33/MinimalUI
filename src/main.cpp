@@ -1,6 +1,6 @@
 #include "main.h"
-#include "Dirutil.h"
-#include "image/uiimgdownloader.h"
+#include "uiobjects/Dirutil.h"
+#include "httpcurl/image/uiimgdownloader.h"
 #include "roms/mamehistoryparser.h"
 // using ofstream constructors.
 #include <iostream>
@@ -9,7 +9,7 @@
 bool procesarTeclado(tEvento *evento, Iofrontend *ioFront){
     bool salir = false;
     static int mode = 0;
-    
+
     if (evento->key == SDLK_RETURN && evento->keyMod & KMOD_LALT){
         ioFront->toggleFullScreen();
         evento->resize = true;
@@ -39,7 +39,7 @@ void Terminate(void)
 int main(int argc, char *argv[]){
     #ifdef WIN
         string appDir = argv[0];
-        int pos = appDir.rfind(Constant::getFileSep());
+        size_t pos = appDir.rfind(Constant::getFileSep());
         if (pos == string::npos){
             FILE_SEPARATOR = FILE_SEPARATOR_UNIX;
             pos = appDir.rfind(FILE_SEPARATOR);
